@@ -6,6 +6,7 @@ import AuthorView from "../views/LandingPages/Author/AuthorView.vue";
 import SavedView from "../views/LandingPages/Saved/SavedView.vue";
 import PostDetails from "../views/LandingPages/Saved/PostDetails.vue";
 import SignInBasicView from "../views/LandingPages/SignIn/BasicView.vue";
+import PostView from "../views/LandingPages/Posting/PostView.vue";
 import PageHeaders from "../layouts/sections/page-sections/page-headers/HeadersView.vue";
 import PageFeatures from "../layouts/sections/page-sections/features/FeaturesView.vue";
 import NavigationNavbars from "../layouts/sections/navigation/navbars/NavbarsView.vue";
@@ -58,6 +59,12 @@ const router = createRouter({
       name: "postdetails",
       component: PostDetails,
       props: true,
+    },
+    {
+      path: "/pages/landing-pages/post",
+      name: "post",
+      component: PostView,
+
     },
     {
       path: "/pages/landing-pages/basic",
