@@ -4,6 +4,7 @@ import AboutView from "../views/LandingPages/AboutUs/AboutView.vue";
 import ContactView from "../views/LandingPages/ContactUs/ContactView.vue";
 import AuthorView from "../views/LandingPages/Author/AuthorView.vue";
 import SavedView from "../views/LandingPages/Saved/SavedView.vue";
+import ExploredView from "../views/LandingPages/Explore/ExploredView.vue";
 import PostDetails from "../views/LandingPages/Saved/PostDetails.vue";
 import SignInBasicView from "../views/LandingPages/SignIn/BasicView.vue";
 import PageHeaders from "../layouts/sections/page-sections/page-headers/HeadersView.vue";
@@ -52,6 +53,11 @@ const router = createRouter({
       path: "/pages/landing-pages/saved",
       name: "saved",
       component: SavedView,
+    },
+    {
+      path: "/pages/landing-pages/explore",
+      name: "explore",
+      component: ExploredView,
     },
     {
       path: "/pages/landing-pages/post-details/:id",
