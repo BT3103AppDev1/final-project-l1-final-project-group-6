@@ -63,7 +63,8 @@ onUnmounted(() => {
               Post Now
             </h1>
             <p class="lead text-white px-5 mt-3" :style="{ fontWeight: '500' }">
-              Ready to champoin a cause you are passionate about, or share more about your organisation?
+              Ready to champoin a cause you are passionate about, or share more
+              about your organisation?
             </p>
           </div>
         </div>
@@ -72,92 +73,94 @@ onUnmounted(() => {
   </Header>
 
   <div class="container">
-      <div class="row">
-        <div class="d-flex flex-column w-100 text-center p-5 mb-8">
-          <h3>Meet our partners</h3>
-          <div class="d-flex justify-content-center mt-3 flex-wrap">
-            <a
-              href="https://www.creative-tim.com/product/material-kit"
-              data-bs-toggle="tooltip"
-              data-bs-placement="bottom"
-              title="Bootstrap 5 - Most popular front-end component library"
-            >
-              <img
-                :src="nvpc"
-                alt="title"
-                loading="lazy"
-                :style="{ height: '90px' }"
-              />
-            </a>
-            <a
-              href="https://www.creative-tim.com/product/vue-material-kit-pro"
-              class="mx-3"
-              data-bs-toggle="tooltip"
-              data-bs-placement="bottom"
-              title="Vue.js - Is a Progressive JavaScript Framework"
-            >
-            </a>
-            <a
-
-              href="#"
-              data-bs-toggle="tooltip"
-              data-bs-placement="bottom"
-              title="Coming Soon"
-            >
-              <img
-                :src="nus"
-                alt="title"
-                loading="lazy"
-                :style="{ height: '90px' }"
-              />
-            </a>
-            <a
-              href="https://www.creative-tim.com/product/vue-material-kit-pro"
-              class="mx-3"
-              data-bs-toggle="tooltip"
-              data-bs-placement="bottom"
-              title="Vue.js - Is a Progressive JavaScript Framework"
-            >
-            </a>
-            <a
-              href="#"
-              data-bs-toggle="tooltip"
-              data-bs-placement="bottom"
-              title="Coming Soon"
-            >
-              <img
-                :src="googleorg"
-                alt="title"
-                loading="lazy"
-                :style="{ height: '90px' }"
-              />
-            </a>
-            <a
-              href="https://www.creative-tim.com/product/material-kit-react-pro"
-              class="mx-3"
-              data-bs-toggle="tooltip"
-              data-bs-placement="bottom"
-              title="React – A JavaScript library for building user interfaces"
-            >
-              <img
-                :src="temasek"
-                alt="title"
-                loading="lazy"
-                :style="{ height: '90px' }"
-              />
-            </a>
-            <a
-              class="opacity-5"
-              href="#"
-              data-bs-toggle="tooltip"
-              data-bs-placement="bottom"
-              title="Coming Soon"
-            >
-            </a>
-          </div>
+    <div class="row">
+      <div class="d-flex flex-column w-100 text-center p-5 mb-8">
+        <h3>Meet our partners</h3>
+        <div class="d-flex justify-content-center mt-3 flex-wrap">
+          <a
+            href="https://cityofgood.sg/"
+            target="_blank"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            title="Bootstrap 5 - Most popular front-end component library"
+          >
+            <img
+              :src="nvpc"
+              alt="title"
+              loading="lazy"
+              :style="{ height: '90px' }"
+            />
+          </a>
+          <a
+            class="mx-3"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            title="Vue.js - Is a Progressive JavaScript Framework"
+          >
+          </a>
+          <a
+            href="https://nus.edu.sg/"
+            target="_blank"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            title="Coming Soon"
+          >
+            <img
+              :src="nus"
+              alt="title"
+              loading="lazy"
+              :style="{ height: '90px' }"
+            />
+          </a>
+          <a
+            href="https://www.creative-tim.com/product/vue-material-kit-pro"
+            class="mx-3"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            title="Vue.js - Is a Progressive JavaScript Framework"
+          >
+          </a>
+          <a
+            href="https://www.google.org/"
+            target="_blank"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            title="Coming Soon"
+          >
+            <img
+              :src="googleorg"
+              alt="title"
+              loading="lazy"
+              :style="{ height: '90px' }"
+            />
+          </a>
+          <a
+            href="https://www.temasekfoundation.org.sg/"
+            target="_blank"
+            class="mx-3"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            title="React – A JavaScript library for building user interfaces"
+          >
+            <img
+              :src="temasek"
+              alt="title"
+              loading="lazy"
+              :style="{ height: '90px' }"
+            />
+          </a>
+          <a
+            class="opacity-5"
+            href="#"
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            title="Coming Soon"
+          >
+          </a>
         </div>
       </div>
     </div>
+  </div>
 
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
     <PresentationCounter />
@@ -178,7 +181,7 @@ onUnmounted(() => {
             :action="{
               route:
                 'https://www.creative-tim.com/learning-lab/vue/overview/material-kit/',
-              label: { text: 'Let\'s start', color: 'white' }
+              label: { text: 'Let\'s start', color: 'white' },
             }"
           />
         </div>
@@ -193,7 +196,7 @@ onUnmounted(() => {
             :action="{
               route:
                 'https://www.creative-tim.com/learning-lab/vue/input/material-kit/',
-              label: { text: 'Read more' }
+              label: { text: 'Read more' },
             }"
           />
         </div>
@@ -207,7 +210,7 @@ onUnmounted(() => {
             :action="{
               route:
                 'https://www.creative-tim.com/learning-lab/vue/utilities/material-kit/',
-              label: { text: 'Read more' }
+              label: { text: 'Read more' },
             }"
           />
         </div>
@@ -218,13 +221,13 @@ onUnmounted(() => {
     <div
       class="container-fluid mt-sm-5 border-radius-xl"
       :style="{
-        background: 'linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25))'
+        background: 'linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25))',
       }"
     >
       <div
         class="page-header py-6 py-md-5 my-sm-3 mb-3 border-radius-xl"
         :style="{
-          backgroundImage: `url(${wavesWhite})`
+          backgroundImage: `url(${wavesWhite})`,
         }"
         loading="lazy"
       >
@@ -255,7 +258,6 @@ onUnmounted(() => {
       </div>
     </div>
 
-   
     <div class="py-5">
       <div class="container">
         <div class="row">
