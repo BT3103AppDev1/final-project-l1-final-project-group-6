@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 //example components
 import NavbarDefault from "../../../examples/navbars/NavbarDefault.vue";
@@ -9,6 +9,10 @@ import FilledInfoCard from "../../../examples/cards/infoCards/FilledInfoCard.vue
 
 //Vue Material Kit 2 components
 import MaterialSocialButton from "@/components/MaterialSocialButton.vue";
+import MaterialInput from "@/components/MaterialInput.vue";
+import MaterialTextArea from "@/components/MaterialTextArea.vue";
+import MaterialButton from "@/components/MaterialButton.vue";
+import MaterialSwitch from "@/components/MaterialSwitch.vue";
 
 // sections
 // import PresentationCounter from "./Sections/PresentationCounter.vue";
@@ -22,10 +26,10 @@ import MaterialSocialButton from "@/components/MaterialSocialButton.vue";
 //images
 import unhelp from "@/assets/img/post-un.jpg";
 import wavesWhite from "@/assets/img/waves-white.svg";
-import nus from "@/assets/img/post-nus.jpeg";
+import nus from "@/assets/img/post-nus-removebg-preview.png";
 import googleorg from "@/assets/img/post-googleorg.png";
-import temasek from "@/assets/img/post-temasek.png";
-import nvpc from "@/assets/img/post-nvpc.png";
+import temasek from "@/assets/img/post-temasek-removebg-preview.png";
+import nvpc from "@/assets/img/post-nvpc-removebg-preview.png";
 
 //hooks
 const body = document.getElementsByTagName("body")[0];
@@ -37,6 +41,34 @@ onUnmounted(() => {
   body.classList.remove("presentation-page");
   body.classList.remove("bg-gray-200");
 });
+
+const showDropdown = ref(false);
+const updateSelectedOption = (option) => {
+  selectedOption.value = option;
+};
+
+const sdgs = [
+  "SDG 1- No Poverty",
+  "SDG 2- Zero Hunger",
+  "SDG 3- Good Health and Well-being",
+  "SDG 4- Quality Education",
+  "SDG 5- Gender Equality",
+  "SDG 6- Clean Water and Sanitation",
+  "SDG 7- Affordable and Clean Energy",
+  "SDG 8- Decent Work and Economic Growth",
+  "SDG 9- Industry, Innovation and Infrastructure",
+  "SDG 10- Reduced Inequality",
+  "SDG 11- Sustainable Cities and Communities",
+  "SDG 12- Responsible Consumption and Production",
+  "SDG 13- Climate Action",
+  "SDG 14- Life Below Water",
+  "SDG 15- Life on Land",
+  "SDG 16- Peace and Justice Strong Institutions",
+  "SDG 17- Partnerships to achieve the Goal",
+];
+
+// Define the ref for the selected option
+const selectedOption = ref("SDG");
 </script>
 
 <template>
@@ -82,7 +114,7 @@ onUnmounted(() => {
             target="_blank"
             data-bs-toggle="tooltip"
             data-bs-placement="bottom"
-            title="Bootstrap 5 - Most popular front-end component library"
+            title="National Volunteer & Philanthropy Centre"
           >
             <img
               :src="nvpc"
@@ -95,7 +127,7 @@ onUnmounted(() => {
             class="mx-3"
             data-bs-toggle="tooltip"
             data-bs-placement="bottom"
-            title="Vue.js - Is a Progressive JavaScript Framework"
+            title="Google.org - Google's Philanthropic Arm"
           >
           </a>
           <a
@@ -103,7 +135,7 @@ onUnmounted(() => {
             target="_blank"
             data-bs-toggle="tooltip"
             data-bs-placement="bottom"
-            title="Coming Soon"
+            title="National University of Singapore"
           >
             <img
               :src="nus"
@@ -125,7 +157,7 @@ onUnmounted(() => {
             target="_blank"
             data-bs-toggle="tooltip"
             data-bs-placement="bottom"
-            title="Coming Soon"
+            title="Google.org - Google's Philanthropic Arm"
           >
             <img
               :src="googleorg"
@@ -140,7 +172,7 @@ onUnmounted(() => {
             class="mx-3"
             data-bs-toggle="tooltip"
             data-bs-placement="bottom"
-            title="React – A JavaScript library for building user interfaces"
+            title="Temasek Foundation- A Singapore Philanthropic Organisation"
           >
             <img
               :src="temasek"
@@ -217,6 +249,119 @@ onUnmounted(() => {
       </div>
     </div>
     <PresentationTestimonials />
+
+    <section>
+      <div class="container py-4">
+        <div class="row">
+          <div
+            class="col-lg-7 mx-auto d-flex justify-content-center flex-column"
+          >
+            <h3 class="text-center">Start your request here</h3>
+            <form
+              role="form"
+              id="contact-form"
+              method="post"
+              autocomplete="off"
+            >
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <MaterialInput
+                      class="input-group-dynamic mb-4"
+                      :label="{ text: 'First Name', class: 'form-label' }"
+                      type="text"
+                    />
+                  </div>
+                  <div class="col-md-6 ps-2">
+                    <MaterialInput
+                      class="input-group-dynamic"
+                      :label="{ text: 'Last Name', class: 'form-label' }"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <MaterialInput
+                    class="input-group-dynamic"
+                    :label="{ text: 'Project Title', class: 'form-label' }"
+                    type="email"
+                  />
+                </div>
+                <div class="mb-4">
+                  <MaterialInput
+                    class="input-group-dynamic"
+                    :label="{ text: 'Organisation Name', class: 'form-label' }"
+                    type="email"
+                  />
+                </div>
+                <div class="col-md6">
+                  <div class="dropdown">
+                    <MaterialButton
+                      variant="gradient"
+                      color="success"
+                      class="dropdown-toggle"
+                      :class="{ show: showDropdown }"
+                      @focusout="showDropdown = false"
+                      id="dropdownMenuButton"
+                      data-bs-toggle="dropdown"
+                      :area-expanded="showDropdown"
+                    >
+                      {{ selectedOption }}
+                    </MaterialButton>
+
+                    <ul
+                      class="dropdown-menu px-2 py-3"
+                      :class="{ show: showDropdown }"
+                      aria-labelledby="dropdownMenuButton"
+                    >
+                      <li v-for="sdg in sdgs" :key="sdg">
+                        <a
+                          class="dropdown-item border-radius-md"
+                          href="javascript:;"
+                          @click="updateSelectedOption(sdg)"
+                          >{{ sdg }}</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <MaterialTextArea
+                  class="input-group-static mb-4"
+                  id="message"
+                  :rows="4"
+                  >Short Blurb About Your Project</MaterialTextArea
+                >
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <MaterialSwitch
+                    class="mb-4 d-flex align-items-center"
+                    id="flexSwitchCheckDefault"
+                    checked
+                    labelClass="ms-3 mb-0"
+                  >
+                    I agree to the
+                    <a href="javascript:;" class="text-dark"
+                      ><u>Terms and Conditions</u></a
+                    >.
+                  </MaterialSwitch>
+
+                  <div class="col-md-12">
+                    <MaterialButton
+                      type="submit"
+                      variant="gradient"
+                      color="dark"
+                      fullWidth
+                      >Send Message</MaterialButton
+                    >
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <div
       class="container-fluid mt-sm-5 border-radius-xl"
