@@ -1,6 +1,6 @@
 <template>
-    <div class="card">
-        <img :src="post.imageURL" class="card-img-top" alt="Post Image" />
+    <div class="card-container">
+        <img :src="post.imageUrl" class="card-img-top" alt="Post Image" />
         <div class="card-body">
             <h5 class="card-title">{{ post.title }}</h5>
             <p class="card-text">{{ post.username }} | {{ post.entity }}</p>
@@ -19,15 +19,14 @@ export default {
 </script>
 
 <style scoped>
-.card {
+.card-container {
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    justify-content: space-evenly;
     background-color: white;
     border: 1px solid black;
     border-radius: 10px;
     overflow: hidden;
-    max-height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
 }
 
 .card-body {
@@ -37,9 +36,9 @@ export default {
     flex: 1;
 }
 
-.card img {
-    width: 100%;
-    height: auto;
+img {
+    width: fit-content;
+    height: 100%;
     object-fit: cover;
 }
 

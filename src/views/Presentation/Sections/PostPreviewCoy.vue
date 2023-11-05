@@ -41,7 +41,7 @@ export default {
             </div>
             <div class="justify-content-center row">
                 <button class="btn btn-success">View More</button>
-                <!-- <button @click="getPosts">Test me</button> -->
+                <button @click="getPosts">Test me</button>
             </div>
         </div>
     </div>
