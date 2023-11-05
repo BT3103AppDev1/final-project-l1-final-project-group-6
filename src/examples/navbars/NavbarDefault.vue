@@ -218,6 +218,12 @@ watch(
                       >
                         <span>Saved Posts</span>
                       </RouterLink>
+                      <RouterLink
+                        :to="{ name: 'explore' }"
+                        class="dropdown-item border-radius-md"
+                      >
+                        <span>Explore</span>
+                      </RouterLink>
                       <div
                         class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-0 mt-3"
                       >
