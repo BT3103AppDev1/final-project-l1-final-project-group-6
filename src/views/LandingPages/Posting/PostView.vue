@@ -1,6 +1,12 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from "vue";
 
+//firebase
+import firebase from "../../../firebase.js";
+import "firebase/firestore";
+import "firebase/auth";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
+
 //example components
 import NavbarDefault from "../../../examples/navbars/NavbarDefault.vue";
 import DefaultFooter from "../../../examples/footers/FooterDefault.vue";
@@ -43,8 +49,46 @@ onUnmounted(() => {
 });
 
 const showDropdown = ref(false);
-const updateSelectedOption = (option) => {
-  selectedOption.value = option;
+
+const db = getFirestore(firebase);
+const firstName = ref("");
+const lastName = ref("");
+const projectTitle = ref("");
+const organizationName = ref("");
+const message = ref("");
+
+const submitToFirebase = async () => {
+  console.log("IN AC");
+  alert(
+    "Submitting your request for project: " +
+      document.getElementById("projectTitle").value
+  );
+
+  try {
+    // Create a new document in Firebase Firestore with the form data
+    const docRef = await setDoc(
+      doc(db, "requests", document.getElementById("projectTitle").value),
+      {
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        projectTitle: document.getElementById("projectTitle").value,
+        organizationName: document.getElementById("organizationName").value,
+        selectedSDG: selectedOption.value,
+        message: document.getElementById("message").value,
+      }
+    );
+
+    console.log(docRef);
+    document.getElementById("myform").reset();
+    //reset selectedsdg
+    selectedOption.value = "SDG";
+
+    // Display a success message (e.g., with a toast or alert)
+    alert("Request submitted successfully!");
+  } catch (error) {
+    console.error("Error adding document: ", error);
+    alert("Error submitting request. Please try again later.");
+  }
 };
 
 const sdgs = [
@@ -257,41 +301,46 @@ const selectedOption = ref("SDG");
             class="col-lg-7 mx-auto d-flex justify-content-center flex-column"
           >
             <h3 class="text-center">Start your request here</h3>
-            <form
-              role="form"
-              id="contact-form"
-              method="post"
-              autocomplete="off"
-            >
+            <form role="form" id="myform" method="post" autocomplete="off">
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-6">
                     <MaterialInput
                       class="input-group-dynamic mb-4"
-                      :label="{ text: 'First Name', class: 'form-label' }"
+                      :placeholder="firstNamePlaceholder || 'First Name'"
                       type="text"
+                      v-model="firstName"
+                      id="firstName"
                     />
                   </div>
                   <div class="col-md-6 ps-2">
                     <MaterialInput
                       class="input-group-dynamic"
-                      :label="{ text: 'Last Name', class: 'form-label' }"
+                      :placeholder="lastNamePlaceholder || 'Last Name'"
                       type="text"
+                      v-model="lastName"
+                      id="lastName"
                     />
                   </div>
                 </div>
                 <div class="mb-4">
                   <MaterialInput
                     class="input-group-dynamic"
-                    :label="{ text: 'Project Title', class: 'form-label' }"
-                    type="email"
+                    :placeholder="projectTitlePlaceholder || 'Project Title'"
+                    type="text"
+                    v-model="projectTitle"
+                    id="projectTitle"
                   />
                 </div>
                 <div class="mb-4">
                   <MaterialInput
                     class="input-group-dynamic"
-                    :label="{ text: 'Organisation Name', class: 'form-label' }"
-                    type="email"
+                    :placeholder="
+                      organizationNamePlaceholder || 'Organization Name'
+                    "
+                    type="text"
+                    v-model="organizationName"
+                    id="organizationName"
                   />
                 </div>
                 <div class="col-md6">
@@ -302,7 +351,7 @@ const selectedOption = ref("SDG");
                       class="dropdown-toggle"
                       :class="{ show: showDropdown }"
                       @focusout="showDropdown = false"
-                      id="dropdownMenuButton"
+                      id="selectedOption"
                       data-bs-toggle="dropdown"
                       :area-expanded="showDropdown"
                     >
@@ -318,7 +367,7 @@ const selectedOption = ref("SDG");
                         <a
                           class="dropdown-item border-radius-md"
                           href="javascript:;"
-                          @click="updateSelectedOption(sdg)"
+                          @click="selectedOption = sdg"
                           >{{ sdg }}</a
                         >
                       </li>
@@ -329,6 +378,7 @@ const selectedOption = ref("SDG");
                   class="input-group-static mb-4"
                   id="message"
                   :rows="4"
+                  v-model="message"
                   >Short Blurb About Your Project</MaterialTextArea
                 >
               </div>
@@ -348,11 +398,12 @@ const selectedOption = ref("SDG");
 
                   <div class="col-md-12">
                     <MaterialButton
-                      type="submit"
+                      type="button"
                       variant="gradient"
                       color="dark"
+                      @click="submitToFirebase"
                       fullWidth
-                      >Send Message</MaterialButton
+                      >Submit request</MaterialButton
                     >
                   </div>
                 </div>
@@ -382,7 +433,7 @@ const selectedOption = ref("SDG");
             <div class="d-flex justify-content-center p-5">
               <div class="col-lg-8 ms-lg-5 text-center">
                 <h3 class="text-white">
-                  Do you love this awesome UI Kit from Vuejs & Bootstrap?
+                  Do you love this awesom e UI Kit from Vuejs & Bootstrap?
                 </h3>
                 <p class="text-white text-md">
                   Cause if you do, it can be yours for FREE. Hit the button
