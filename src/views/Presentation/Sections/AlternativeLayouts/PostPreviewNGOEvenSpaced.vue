@@ -1,3 +1,5 @@
+<!-- THIS SPACES RECENT POSTS OUT EVENLY, INSTEAD OF RESERVING WHITESPACE IF < 3 POSTS -->
+
 <script>
 import getRecentPosts from './Data/getPreviewPosts.js';
 import PostsCard from '../Components/PostsCard.vue';
@@ -14,7 +16,7 @@ export default {
     },
     methods: {
         getPosts() {
-            getRecentPosts('Company').then((data) => {
+            getRecentPosts('NGO').then((data) => {
                 console.log(data);
                 // Update the previewPosts data property with the fetched data
                 this.previewPosts = data;
@@ -33,48 +35,51 @@ export default {
 </script>
 
 <template>
-    <div class="parent">
-        <div class="title">
-            <h2>Recent NGO Posts</h2>
+    <div class="parent-container">
+        <div class="header">
+            <h2>Recent Posts</h2>
         </div>
+
         <div class="post-container">
-            <div v-for="(post, index) in visiblePosts" :key="index" class="post-list-item">
+            <div class="post" v-for="post in visiblePosts" :key="post.id">
                 <PostsCard :post="post" />
             </div>
+        </div>
 
-            <div v-for="n in numPosts - visiblePosts.length" :key="n" class="post-list-item"></div>
-        </div>
-        <div class="view-more">
-            <button class="btn btn-success view-btn">View More</button>
-        </div>
+        <button class="btn btn-success view-more">View More</button>
     </div>
 </template>
 
 <style scoped>
-.parent {
+.parent-container {
     border: 1px solid grey;
     border-radius: 10px;
-    padding: 1em 1em 0 1em;
-    width: 95%;
+    padding: 20px;
+    width: 95%; /* Adjust the width as needed */
     margin: 0 auto;
     text-align: center;
 }
 
-.title {
+.header {
     text-align: left;
-}
-.post-container {
-    display: flex;
-    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
-.post-list-item {
-    flex: 0 0 calc(33.33% - 20px); /* Adjust for margins */
-    padding: 10px;
+.post-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    margin: 0 -10px; /* Add negative margin to offset Bootstrap column gutters */
+}
+
+.post {
+    flex: 0 0 30%; /* Each post occupies 30% of the container */
+    padding: 10px; /* Add padding to create gaps between posts */
 }
 
 .view-more {
-    text-align: center;
-    margin-top: 18px; /* Add spacing between posts and the button */
+    width: 100%;
+    margin-top: 20px;
 }
 </style>

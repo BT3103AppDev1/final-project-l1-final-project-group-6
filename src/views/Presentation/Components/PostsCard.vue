@@ -1,13 +1,12 @@
 <template>
-    <div class="card-container">
-        <img :src="post.imageUrl" class="card-img-top" alt="Post Image" />
-        <div class="card-body">
-            <h5 class="card-title">{{ post.title }}</h5>
-            <p class="card-text">{{ post.username }} | {{ post.entity }}</p>
-            <p class="card-text description">{{ post.description }}</p>
-        </div>
+    <div class="post">
+        <img :src="post.imageUrl" class="post-image" alt="Post Image" />
+
+        <h3 class="post-title">{{ post.title }}</h3>
+        <p class="post-author">{{ post.username }} | {{ post.entity }}</p>
+        <p class="post-description">{{ post.description }}</p>
         <div class="card-footer">
-            <button class="btn btn-success btn-sm">Read More</button>
+            <button class="btn btn-success read-more">Read More</button>
         </div>
     </div>
 </template>
@@ -19,36 +18,42 @@ export default {
 </script>
 
 <style scoped>
-.card-container {
-    /* display: flex; */
-    /* flex-wrap: wrap; */
-    justify-content: space-evenly;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.card-body {
+.post {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    flex: 1;
+    justify-content: space-evenly;
+    /* align-items: center;
+    text-align: center; */
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    height: 100%;
+    /* flex: 0 0 30%; */
 }
 
-img {
-    width: fit-content;
+.post-image {
+    border-radius: 10px;
+    max-width: 100%;
+    max-height: 150px; /* Set a fixed height for the image */
+}
+.post-image img {
+    width: auto;
     height: 100%;
     object-fit: cover;
 }
-
-.card-footer {
-    padding: 8px;
-    display: flex;
-    justify-content: flex-end;
+.post-title {
+    font-size: 1.25rem;
+    margin: 10px 0;
 }
 
-.description {
-    margin: 0 16px 16px;
+.post-author {
+    color: #888;
+    margin: 0;
+}
+
+.post-description {
+    flex-grow: 1; /* Expand to fill remaining vertical space */
+    margin: 10px;
 }
 </style>

@@ -84,6 +84,7 @@ onUnmounted(() => {
         <div class="py-2">
             <PostPreviewCoy />
         </div>
+        <br /><br />
         <div class="py-2">
             <PostPreviewNGO />
         </div>

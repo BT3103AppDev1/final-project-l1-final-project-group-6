@@ -3,9 +3,13 @@ import getRecentPosts from './Data/getPreviewPosts.js';
 import PostsCard from '../Components/PostsCard.vue';
 
 export default {
+    components: {
+        PostsCard
+    },
     data() {
         return {
-            previewPosts: []
+            previewPosts: [],
+            numPosts: 3
         };
     },
     methods: {
@@ -20,45 +24,57 @@ export default {
     created() {
         this.getPosts(); // Call the getPosts method when the component is created
     },
-    components: {
-        PostsCard
+    computed: {
+        visiblePosts() {
+            return this.previewPosts.slice(0, this.numPosts);
+        }
     }
 };
 </script>
 
 <template>
-    <div class="container rounded border border-secondary border-2 py-3">
-        <div class="column mx-4">
-            <div class="title">
-                <h2>Recent NGO Posts</h2>
+    <div class="parent">
+        <div class="title">
+            <h2>Recent NGO Posts</h2>
+        </div>
+        <div class="post-container">
+            <div v-for="(post, index) in visiblePosts" :key="index" class="post-list-item">
+                <PostsCard :post="post" />
             </div>
-            <div class="card-container row justify-content-between mb-3">
-                <PostsCard
-                    v-for="(post, index) in previewPosts"
-                    :post="post"
-                    :key="index"
-                ></PostsCard>
-            </div>
-            <div class="justify-content-center row">
-                <button class="btn btn-success">View More</button>
-                <!-- <button @click="getPosts">Test me</button> -->
-            </div>
+
+            <div v-for="n in numPosts - visiblePosts.length" :key="n" class="post-list-item"></div>
+        </div>
+        <div class="view-more">
+            <button class="btn btn-success view-btn">View More</button>
         </div>
     </div>
 </template>
 
 <style scoped>
-.card {
-    width: 30%;
-    height: 200px;
-    background-color: white;
-    border: 1px solid black;
+.parent {
+    border: 1px solid grey;
     border-radius: 10px;
+    padding: 1em 1em 0 1em;
+    width: 95%;
+    margin: 0 auto;
+    text-align: center;
 }
-.card-container {
+
+.title {
+    text-align: left;
+}
+.post-container {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: space-between;
+}
+
+.post-list-item {
+    flex: 0 0 calc(33.33% - 20px); /* Adjust for margins */
+    padding: 10px;
+}
+
+.view-more {
+    text-align: center;
+    margin-top: 18px; /* Add spacing between posts and the button */
 }
 </style>
