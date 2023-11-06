@@ -6,6 +6,15 @@ export default {
     components: {
         PostsCard
     },
+    props: {
+        entityType: {
+            type: String,
+            required: true,
+            validator: (value) => {
+                return ['Company', 'NGO'].includes(value);
+            }
+        }
+    },
     data() {
         return {
             previewPosts: [],
@@ -14,7 +23,7 @@ export default {
     },
     methods: {
         getPosts() {
-            getRecentPosts('Company').then((data) => {
+            getRecentPosts(this.entityType).then((data) => {
                 console.log(data);
                 // Update the previewPosts data property with the fetched data
                 this.previewPosts = data;
@@ -35,7 +44,7 @@ export default {
 <template>
     <div class="parent">
         <div class="title">
-            <h2>Recent NGO Posts</h2>
+            <h2>Recent {{ this.entityType }} Posts</h2>
         </div>
         <div class="post-container">
             <div v-for="(post, index) in visiblePosts" :key="index" class="post-list-item">

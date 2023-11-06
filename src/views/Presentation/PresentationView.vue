@@ -18,8 +18,7 @@ import data from './Sections/Data/designBlocksData';
 import BuiltByDevelopers from './Components/BuiltByDevelopers.vue';
 import PresentationTestimonials from './Sections/PresentationTestimonials.vue';
 import PresentationInformation from './Sections/PresentationInformation.vue';
-import PostPreviewCoy from './Sections/PostPreviewCoy.vue';
-import PostPreviewNGO from './Sections/PostPreviewNGO.vue';
+import RecentPostPreview from './Sections/RecentPostPreview.vue';
 
 //images
 /* import vueMkHeader from "@/assets/img/vue-mk-header.jpg"; */
@@ -82,11 +81,11 @@ onUnmounted(() => {
     <!-- Body -->
     <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
         <div class="py-2">
-            <PostPreviewCoy />
+            <RecentPostPreview entityType="Company" />
         </div>
         <br /><br />
         <div class="py-2">
-            <PostPreviewNGO />
+            <RecentPostPreview entityType="NGO" />
         </div>
         <!-- <PresentationCounter />
         <PresentationInformation />
@@ -166,7 +165,7 @@ onUnmounted(() => {
                                     difference.
                                 </p>
 
-                                <!-- TODO: Replace below with link<a> & RouterLink -->
+                                <!-- TODO: Replace below with link<a> & RouterLink to sign up page -->
                                 <a
                                     href="https://www.creative-tim.com/product/vue-material-kit"
                                     class="btn btn-sm mb-0 bg-gradient-success px-5 py-3 mt-4"
