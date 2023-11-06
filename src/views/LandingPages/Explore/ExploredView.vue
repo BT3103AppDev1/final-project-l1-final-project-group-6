@@ -10,7 +10,7 @@ export default {
     DefaultNavbar,
     Header,
     Footer,
-    Posts,
+    Posts, // This is your Posts component
     counter,
   },
   data: () => ({
@@ -20,6 +20,8 @@ export default {
     projectsTitle: 'Number of Partnerships',
   }),
 };
+
+
 </script>
 
 <template>
@@ -136,32 +138,31 @@ export default {
     </div>
   </div>
 
-  <!-- Container for NGOs -->
-  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-4 mb-4">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h2 class="header-title"
-          style="margin-top: -30px; ">NGOs</h2> <!-- Apply the class to this header -->
+  <div>
+    <!-- Container for NGOs -->
+    <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-4 mb-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="header-title" style="margin-top: -30px;">NGOs</h2>
+          </div>
         </div>
       </div>
+      <Posts category="NGO"/>
     </div>
-    <Posts category="ngos"/>
-  </div>
 
-  <!-- Container for Companies -->
-  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-4 mb-4">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h2 class="header-title">Companies</h2> <!-- Apply the class to this header -->
+    <!-- Container for Companies -->
+    <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-4 mb-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="header-title">Companies</h2>
+          </div>
         </div>
       </div>
+      <Posts category="Company"/>
     </div>
-    <Posts category="companies"/>
   </div>
-
-
 
   <!-- Code for footer -->
   <Footer />

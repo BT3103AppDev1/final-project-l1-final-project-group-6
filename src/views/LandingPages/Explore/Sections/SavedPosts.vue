@@ -11,52 +11,36 @@ import {
 } from "firebase/firestore";
 
 export default {
+  props: {
+    category: String, // Accepts 'NGO' or 'Company'
+  },
   data() {
     return {
       db: getFirestore(firebaseApp),
-      userID: 1,
-      savedPosts: [],
+      filteredPosts: [],
     };
   },
-  mounted() {
-    this.fetchSavedPosts();
+  async mounted() {
+    await this.fetchPosts();
   },
   methods: {
-    async fetchSavedPosts() {
+    async fetchPosts() {
       try {
-        const userSavedRef = doc(this.db, "saved", this.userID.toString());
-        const userSavedDoc = await getDoc(userSavedRef);
+        const postsQuery = query(
+          collection(this.db, "posts"),
+          where("entity", "==", this.category)
+        );
+        const querySnapshot = await getDocs(postsQuery);
 
-        if (userSavedDoc.exists()) {
-          const savedData = userSavedDoc.data();
-          //console.log(savedData);
-          if (savedData && savedData.postID && savedData.postID.length > 0) {
-            const postIds = savedData.postID;
-            const posts = [];
+        const posts = [];
+        querySnapshot.forEach((doc) => {
+          posts.push({ id: doc.id, ...doc.data() });
+        });
 
-            for (const postId of postIds) {
-              const postQuery = query(
-                collection(this.db, "posts"),
-                where("postID", "==", postId)
-              );
-              const postSnapshot = await getDocs(postQuery);
-              //console.log(postSnapshot.docs[0].data());
-
-              if (!postSnapshot.empty) {
-                posts.push(postSnapshot.docs[0].data());
-              }
-            }
-
-            this.savedPosts = posts;
-            console.log(this.savedPosts);
-          }
-        }
+        this.filteredPosts = posts;
       } catch (error) {
-        console.error("Error fetching saved posts:", error);
+        console.error("Error fetching posts:", error);
       }
-    },
-    redirectToPostDetails(postId) {
-      this.$router.push({ name: "postdetails", params: { id: postId } });
     },
   },
 };
@@ -64,7 +48,7 @@ export default {
 
 <template>
   <div class="card-container">
-    <div class="post-card" v-for="(post, index) in savedPosts" :key="index">
+    <div class="post-card" v-for="(post, index) in filteredPosts" :key="index">
       <img :src="post.imageUrl" alt="Post Image" class="post-image" />
       <h2 class="post-title">{{ post.title }}</h2>
       <div class="company-entity">{{ post.username }} | {{ post.entity }}</div>
