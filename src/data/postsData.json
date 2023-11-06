@@ -1,0 +1,203 @@
+[
+    {
+      "category": "Financial: Fundraising",
+      "description": "We are organizing a fundraiser to help with disaster relief efforts.",
+      "entity": "NGO",
+      "imageUrl": "https://picsum.photos/200/300?random=1",
+      "postID": 1,
+      "title": "Request for: Disaster Relief Funds",
+      "userID": 101,
+      "username": "ReliefAidNGO"
+    },
+    {
+      "category": "Non-Financial: Volunteering",
+      "description": "Looking for volunteers to help with our annual community clean-up event.",
+      "entity": "NGO",
+      "imageUrl": "https://picsum.photos/200/300?random=2",
+      "postID": 2,
+      "title": "Request for: Community Volunteers",
+      "userID": 102,
+      "username": "GreenEarth"
+    },
+    {
+      "category": "Financial: Sponsorships",
+      "description": "Seeking a sponsor for our youth sports league.",
+      "entity": "NGO",
+      "imageUrl": "https://picsum.photos/200/300?random=3",
+      "postID": 3,
+      "title": "Request for: Youth Sports Sponsorship",
+      "userID": 103,
+      "username": "ActiveYouth"
+    },
+    {
+      "category": "Non-Financial: Legal Assistance",
+      "description": "Offering free legal advice to NGOs working with vulnerable populations.",
+      "entity": "Company",
+      "imageUrl": "https://picsum.photos/200/300?random=4",
+      "postID": 4,
+      "title": "Looking to provide: Legal Aid",
+      "userID": 201,
+      "username": "JustLaw"
+    },
+    {
+      "category": "Financial: Equipment Donation",
+      "description": "We need modern medical equipment for our new clinic in rural areas.",
+      "entity": "NGO",
+      "imageUrl": "https://picsum.photos/200/300?random=5",
+      "postID": 5,
+      "title": "Request for: Medical Equipment",
+      "userID": 104,
+      "username": "HealthForAll"
+    },
+    {
+      "category": "Non-Financial: Educational Materials",
+      "description": "Donating educational materials to schools in need.",
+      "entity": "Company",
+      "imageUrl": "https://picsum.photos/200/300?random=6",
+      "postID": 6,
+      "title": "Looking to provide: Educational Supplies",
+      "userID": 202,
+      "username": "BookBuilders"
+    },
+    {
+      "category": "Financial: Microloans",
+      "description": "Providing microloans to small business owners in underdeveloped regions.",
+      "entity": "Company",
+      "imageUrl": "https://picsum.photos/200/300?random=7",
+      "postID": 7,
+      "title": "Looking to provide: Microloans",
+      "userID": 203,
+      "username": "QuickLoansInc"
+    },
+    {
+      "category": "Non-Financial: Mentoring",
+      "description": "Experienced professionals needed to mentor our team on project management.",
+      "entity": "NGO",
+      "imageUrl": "https://picsum.photos/200/300?random=8",
+      "postID": 8,
+      "title": "Request for: Professional Mentoring",
+      "userID": 105,
+      "username": "ProjectNGO"
+    },
+    {
+      "category": "Financial: Grants",
+      "description": "Applying for grants to fund our clean water initiative for communities.",
+      "entity": "NGO",
+      "imageUrl": "https://picsum.photos/200/300?random=9",
+      "postID": 9,
+      "title": "Request for: Water Project Grants",
+      "userID": 106,
+      "username": "AquaLife"
+    },
+    {
+      "category": "Non-Financial: IT Support",
+      "description": "Offering IT support services to NGOs to help set up their computer networks.",
+      "entity": "Company",
+      "imageUrl": "https://picsum.photos/200/300?random=10",
+      "postID": 10,
+      "title": "Looking to provide: IT Network Setup",
+      "userID": 999, 
+      "username": "Jane Street"
+    },
+        {
+          "category": "Financial: Grants",
+          "description": "Seeking grant support for art programs in underfunded schools.",
+          "entity": "NGO",
+          "imageUrl": "https://picsum.photos/200/300?random=11",
+          "postID": 11,
+          "title": "Request for: Art Program Funding",
+          "userID": 107,
+          "username": "CreativeMinds"
+        },
+        {
+          "category": "Non-Financial: Marketing",
+          "description": "Offering marketing services to promote NGO events and campaigns.",
+          "entity": "Company",
+          "imageUrl": "https://picsum.photos/200/300?random=12",
+          "postID": 12,
+          "title": "Looking to provide: Marketing Expertise",
+          "userID": 204,
+          "username": "MarketPros"
+        },
+        {
+          "category": "Financial: Donations",
+          "description": "Requesting donations for our shelter home expansion to accommodate more residents.",
+          "entity": "NGO",
+          "imageUrl": "https://picsum.photos/200/300?random=13",
+          "postID": 13,
+          "title": "Request for: Shelter Expansion Funds",
+          "userID": 108,
+          "username": "SafeHaven"
+        },
+        {
+          "category": "Non-Financial: Technical Training",
+          "description": "Providing free technical training sessions for workforce development in tech.",
+          "entity": "Company",
+          "imageUrl": "https://picsum.photos/200/300?random=14",
+          "postID": 14,
+          "title": "Looking to provide: Tech Training",
+          "userID": 205,
+          "username": "TechTrainersLtd"
+        },
+        {
+          "category": "Financial: Fundraising",
+          "description": "Organizing a fundraiser to build new libraries in rural areas.",
+          "entity": "NGO",
+          "imageUrl": "https://picsum.photos/200/300?random=15",
+          "postID": 15,
+          "title": "Request for: Library Building Funds",
+          "userID": 109,
+          "username": "ReadersUnite"
+        },
+        {
+          "category": "Non-Financial: Construction Services",
+          "description": "Offering construction services for community-driven infrastructure projects.",
+          "entity": "Company",
+          "imageUrl": "https://picsum.photos/200/300?random=16",
+          "postID": 16,
+          "title": "Looking to provide: Construction Aid",
+          "userID": 206,
+          "username": "BuildRightInc"
+        },
+        {
+          "category": "Financial: Financial Advisory",
+          "description": "In need of financial advisory to manage our non-profit's growing funds.",
+          "entity": "NGO",
+          "imageUrl": "https://picsum.photos/200/300?random=17",
+          "postID": 17,
+          "title": "Request for: Financial Advisory Services",
+          "userID": 110,
+          "username": "MoneyWise"
+        },
+        {
+          "category": "Non-Financial: Educational Support",
+          "description": "Providing scholarships and educational support for talented but underprivileged students.",
+          "entity": "Company",
+          "imageUrl": "https://picsum.photos/200/300?random=18",
+          "postID": 18,
+          "title": "Looking to provide: Scholarships",
+          "userID": 207,
+          "username": "BrightFutureScholarships"
+        },
+        {
+          "category": "Financial: Sponsorships",
+          "description": "Looking for sponsorships to host a series of environmental workshops.",
+          "entity": "NGO",
+          "imageUrl": "https://picsum.photos/200/300?random=19",
+          "postID": 19,
+          "title": "Request for: Workshop Sponsorships",
+          "userID": 111,
+          "username": "EcoWarriors"
+        },
+        {
+          "category": "Non-Financial: IT Equipment",
+          "description": "Donating gently used IT equipment to educational institutions in need.",
+          "entity": "Company",
+          "imageUrl": "https://picsum.photos/200/300?random=20",
+          "postID": 20,
+          "title": "Looking to provide: IT Equipment",
+          "userID": 208,
+          "username": "Tech4Good"
+        }
+    ]
+      
