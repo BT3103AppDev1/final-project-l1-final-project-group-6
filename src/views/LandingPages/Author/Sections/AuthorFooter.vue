@@ -54,8 +54,7 @@
         </div>
         <div class="col-lg-6 ms-auto text-lg-end text-center">
           <p class="mb-5 text-lg text-dark font-weight-bold">
-            The reward for getting on the stage is fame. The price of fame is
-            you can’t get off the stage.
+            We love Shashank 
           </p>
           <a
             href="javascript:;"
