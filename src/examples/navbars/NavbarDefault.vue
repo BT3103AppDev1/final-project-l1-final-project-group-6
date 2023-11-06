@@ -8,6 +8,24 @@ import ArrDark from "@/assets/img/down-arrow-dark.svg";
 import downArrow from "@/assets/img/down-arrow.svg";
 import DownArrWhite from "@/assets/img/down-arrow-white.svg";
 
+import { getAuth, signOut } from "firebase/auth";
+import firebaseApp from "../../firebase";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const auth = getAuth(firebaseApp);
+
+const handleSignOut = async () => {
+  try {
+    await signOut(auth);
+    console.log("User signed out successfully");
+    // You can optionally redirect the user to a different page or perform any other actions after sign-out.
+    router.push({ name: "signin-basic" });
+  } catch (error) {
+    console.error("Error signing out:", error);
+  }
+};
+
 const props = defineProps({
   action: {
     type: Object,
@@ -229,12 +247,10 @@ watch(
                       >
                         Account
                       </div>
-                      <RouterLink
-                        :to="{ name: 'signin-basic' }"
-                        class="dropdown-item border-radius-md"
-                      >
-                        <span>Sign In</span>
-                      </RouterLink>
+
+                      <button @click="handleSignOut" class="btn btn-danger">
+                        Sign Out
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -268,29 +284,25 @@ watch(
                 >
                   Account
                 </div>
-                <RouterLink
-                  :to="{ name: 'signin-basic' }"
-                  class="dropdown-item border-radius-md"
-                >
-                  <span>Sign In</span>
-                </RouterLink>
+
+                <button @click="handleSignOut" class="btn btn-danger">
+                  Sign Out
+                </button>
               </div>
             </div>
           </li>
 
-
           <li class="nav-item mx-2">
-  <RouterLink
-    to="/pages/landing-pages/explore"
-    class="nav-link ps-2 d-flex cursor-pointer align-items-center"
-    :class="getTextColor()"
-  >
-    <i class="material-icons opacity-6 me-2 text-md">public</i> <!-- Added me-2 for margin -->
-    Explore
-  </RouterLink>
-</li>
-
-
+            <RouterLink
+              to="/pages/landing-pages/explore"
+              class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+              :class="getTextColor()"
+            >
+              <i class="material-icons opacity-6 me-2 text-md">public</i>
+              <!-- Added me-2 for margin -->
+              Explore
+            </RouterLink>
+          </li>
 
           <li class="nav-item dropdown dropdown-hover mx-2">
             <a

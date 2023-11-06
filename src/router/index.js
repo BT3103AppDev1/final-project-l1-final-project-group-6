@@ -7,6 +7,7 @@ import SavedView from "../views/LandingPages/Saved/SavedView.vue";
 import ExploredView from "../views/LandingPages/Explore/ExploredView.vue";
 import PostDetails from "../views/LandingPages/Saved/PostDetails.vue";
 import SignInBasicView from "../views/LandingPages/SignIn/BasicView.vue";
+import SignUpView from "../views/LandingPages/SignIn/SignUpView.vue";
 import PageHeaders from "../layouts/sections/page-sections/page-headers/HeadersView.vue";
 import PageFeatures from "../layouts/sections/page-sections/features/FeaturesView.vue";
 import NavigationNavbars from "../layouts/sections/navigation/navbars/NavbarsView.vue";
@@ -69,6 +70,11 @@ const router = createRouter({
       path: "/pages/landing-pages/basic",
       name: "signin-basic",
       component: SignInBasicView,
+    },
+    {
+      path: "/pages/landing-pages/signup",
+      name: "signup",
+      component: SignUpView,
     },
     {
       path: "/sections/page-sections/page-headers",

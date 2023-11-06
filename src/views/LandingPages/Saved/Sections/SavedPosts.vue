@@ -9,6 +9,11 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth(firebaseApp);
+
+console.log("user", auth.currentUser);
 
 export default {
   data() {
