@@ -49,7 +49,7 @@ export default {
                   type="email"
                   id="email"
                   v-model="email"
-                  class="form-control"
+                  class="form-control input-box"
                   required
                 />
               </div>
@@ -59,7 +59,7 @@ export default {
                   type="password"
                   id="password"
                   v-model="password"
-                  class="form-control"
+                  class="form-control input-box"
                   required
                 />
               </div>
@@ -72,3 +72,12 @@ export default {
   </div>
 </template>
   
+<style scoped>
+/* Define the styling for the input boxes */
+.input-box {
+  border: 2px solid #ccc; /* Add a 2px solid border */
+  border-radius: 5px; /* Add some border radius for rounded corners */
+  padding: 8px; /* Add padding to the input fields */
+  width: 100%; /* Make the input fields full width */
+}
+</style>
