@@ -110,7 +110,7 @@ export default {
 }
 
 .post-title {
-  font-size: 20px;
+  font-size: 30px;
   font-weight: bold;
   margin: 16px; /* You can adjust margins as needed */
 }
