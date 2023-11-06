@@ -1,0 +1,182 @@
+[
+  {
+    "description": "We love green stuff!",
+    "entity": "NGO",
+    "imageUrl": "https://picsum.photos/200/300?random=1",
+    "followers": 100,
+    "following": 1000,
+    "userID": 101,
+    "username": "ReliefAidNGO"
+  },
+  {
+    "description": "Looking for volunteers to help with our annual community clean-up event.",
+    "entity": "NGO",
+    "imageUrl": "https://picsum.photos/200/300?random=2",
+    "followers": 0,
+    "following": 0,
+    "userID": 102,
+    "username": "GreenEarth"
+  },
+  {
+    "description": "Seeking a sponsor for our youth sports league.",
+    "entity": "NGO",
+    "imageUrl": "https://picsum.photos/200/300?random=3",
+    "followers": 0,
+    "following": 0,
+    "userID": 103,
+    "username": "ActiveYouth"
+  },
+  {
+    "description": "Offering free legal advice to NGOs working with vulnerable populations.",
+    "entity": "Company",
+    "imageUrl": "https://picsum.photos/200/300?random=4",
+    "followers": 0,
+    "following": 0,
+    "userID": 201,
+    "username": "JustLaw"
+  },
+  {
+    "description": "We need modern medical equipment for our new clinic in rural areas.",
+    "entity": "NGO",
+    "imageUrl": "https://picsum.photos/200/300?random=5",
+    "followers": 0,
+    "following": 0,
+    "userID": 104,
+    "username": "HealthForAll"
+  },
+  {
+    "description": "Donating educational materials to schools in need.",
+    "entity": "Company",
+    "imageUrl": "https://picsum.photos/200/300?random=6",
+    "followers": 0,
+    "following": 0,
+    "userID": 202,
+    "username": "BookBuilders"
+  },
+  {
+    "description": "Providing microloans to small business owners in underdeveloped regions.",
+    "entity": "Company",
+    "imageUrl": "https://picsum.photos/200/300?random=7",
+    "followers": 0,
+    "following": 0,
+    "userID": 203,
+    "username": "QuickLoansInc"
+  },
+  {
+    "description": "Experienced professionals needed to mentor our team on project management.",
+    "entity": "NGO",
+    "imageUrl": "https://picsum.photos/200/300?random=8",
+    "followers": 0,
+    "following": 0,
+    "userID": 105,
+    "username": "ProjectNGO"
+  },
+  {
+    "description": "Applying for grants to fund our clean water initiative for communities.",
+    "entity": "NGO",
+    "imageUrl": "https://picsum.photos/200/300?random=9",
+    "followers": 0,
+    "following": 0,
+    "userID": 106,
+    "username": "AquaLife"
+  },
+  {
+    "description": "Offering IT support services to NGOs to help set up their computer networks.",
+    "entity": "Company",
+    "imageUrl": "https://picsum.photos/200/300?random=10",
+    "followers": 0,
+    "following": 0,
+    "userID": 999,
+    "username": "Jane Street"
+  },
+  {
+    "description": "Seeking grant support for art programs in underfunded schools.",
+    "entity": "NGO",
+    "imageUrl": "https://picsum.photos/200/300?random=11",
+    "followers": 0,
+    "following": 0,
+    "userID": 107,
+    "username": "CreativeMinds"
+  },
+  {
+    "description": "Offering marketing services to promote NGO events and campaigns.",
+    "entity": "Company",
+    "imageUrl": "https://picsum.photos/200/300?random=12",
+    "followers": 0,
+    "following": 0,
+    "userID": 204,
+    "username": "MarketPros"
+  },
+  {
+    "description": "Requesting donations for our shelter home expansion to accommodate more residents.",
+    "entity": "NGO",
+    "imageUrl": "https://picsum.photos/200/300?random=13",
+    "followers": 0,
+    "following": 0,
+    "userID": 108,
+    "username": "SafeHaven"
+  },
+  {
+    "description": "Providing free technical training sessions for workforce development in tech.",
+    "entity": "Company",
+    "imageUrl": "https://picsum.photos/200/300?random=14",
+    "followers": 0,
+    "following": 0,
+    "userID": 205,
+    "username": "TechTrainersLtd"
+  },
+  {
+    "description": "Organizing a fundraiser to build new libraries in rural areas.",
+    "entity": "NGO",
+    "imageUrl": "https://picsum.photos/200/300?random=15",
+    "followers": 0,
+    "following": 0,
+    "userID": 109,
+    "username": "ReadersUnite"
+  },
+  {
+    "description": "Offering construction services for community-driven infrastructure projects.",
+    "entity": "Company",
+    "imageUrl": "https://picsum.photos/200/300?random=16",
+    "followers": 0,
+    "following": 0,
+    "userID": 206,
+    "username": "BuildRightInc"
+  },
+  {
+    "description": "In need of financial advisory to manage our non-profit's growing funds.",
+    "entity": "NGO",
+    "imageUrl": "https://picsum.photos/200/300?random=17",
+    "followers": 0,
+    "following": 0,
+    "userID": 110,
+    "username": "MoneyWise"
+  },
+  {
+    "description": "Providing scholarships and educational support for talented but underprivileged students.",
+    "entity": "Company",
+    "imageUrl": "https://picsum.photos/200/300?random=18",
+    "followers": 0,
+    "following": 0,
+    "userID": 207,
+    "username": "BrightFutureScholarships"
+  },
+  {
+    "description": "Looking for sponsorships to host a series of environmental workshops.",
+    "entity": "NGO",
+    "imageUrl": "https://picsum.photos/200/300?random=19",
+    "followers": 0,
+    "following": 0,
+    "userID": 111,
+    "username": "EcoWarriors"
+  },
+  {
+    "description": "Donating gently used IT equipment to educational institutions in need.",
+    "entity": "Company",
+    "imageUrl": "https://picsum.photos/200/300?random=20",
+    "followers": 0,
+    "following": 0,
+    "userID": 208,
+    "username": "Tech4Good"
+  }
+]
