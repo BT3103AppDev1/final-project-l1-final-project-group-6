@@ -49,6 +49,7 @@ onUnmounted(() => {
 });
 
 const showDropdown = ref(false);
+const checkedNames = ref([])
 
 const db = getFirestore(firebase);
 const firstName = ref("");
@@ -374,6 +375,34 @@ const selectedOption = ref("SDG");
                     </ul>
                   </div>
                 </div>
+
+                <div>Financial Requested: {{ checkedNames }}</div>
+
+                <input
+                  type="checkbox"
+                  id="jack"
+                  class="input-group-static mb-4"
+                  value="Grant"
+                  v-model="checkedNames"
+                />
+                <label for="jack">Grant</label>
+
+                <input
+                  type="checkbox"
+                  id="john"
+                  value="John"
+                  v-model="checkedNames"
+                />
+                <label for="john">John</label>
+
+                <input
+                  type="checkbox"
+                  id="mike"
+                  value="Mike"
+                  v-model="checkedNames"
+                />
+                <label for="mike">Mike</label>
+
                 <MaterialTextArea
                   class="input-group-static mb-4"
                   id="message"
