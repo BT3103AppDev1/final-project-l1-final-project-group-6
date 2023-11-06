@@ -17,7 +17,7 @@ const props = defineProps({
     default: () => ({
       route: "https://www.creative-tim.com/product/vue-material-kit",
       color: "bg-gradient-success",
-      label: "Free Download",
+      label: "Profile",
     }),
   },
   transparent: {
@@ -134,7 +134,7 @@ watch(
         title="Designed and Coded by Creative Tim"
         data-placement="bottom"
       >
-        Material Design
+        VueJS
       </RouterLink>
       <a
         href="https://www.creative-tim.com/product/vue-material-kit-pro"
@@ -219,10 +219,10 @@ watch(
                         <span>Saved Posts</span>
                       </RouterLink>
                       <RouterLink
-                        :to="{ name: 'post' }"
+                        :to="{ name: 'explore' }"
                         class="dropdown-item border-radius-md"
                       >
-                        <span>Post Now</span>
+                        <span>Explore</span>
                       </RouterLink>
                       <div
                         class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-0 mt-3"
@@ -263,12 +263,6 @@ watch(
                 >
                   <span>Saved Posts</span>
                 </RouterLink>
-                <RouterLink
-                  :to="{ name: 'post' }"
-                  class="dropdown-item border-radius-md"
-                >
-                  <span>Post Now</span>
-                </RouterLink>
                 <div
                   class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-0 mt-3"
                 >
@@ -283,6 +277,21 @@ watch(
               </div>
             </div>
           </li>
+
+
+          <li class="nav-item mx-2">
+  <RouterLink
+    to="/pages/landing-pages/explore"
+    class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+    :class="getTextColor()"
+  >
+    <i class="material-icons opacity-6 me-2 text-md">public</i> <!-- Added me-2 for margin -->
+    Explore
+  </RouterLink>
+</li>
+
+
+
           <li class="nav-item dropdown dropdown-hover mx-2">
             <a
               role="button"
