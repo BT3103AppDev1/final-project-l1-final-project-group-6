@@ -10,7 +10,7 @@ export default {
     DefaultNavbar,
     Header,
     Footer,
-    Posts,
+    Posts, // This is your Posts component
     counter,
   },
   data: () => ({
@@ -20,40 +20,44 @@ export default {
     projectsTitle: 'Number of Partnerships',
   }),
 };
+
+
 </script>
 
 <template>
   <DefaultNavbar transparent />
 
   <Header>
-    <div
-      class="page-header"
-      :style="{ 
-  backgroundImage: `url(https://assets.telecomtv.com/assets/telecomtv/globe-connection-connected-map-16589.jpeg?w=1280)`,
-  fontFamily: `'Geologica', sans-serif`,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  textAlign: 'center',
-  height: '45vh'  /* Adjusted height */
-}"
-      loading="lazy"
-    >
-      <span class="mask bg-gradient-dark opacity-5"></span>
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8 text-center mx-auto my-auto">
-            <h1 class="text-white" style="font-weight: bold">
-              Explore<span class="text-white" id="typed"></span>
-            </h1>
-            <p class="text-white" style="font-weight: bold">
-              The world just around the corner
-            </p>
-          </div>
+  <div
+    class="page-header"
+    :style="{
+      backgroundImage: 'url(https://assets.telecomtv.com/assets/telecomtv/globe-connection-connected-map-16589.jpeg?w=1280)',
+      fontFamily: '\'Gill Sans\', Arial, sans-serif',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+      height: '40vh', /* You can adjust this if needed */
+      paddingTop: '25px' /* Adjust this value to lower the text */
+    }"
+    loading="lazy"
+  >
+    <span class="mask bg-gradient-dark opacity-5"></span>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center mx-auto my-auto" style="padding-top: 25px;">
+          <h1 class="text-white" style="font-weight: bold; font-size: 4em; font-family: 'Gill Sans', Arial, sans-serif;">
+            Explore<span class="text-white" id="typed"></span>
+          </h1>
+          <p class="text-white" style="font-family: 'Gill Sans', Arial, sans-serif; margin-top: -10px;">
+            The world within reach
+          </p>
         </div>
       </div>
     </div>
-  </Header>
+  </div>
+</Header>
+
 
   <!-- Metrics Banner -->
   <div class="container my-6">
@@ -63,14 +67,16 @@ export default {
         <counter
           ref="counter"
           :startAmount="0"
-          :endAmount="8"
+          :endAmount="2000"
+          suffix="+"
           :duration="5"
           :autoinit="true"
           @finished="alert(`Counting finished!`)"
           class="font-general-medium text-4xl font-bold text-secondary-dark dark:text-secondary-light mb-2"
           aria-label="About Status Counter"
+          style="margin-top: -40px;"
         />
-        <span class="text-md text-ternary-dark dark:text-ternary-light">
+        <span class="text-md text-ternary-dark dark:text-ternary-light" style="margin-top: -10px;">
           {{ experienceTitle }}
         </span>
       </div>
@@ -80,15 +86,16 @@ export default {
         <counter
           ref="counter"
           :startAmount="0"
-          :endAmount="2.2"
+          :endAmount="1500"
+          suffix="+"
           :duration="5"
-          suffix="m+"
           :autoinit="true"
           @finished="alert(`Counting finished!`)"
           class="font-general-medium text-4xl font-bold text-secondary-dark dark:text-secondary-light mb-2"
+          style="margin-top: -40px;"
         />
         <span
-          class="block text-md text-ternary-dark dark:text-ternary-light"
+          class="block text-md text-ternary-dark dark:text-ternary-light" style="margin-top: -10px;"
           >{{ githubTitle }}</span
         >
       </div>
@@ -98,14 +105,15 @@ export default {
         <counter
           ref="counter"
           :startAmount="0"
-          :endAmount="6"
+          :endAmount="5"
+          suffix="+"
           :duration="5"
-          suffix="%"
           :autoinit="true"
           @finished="alert(`Counting finished!`)"
           class="font-general-medium text-4xl font-bold text-secondary-dark dark:text-secondary-light mb-2"
+          style="margin-top: -40px;"
         />
-        <span class="block text-md text-ternary-dark dark:text-ternary-light">
+        <span class="block text-md text-ternary-dark dark:text-ternary-light" style="margin-top: -10px;">
           {{ feedbackTitle }}
         </span>
       </div>
@@ -121,18 +129,42 @@ export default {
           :autoinit="true"
           @finished="alert(`Counting finished!`)"
           class="font-general-medium text-4xl font-bold text-secondary-dark dark:text-secondary-light mb-2"
+          style="margin-top: -40px;"
         />
-        <span class="block text-md text-ternary-dark dark:text-ternary-light">
+        <span class="block text-md text-ternary-dark dark:text-ternary-light" style="margin-top: -10px;">
           {{ projectsTitle }}
         </span>
       </div>
     </div>
   </div>
 
-  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
-    <Posts />
+  <div>
+    <!-- Container for NGOs -->
+    <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-4 mb-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="header-title" style="margin-top: -30px;">NGOs</h2>
+          </div>
+        </div>
+      </div>
+      <Posts category="NGO"/>
+    </div>
+
+    <!-- Container for Companies -->
+    <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-4 mb-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="header-title">Companies</h2>
+          </div>
+        </div>
+      </div>
+      <Posts category="Company"/>
+    </div>
   </div>
 
+  <!-- Code for footer -->
   <Footer />
 </template>
 
