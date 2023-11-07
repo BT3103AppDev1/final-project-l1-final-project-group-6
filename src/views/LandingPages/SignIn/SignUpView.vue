@@ -1,14 +1,18 @@
 <script>
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import firebaseApp from "../../../firebase.js"; // Keep this as is
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 const auth = getAuth(firebaseApp);
+const db = getFirestore(firebaseApp);
 
 export default {
   data() {
     return {
       email: "",
       password: "",
+      entity: "",
+      username: "", // Initialize the company name field
     };
   },
   methods: {
@@ -21,6 +25,21 @@ export default {
         );
         const user = userCredential.user;
         console.log("User registered successfully:", user.email);
+
+        // Create a Firestore document under the "users" collection with the user's UID
+        const userDocRef = doc(db, "users", user.uid);
+        const userData = {
+          email: user.email,
+          entity: this.entity,
+          username: this.username,
+          following: 0,
+          followers: 0,
+          userID: user.uid,
+          description: "",
+        };
+
+        await setDoc(userDocRef, userData);
+
         // Redirect or perform other actions upon successful registration
         this.$router.push({ name: "signin-basic" }); // Redirect to the sign-in page
       } catch (error) {
@@ -63,6 +82,30 @@ export default {
                   required
                 />
               </div>
+              <div class="mb-3">
+                <label for="type" class="form-label"
+                  >Are you an NGO or a Company?</label
+                >
+                <select
+                  id="type"
+                  v-model="type"
+                  class="form-control input-box"
+                  required
+                >
+                  <option value="ngo">NGO</option>
+                  <option value="company">Company</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="username" class="form-label">Company Name</label>
+                <input
+                  type="text"
+                  id="username"
+                  v-model="username"
+                  class="form-control input-box"
+                  required
+                />
+              </div>
               <button type="submit" class="btn btn-primary">Sign Up</button>
             </form>
           </div>
@@ -71,6 +114,7 @@ export default {
     </div>
   </div>
 </template>
+
   
 <style scoped>
 /* Define the styling for the input boxes */
