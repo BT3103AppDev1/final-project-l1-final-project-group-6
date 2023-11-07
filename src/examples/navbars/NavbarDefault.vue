@@ -241,16 +241,7 @@ watch(
                       >
                         <span>Saved Posts</span>
                       </RouterLink>
-                      
-                      <div
-                        class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-0 mt-3"
-                      >
-                        Account
-                      </div>
-
-                      <button @click="handleSignOut" class="btn btn-danger">
-                        Sign Out
-                      </button>
+                  
                     </div>
                   </div>
                 </div>
@@ -328,17 +319,17 @@ watch(
             </a>
           </li>
         </ul>
-        <ul class="navbar-nav d-lg-block d-none">
-          <li class="nav-item">
-            <a
-              :href="action.route"
-              class="btn btn-sm mb-0"
-              :class="action.color"
-              onclick="smoothToPricing('pricing-soft-ui')"
-              >{{ action.label }}</a
-            >
-          </li>
-        </ul>
+
+        <!-- SIGN OUT BUTTONS -->
+        <li class="nav-item dropdown">
+    <a class="nav-link d-flex align-items-center" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <img src="https://www.comp.nus.edu.sg/stfphotos/shashank.jpg" class="rounded-circle" style="width: 40px; height: 40px;" alt="Profile">
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+      <li><RouterLink to="/profile" class="dropdown-item">View Profile</RouterLink></li>
+      <li><button @click="handleSignOut" class="dropdown-item">Sign Out</button></li>
+    </ul>
+  </li>
       </div>
     </div>
   </nav>
@@ -346,10 +337,38 @@ watch(
 </template>
 
 <style scoped>
+.navbar-profile-pic {
+  width: 40px; 
+  height: 40px; 
+  object-fit: cover;
+  margin-left: 12px; /* Adjust as needed for spacing */
+}
+
+/* Adjust the line-height if necessary to vertically center the profile pic */
+.navbar-nav .nav-item {
+  align-items: center; /* Align items vertically */
+}
+
+/* Adjust dropdown menu positioning if necessary */
+.dropdown-menu {
+  top: 100%; /* Ensure it drops down right below the profile pic */
+}
 .navbar-brand {
   display: flex;
   align-items: center;
 }
+
+.nav-item {
+  list-style: none; /* This removes the bullet point from the list item */
+}
+
+/* Custom CSS to align buttons */
+.nav-item .btn {
+  vertical-align: middle; /* Aligns the text vertically in the buttons */
+  line-height: normal; /* Resets line-height to avoid discrepancies */
+  /* If needed, use padding to adjust the vertical position of the buttons */
+}
+
 
 .icon-spacing {
   margin-right: 10px;
