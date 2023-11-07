@@ -28,28 +28,20 @@ export default {
   <DefaultNavbar transparent />
 
   <Header>
-  <div
-    class="page-header"
-    :style="{
-      backgroundImage: 'url(https://assets.telecomtv.com/assets/telecomtv/globe-connection-connected-map-16589.jpeg?w=1280)',
-      fontFamily: '\'Gill Sans\', Arial, sans-serif',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      textAlign: 'center',
-      height: '40vh', /* You can adjust this if needed */
-      paddingTop: '25px' /* Adjust this value to lower the text */
-    }"
-    loading="lazy"
-  >
-    <span class="mask bg-gradient-dark opacity-5"></span>
+  <div class="page-header" :style="headerStyle">
+    <video autoplay loop muted playsinline class="globe-video">
+      <source src="../../../data/video1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <span class="mask bg-gradient-dark opacity-2"></span>
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-lg-8 text-center mx-auto my-auto" style="padding-top: 25px;">
-          <h1 class="text-white" style="font-weight: bold; font-size: 4em; font-family: 'Gill Sans', Arial, sans-serif;">
-            Explore<span class="text-white" id="typed"></span>
+        <div class="col-lg-8 text-center mx-auto my-auto">
+          <h1 class="text-white header-title">
+            Explore<span id="typed"></span>
           </h1>
-          <p class="text-white" style="font-family: 'Gill Sans', Arial, sans-serif; margin-top: -10px;">
+          <p class="text-white header-subtitle">
             The world within reach
           </p>
         </div>
@@ -194,5 +186,50 @@ export default {
 
 .card.card-body {
   margin-top: 2rem; /* Add margin at the top to create space between this container and the one above */
+}
+
+/* Header */
+.page-header {
+  position: relative;
+  width: 100%; /* Make sure the header is full width */
+  height: 50vh; /* Adjust the height as needed */
+  overflow: hidden; /* This will contain the video within the header */
+}
+
+.globe-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This will cover the full area, potentially cropping the video */
+  object-position: center 35%;; /* Center the video in the container */
+  position: absolute;
+  top: 50;
+  z-index: -1;/* Keep the video behind other content */
+}
+
+
+.mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  z-index: 0; /* Above the video but below the text */
+}
+
+.header-title, .header-subtitle {
+  z-index: 1; /* Ensures text is above the overlay and video */
+  position: relative;
+  color: rgb(10, 0, 0);
+}
+
+.header-title {
+  font-weight: bold;
+  font-size: 4em;
+}
+
+.header-subtitle {
+  font-size: 1.2em;
+  margin-top: -10px;
 }
 </style>

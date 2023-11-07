@@ -1,4 +1,4 @@
-BT3103 Project
+BT3103 Project: Link4Impact
 
 1. create new directory 
 2. cd into new directory
