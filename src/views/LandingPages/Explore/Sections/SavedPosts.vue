@@ -12,18 +12,54 @@ import {
 
 export default {
   props: {
-    category: String, // Accepts 'NGO' or 'Company'
+    category: String, // Optional, accepts 'NGO' or 'Company'
   },
   data() {
     return {
       db: getFirestore(firebaseApp),
+      userID: 1, // Assuming a fixed user ID for simplicity
+      savedPosts: [],
       filteredPosts: [],
     };
   },
   async mounted() {
-    await this.fetchPosts();
+    await this.fetchSavedPosts();
+    if (this.category) {
+      await this.fetchPosts();
+    }
   },
   methods: {
+    async fetchSavedPosts() {
+      try {
+        const userSavedRef = doc(this.db, "saved", this.userID.toString());
+        const userSavedDoc = await getDoc(userSavedRef);
+
+        if (userSavedDoc.exists()) {
+          const savedData = userSavedDoc.data();
+          if (savedData && savedData.postID && savedData.postID.length > 0) {
+            const postIds = savedData.postID;
+            const posts = [];
+
+            for (const postId of postIds) {
+              const postQuery = query(
+                collection(this.db, "posts"),
+                where("postID", "==", postId)
+              );
+              const postSnapshot = await getDocs(postQuery);
+
+              if (!postSnapshot.empty) {
+                posts.push(postSnapshot.docs[0].data());
+              }
+            }
+
+            this.savedPosts = posts;
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching saved posts:", error);
+      }
+    },
+
     async fetchPosts() {
       try {
         const postsQuery = query(
@@ -42,8 +78,13 @@ export default {
         console.error("Error fetching posts:", error);
       }
     },
+
+    redirectToPostDetails(postId) {
+      this.$router.push({ name: "postdetails", params: { id: postId } });
+    },
   },
 };
+
 </script>
 
 <template>
