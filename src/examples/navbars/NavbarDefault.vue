@@ -7,6 +7,11 @@ import { useWindowsWidth } from "../../assets/js/useWindowsWidth";
 import ArrDark from "@/assets/img/down-arrow-dark.svg";
 import downArrow from "@/assets/img/down-arrow.svg";
 import DownArrWhite from "@/assets/img/down-arrow-white.svg";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faSeedling } from '@fortawesome/free-solid-svg-icons'; // Use the correct icon name
+
+library.add(faSeedling); // Add the icon to the library
 
 import { getAuth, signOut } from "firebase/auth";
 import firebaseApp from "../../firebase";
@@ -126,22 +131,22 @@ watch(
           : 'container-fluid px-0'
       "
     >
+  <div :class="containerClass">
+    <RouterLink
+      :to="{ name: 'presentation' }"
+      class="navbar-brand"
+      :class="navbarBrandClass"
+      rel="tooltip"
+      title="Designed and Coded by Lucas"
+      data-placement="bottom"
+    >
+      <font-awesome-icon icon="fa-solid fa-seedling" bounce style="color: #04b949; margin-right: 10px;" />
+      <span class="link-text">Link4Impact</span>
+    </RouterLink>
+  </div>
+
       <RouterLink
-        class="navbar-brand d-none d-md-block"
-        :class="[
-          (props.transparent && textDark.value) || !props.transparent
-            ? 'text-dark font-weight-bolder ms-sm-3'
-            : 'text-white font-weight-bolder ms-sm-3',
-        ]"
-        :to="{ name: 'presentation' }"
-        rel="tooltip"
-        title="Designed and Coded by Creative Tim"
-        data-placement="bottom"
-      >
-        Link4Impact
-      </RouterLink>
-      <RouterLink
-        class="navbar-brand d-block d-md-none"
+        class="navbar-brand d-block d-md-none" 
         :class="
           props.transparent || props.dark
             ? 'text-white'
@@ -353,7 +358,7 @@ watch(
                   >
                     <a
                       class="dropdown-item py-2 ps-3 border-radius-md"
-                      href="javascript:;"
+                      href="java`sc`ript:;"
                     >
                       <div class="d-flex">
                         <div
@@ -971,3 +976,35 @@ watch(
   </nav>
   <!-- End Navbar -->
 </template>
+
+<style scoped>
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.icon-spacing {
+  margin-right: 10px;
+}
+
+.link-text:hover {
+  color: brightpink; /* This will change the hover color of the text only */
+}
+
+.link-text {
+  font-weight: bold;
+  font-size: 1.25rem; /* This increases the font size */
+  font-family: 'Roboto', sans-serif; /* This sets a modern, sans-serif font */
+  color: white; /* This sets the text color to white */
+}
+
+/* You may need to add the following @font-face if you don't have Roboto loaded in your project */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.googleapis.com/css?family=Roboto) format('woff2');
+}
+
+
+</style>
