@@ -31,6 +31,9 @@ import ElToggles from "../layouts/sections/elements/toggles/TogglesView.vue";
 import ElTypography from "../layouts/sections/elements/typography/TypographyView.vue";
 import firebase from "../firebase.js";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+=========
+import auth from "../firebase.js";
+>>>>>>>>> Temporary merge branch 2
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -68,7 +71,11 @@ const router = createRouter({
       component: PostView,
       meta: {
         requiresAuth: true,
+<<<<<<<<< Temporary merge branch 1
       },
+=========
+      },  
+>>>>>>>>> Temporary merge branch 2
     },
     {
       path: "/pages/landing-pages/explore",
