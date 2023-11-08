@@ -167,7 +167,7 @@ onUnmounted(() => {
                     <div class="row">
                         <div class="d-flex justify-content-center p-5">
                             <div class="col-lg-8 ms-lg-5 text-center">
-                                <h3 class="text-white">Want to make a difference today?</h3>
+                                <h3 class="text-white">Ready to create an impact together?</h3>
                                 <p class="text-white text-md">
                                     Cause if you do, join us! Whether you represent a nonprofit or a
                                     company looking to help, we are here to help you make a
@@ -176,10 +176,10 @@ onUnmounted(() => {
 
                                 <!-- TODO: Replace below with link<a> & RouterLink to sign up page -->
                                 <a
-                                    href="https://www.creative-tim.com/product/vue-material-kit"
+                                    href="pages/landing-pages/post/"
                                     class="btn btn-sm mb-0 bg-gradient-success px-5 py-3 mt-4"
                                 >
-                                    Join Us
+                                    Create A Post Now
                                 </a>
                             </div>
                         </div>

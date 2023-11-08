@@ -14,7 +14,6 @@ import Header from "../../../examples/Header.vue";
 import FilledInfoCard from "../../../examples/cards/infoCards/FilledInfoCard.vue";
 
 //Vue Material Kit 2 components
-import MaterialSocialButton from "@/components/MaterialSocialButton.vue";
 import MaterialInput from "@/components/MaterialInput.vue";
 import MaterialTextArea from "@/components/MaterialTextArea.vue";
 import MaterialButton from "@/components/MaterialButton.vue";
@@ -58,7 +57,6 @@ const lastName = ref("");
 const projectTitle = ref("");
 const organizationName = ref("");
 const message = ref("");
-
 const submitToFirebase = async () => {
   if (document.getElementById("flexSwitchCheckDefault").checked) {
     console.log("IN AC");
@@ -84,13 +82,17 @@ const submitToFirebase = async () => {
       );
 
       console.log(docRef);
+      // Display a success message (e.g., with a toast or alert)
+      console.log("Document written!");
+      alert(
+        "Your request for project: " +
+          document.getElementById("projectTitle").value +
+          " has been submitted!"
+      );
       document.getElementById("myform").reset();
       //reset selectedsdg
       selectedOption.value = "SDG";
       selectedCountry.value = "Country";
-
-      // Display a success message (e.g., with a toast or alert)
-      alert("Request submitted successfully!");
     } catch (error) {
       console.error("Error adding document: ", error);
       alert("Error submitting request. Please try again later.");
@@ -156,6 +158,7 @@ const selectedCountry = ref("Country");
       </div>
     </div>
   </div>
+
   <Header>
     <div
       class="page-header min-vh-75"
@@ -272,60 +275,37 @@ const selectedCountry = ref("Country");
   </div>
 
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
-    <PresentationCounter />
-    <PresentationInformation />
-    <PresentationExample :data="data" />
-    <PresentationPages />
-    <BuiltByDevelopers />
-
     <div class="container">
       <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-6">
           <FilledInfoCard
             class="p-4"
             :color="{ text: 'white', background: 'bg-gradient-success' }"
             :icon="{ component: 'flag', color: 'white' }"
-            title="Getting Started"
-            description="Check the possible ways of working with our product and the necessary files for building your own project."
+            title="17 United Nations Sustainable Development Goals "
+            description="Providing a shared blueprint for peace and prosperity for people and the planet, now and into the future."
             :action="{
-              route:
-                'https://www.creative-tim.com/learning-lab/vue/overview/material-kit/',
-              label: { text: 'Let\'s start', color: 'white' },
+              route: 'https://sdgs.un.org/goals',
+              label: { text: 'Find out more', color: 'white' },
             }"
           />
         </div>
-        <div class="col-lg-4">
-          <FilledInfoCard
-            class="px-lg-1 mt-lg-0 mt-4 p-4"
-            height="h-100"
-            :icon="{ component: 'precision_manufacturing', color: 'success' }"
-            title="Plugins"
-            description="Get inspiration and have an overview about the plugins that we
-                used to create the Material Kit."
-            :action="{
-              route:
-                'https://www.creative-tim.com/learning-lab/vue/input/material-kit/',
-              label: { text: 'Read more' },
-            }"
-          />
-        </div>
-        <div class="col-lg-4">
+        <div class="col-lg-6">
           <FilledInfoCard
             class="px-lg-1 mt-lg-0 mt-4 p-4"
             :icon="{ component: 'receipt_long', color: 'success' }"
-            title="Utility Classes"
-            description="Material Kit is giving you a lot of pre-made elements. For those
-                who want flexibility, we included many utility classes."
+            title="Our Mission"
+            description="To empower the next generation to do good together at scale while leveraging on the power of networks"
             :action="{
-              route:
-                'https://www.creative-tim.com/learning-lab/vue/utilities/material-kit/',
-              label: { text: 'Read more' },
+              route: 'https://www.un.org/en/',
+              label: { text: 'Learn more' },
             }"
           />
         </div>
       </div>
     </div>
-    <PresentationTestimonials />
+    <br />
+    <br />
 
     <section>
       <div class="container py-4">
@@ -519,7 +499,7 @@ const selectedCountry = ref("Country");
                 <MaterialTextArea
                   class="input-group-static mb-4"
                   id="message"
-                  :rows="4"
+                  :rows="6"
                   v-model="message"
                   >Short Blurb About Your Project</MaterialTextArea
                 >
@@ -592,37 +572,6 @@ const selectedCountry = ref("Country");
                 >
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="py-5">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-5 ms-auto">
-            <h4 class="mb-1">Thank you for your support!</h4>
-            <p class="lead mb-0">We deliver the best web products</p>
-          </div>
-          <div class="col-lg-5 me-lg-auto my-lg-auto text-lg-end mt-5">
-            <MaterialSocialButton
-              route="https://twitter.com/intent/tweet?text=Check%20Material%20Design%20System%20made%20by%20%40CreativeTim%20%23webdesign%20%23designsystem%20%23bootstrap5&url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fmaterial-design-system-pro"
-              component="twitter"
-              color="twitter"
-              label="Tweet"
-            />
-            <MaterialSocialButton
-              route="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/material-design-system-pro"
-              component="facebook-square"
-              color="facebook"
-              label="Share"
-            />
-            <MaterialSocialButton
-              route=""
-              component="pinterest"
-              color="pinterest"
-              label="Pin it"
-            />
           </div>
         </div>
       </div>

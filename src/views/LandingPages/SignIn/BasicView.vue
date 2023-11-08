@@ -85,7 +85,7 @@ export default {
                 </div> -->
               </div>
             </div>
-            <div class="card-body">
+            <div class="card-body-login">
               <h1>Login</h1>
               <br>
               <form @submit.prevent="login">
@@ -140,33 +140,34 @@ export default {
   </div>
 </template>
 
+
 <style>
-.card-body {
+.card-body-login {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.card-body > form {
+.card-body-login > form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.card-body > form > label {
+.card-body-login > form > label {
   display: inline-block;
   margin-bottom: 0.5rem;
   width: auto;
 }
 
-.card-body > form > input {
+.card-body-login > form > input {
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #ccc;
 }
 
-.card-body > button {
+.card-body-login > button {
   margin-top: 1rem;
   padding: 1rem 2rem;
   border: none;
