@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.push({ name: "saved" });
+      this.$router.push({ name: "explore" });
     },
   },
 };

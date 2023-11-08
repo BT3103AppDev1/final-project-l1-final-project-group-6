@@ -9,12 +9,11 @@ import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 //example components
 import NavbarDefault from "../../../examples/navbars/NavbarDefault.vue";
-import DefaultFooter from "../../../examples/footers/FooterDefault.vue";
+import Footer from "../../../examples/footers/SavedFooter.vue";
 import Header from "../../../examples/Header.vue";
 import FilledInfoCard from "../../../examples/cards/infoCards/FilledInfoCard.vue";
 
 //Vue Material Kit 2 components
-import MaterialSocialButton from "@/components/MaterialSocialButton.vue";
 import MaterialInput from "@/components/MaterialInput.vue";
 import MaterialTextArea from "@/components/MaterialTextArea.vue";
 import MaterialButton from "@/components/MaterialButton.vue";
@@ -31,7 +30,7 @@ import MaterialSwitch from "@/components/MaterialSwitch.vue";
 
 //images
 import unhelp from "@/assets/img/post-un.jpg";
-import wavesWhite from "@/assets/img/waves-white.svg";
+import soc from "@/assets/img/computing_places-1-505521.jpg";
 import nus from "@/assets/img/post-nus-removebg-preview.png";
 import googleorg from "@/assets/img/post-googleorg.png";
 import temasek from "@/assets/img/post-temasek-removebg-preview.png";
@@ -49,7 +48,8 @@ onUnmounted(() => {
 });
 
 const showDropdown = ref(false);
-const checkedNames = ref([])
+const checkedNames = ref([]);
+const checkedNonNames = ref([]);
 
 const db = getFirestore(firebase);
 const firstName = ref("");
@@ -57,38 +57,48 @@ const lastName = ref("");
 const projectTitle = ref("");
 const organizationName = ref("");
 const message = ref("");
-
 const submitToFirebase = async () => {
-  console.log("IN AC");
-  alert(
-    "Submitting your request for project: " +
-      document.getElementById("projectTitle").value
-  );
-
-  try {
-    // Create a new document in Firebase Firestore with the form data
-    const docRef = await setDoc(
-      doc(db, "requests", document.getElementById("projectTitle").value),
-      {
-        firstName: document.getElementById("firstName").value,
-        lastName: document.getElementById("lastName").value,
-        projectTitle: document.getElementById("projectTitle").value,
-        organizationName: document.getElementById("organizationName").value,
-        selectedSDG: selectedOption.value,
-        message: document.getElementById("message").value,
-      }
+  if (document.getElementById("flexSwitchCheckDefault").checked) {
+    console.log("IN AC");
+    alert(
+      "Submitting your request for project: " +
+        document.getElementById("projectTitle").value
     );
 
-    console.log(docRef);
-    document.getElementById("myform").reset();
-    //reset selectedsdg
-    selectedOption.value = "SDG";
+    try {
+      // Create a new document in Firebase Firestore with the form data
+      const docRef = await setDoc(
+        doc(db, "requests", document.getElementById("projectTitle").value),
+        {
+          firstName: document.getElementById("firstName").value,
+          lastName: document.getElementById("lastName").value,
+          projectTitle: document.getElementById("projectTitle").value,
+          FinancialRequested: checkedNames.value,
+          NonFinancialRequested: checkedNonNames.value,
+          organizationName: document.getElementById("organizationName").value,
+          selectedSDG: selectedOption.value,
+          message: document.getElementById("message").value,
+        }
+      );
 
-    // Display a success message (e.g., with a toast or alert)
-    alert("Request submitted successfully!");
-  } catch (error) {
-    console.error("Error adding document: ", error);
-    alert("Error submitting request. Please try again later.");
+      console.log(docRef);
+      // Display a success message (e.g., with a toast or alert)
+      console.log("Document written!");
+      alert(
+        "Your request for project: " +
+          document.getElementById("projectTitle").value +
+          " has been submitted!"
+      );
+      document.getElementById("myform").reset();
+      //reset selectedsdg
+      selectedOption.value = "SDG";
+      selectedCountry.value = "Country";
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      alert("Error submitting request. Please try again later.");
+    }
+  } else {
+    alert("Please agree to the Terms and Conditions to submit the request.");
   }
 };
 
@@ -112,8 +122,32 @@ const sdgs = [
   "SDG 17- Partnerships to achieve the Goal",
 ];
 
+const countries = [
+  "Afghanistan",
+  "Bahrain",
+  "Bangladesh",
+  "Brunei",
+  "Cambodia",
+  "China",
+  "India",
+  "Indonesia",
+  "Iraq",
+  "Israel",
+  "Japan",
+  "Laos",
+  "Malaysia",
+  "Myanmar",
+  "Pakistan",
+  "Philippines",
+  "Saudi Arabia",
+  "Singapore",
+  "South Korea",
+  "Vietnam",
+];
+
 // Define the ref for the selected option
 const selectedOption = ref("SDG");
+const selectedCountry = ref("Country");
 </script>
 
 <template>
@@ -124,6 +158,7 @@ const selectedOption = ref("SDG");
       </div>
     </div>
   </div>
+
   <Header>
     <div
       class="page-header min-vh-75"
@@ -240,68 +275,51 @@ const selectedOption = ref("SDG");
   </div>
 
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
-    <PresentationCounter />
-    <PresentationInformation />
-    <PresentationExample :data="data" />
-    <PresentationPages />
-    <BuiltByDevelopers />
-
     <div class="container">
       <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-6">
           <FilledInfoCard
             class="p-4"
             :color="{ text: 'white', background: 'bg-gradient-success' }"
             :icon="{ component: 'flag', color: 'white' }"
-            title="Getting Started"
-            description="Check the possible ways of working with our product and the necessary files for building your own project."
+            title="17 United Nations Sustainable Development Goals "
+            description="Providing a shared blueprint for peace and prosperity for people and the planet, now and into the future."
             :action="{
-              route:
-                'https://www.creative-tim.com/learning-lab/vue/overview/material-kit/',
-              label: { text: 'Let\'s start', color: 'white' },
+              route: 'https://sdgs.un.org/goals',
+              label: { text: 'Find out more', color: 'white' },
             }"
           />
         </div>
-        <div class="col-lg-4">
-          <FilledInfoCard
-            class="px-lg-1 mt-lg-0 mt-4 p-4"
-            height="h-100"
-            :icon="{ component: 'precision_manufacturing', color: 'success' }"
-            title="Plugins"
-            description="Get inspiration and have an overview about the plugins that we
-                used to create the Material Kit."
-            :action="{
-              route:
-                'https://www.creative-tim.com/learning-lab/vue/input/material-kit/',
-              label: { text: 'Read more' },
-            }"
-          />
-        </div>
-        <div class="col-lg-4">
+        <div class="col-lg-6">
           <FilledInfoCard
             class="px-lg-1 mt-lg-0 mt-4 p-4"
             :icon="{ component: 'receipt_long', color: 'success' }"
-            title="Utility Classes"
-            description="Material Kit is giving you a lot of pre-made elements. For those
-                who want flexibility, we included many utility classes."
+            title="Our Mission"
+            description="To empower the next generation to do good together at scale while leveraging on the power of networks"
             :action="{
-              route:
-                'https://www.creative-tim.com/learning-lab/vue/utilities/material-kit/',
-              label: { text: 'Read more' },
+              route: 'https://www.un.org/en/',
+              label: { text: 'Learn more' },
             }"
           />
         </div>
       </div>
     </div>
-    <PresentationTestimonials />
+    <br />
+    <br />
 
     <section>
       <div class="container py-4">
         <div class="row">
           <div
-            class="col-lg-7 mx-auto d-flex justify-content-center flex-column"
+            class="col-lg-8 mx-auto d-flex justify-content-center flex-column"
           >
             <h3 class="text-center">Start your request here</h3>
+            <p class="lead text-black px-0 mt-3" :style="{ fontWeight: '300' }">
+              Please allow a minimum of 2 weeks processing time for your
+              submission for listing and reach out to hello@link4impact if you
+              have any questions about the submission guidelines and endorsement
+              criteria.
+            </p>
             <form role="form" id="myform" method="post" autocomplete="off">
               <div class="card-body">
                 <div class="row">
@@ -344,7 +362,7 @@ const selectedOption = ref("SDG");
                     id="organizationName"
                   />
                 </div>
-                <div class="col-md6">
+                <div class="col-md-6">
                   <div class="dropdown">
                     <MaterialButton
                       variant="gradient"
@@ -376,37 +394,112 @@ const selectedOption = ref("SDG");
                   </div>
                 </div>
 
-                <div>Financial Requested: {{ checkedNames }}</div>
+                <div class="col-md-6">
+                  <div class="dropdown">
+                    <MaterialButton
+                      variant="gradient"
+                      color="success"
+                      class="dropdown-toggle"
+                      :class="{ show: showDropdown }"
+                      @focusout="showDropdown = false"
+                      id="selectedCountry"
+                      data-bs-toggle="dropdown"
+                      :area-expanded="showDropdown"
+                    >
+                      {{ selectedCountry }}
+                    </MaterialButton>
+
+                    <ul
+                      class="dropdown-menu px-2 py-3"
+                      :class="{ show: showDropdown }"
+                      aria-labelledby="dropdownMenuButton"
+                    >
+                      <li v-for="country in countries" :key="country">
+                        <a
+                          class="dropdown-item border-radius-md"
+                          href="javascript:;"
+                          @click="selectedCountry = country"
+                          >{{ country }}</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div>Financial Requested: {{ checkedNames.join(", ") }}</div>
 
                 <input
                   type="checkbox"
-                  id="jack"
+                  id="Grant"
                   class="input-group-static mb-4"
                   value="Grant"
                   v-model="checkedNames"
                 />
-                <label for="jack">Grant</label>
+                <label for="Grant" style="margin-right: 10px">Grant</label>
 
                 <input
                   type="checkbox"
-                  id="john"
-                  value="John"
+                  id="Equity"
+                  value="Equity"
                   v-model="checkedNames"
                 />
-                <label for="john">John</label>
+                <label for="Equity" style="margin-right: 10px">Equity</label>
 
                 <input
                   type="checkbox"
-                  id="mike"
-                  value="Mike"
+                  id="Debt"
+                  value="Debt"
                   v-model="checkedNames"
                 />
-                <label for="mike">Mike</label>
+                <label for="Debt">Debt</label>
+
+                <div>
+                  Non-Financial Requested: {{ checkedNonNames.join(", ") }}
+                </div>
+
+                <input
+                  type="checkbox"
+                  id="Mentoring"
+                  class="input-group-static mb-5"
+                  value="Mentoring"
+                  v-model="checkedNonNames"
+                />
+                <label for="Mentoring" style="margin-right: 10px"
+                  >Mentoring</label
+                >
+
+                <input
+                  type="checkbox"
+                  id="Information Technology"
+                  value="Information Technology"
+                  v-model="checkedNonNames"
+                />
+                <label for="Information Technology" style="margin-right: 10px"
+                  >Information Technology</label
+                >
+
+                <input
+                  type="checkbox"
+                  id="Impact Measurement"
+                  value="Impact Measurement"
+                  v-model="checkedNonNames"
+                />
+                <label for="Impact Measurement" style="margin-right: 10px"
+                  >Impact Measurement</label
+                >
+
+                <input
+                  type="checkbox"
+                  id="Legal Support"
+                  value="Legal Support"
+                  v-model="checkedNonNames"
+                />
+                <label for="Legal Support">Legal Support</label>
 
                 <MaterialTextArea
                   class="input-group-static mb-4"
                   id="message"
-                  :rows="4"
+                  :rows="6"
                   v-model="message"
                   >Short Blurb About Your Project</MaterialTextArea
                 >
@@ -419,8 +512,12 @@ const selectedOption = ref("SDG");
                     checked
                     labelClass="ms-3 mb-0"
                   >
-                    I agree to the
-                    <a href="javascript:;" class="text-dark"
+                    I agree to disclose my information to the Link4Impact team
+                    and agree to the
+                    <a
+                      href="https://nusmods.com/courses/BT3103/application-systems-development-for-business-analytics"
+                      target="_blank"
+                      class="text-dark"
                       ><u>Terms and Conditions</u></a
                     >.
                   </MaterialSwitch>
@@ -452,7 +549,7 @@ const selectedOption = ref("SDG");
       <div
         class="page-header py-6 py-md-5 my-sm-3 mb-3 border-radius-xl"
         :style="{
-          backgroundImage: `url(${wavesWhite})`,
+          backgroundImage: `url(${soc})`,
         }"
         loading="lazy"
       >
@@ -462,19 +559,16 @@ const selectedOption = ref("SDG");
             <div class="d-flex justify-content-center p-5">
               <div class="col-lg-8 ms-lg-5 text-center">
                 <h3 class="text-white">
-                  Do you love this awesom e UI Kit from Vuejs & Bootstrap?
+                  Want to get in touch with the Link4Impact team?
                 </h3>
                 <p class="text-white text-md">
-                  Cause if you do, it can be yours for FREE. Hit the button
-                  below to navigate to Creative Tim where you can <br />
-                  find the Design System in HTML. Start a new project or give an
-                  old Bootstrap project a new look!
+                  We are here to help you build your project. Reach out to us
+                  and we will get back to you as soon as possible.
                 </p>
-
                 <a
-                  href="https://www.creative-tim.com/product/vue-material-kit"
+                  href="mailto:hello@link4impact.com"
                   class="btn btn-sm mb-0 bg-gradient-success px-5 py-3 mt-4"
-                  >Download Now</a
+                  >Reach out</a
                 >
               </div>
             </div>
@@ -482,37 +576,6 @@ const selectedOption = ref("SDG");
         </div>
       </div>
     </div>
-
-    <div class="py-5">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-5 ms-auto">
-            <h4 class="mb-1">Thank you for your support!</h4>
-            <p class="lead mb-0">We deliver the best web products</p>
-          </div>
-          <div class="col-lg-5 me-lg-auto my-lg-auto text-lg-end mt-5">
-            <MaterialSocialButton
-              route="https://twitter.com/intent/tweet?text=Check%20Material%20Design%20System%20made%20by%20%40CreativeTim%20%23webdesign%20%23designsystem%20%23bootstrap5&url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fmaterial-design-system-pro"
-              component="twitter"
-              color="twitter"
-              label="Tweet"
-            />
-            <MaterialSocialButton
-              route="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/material-design-system-pro"
-              component="facebook-square"
-              color="facebook"
-              label="Share"
-            />
-            <MaterialSocialButton
-              route=""
-              component="pinterest"
-              color="pinterest"
-              label="Pin it"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
-  <DefaultFooter />
+  <Footer />
 </template>
