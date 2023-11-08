@@ -7,6 +7,7 @@ import SavedView from "../views/LandingPages/Saved/SavedView.vue";
 import ExploredView from "../views/LandingPages/Explore/ExploredView.vue";
 import PostDetails from "../views/LandingPages/Saved/PostDetails.vue";
 import ProfileView from "../views/LandingPages/Profile/ProfileView.vue";
+import ProfileEdit from "../views/LandingPages/Profile/EditProfile.vue";
 import SignInBasicView from "../views/LandingPages/SignIn/BasicView.vue";
 import SignUpView from "../views/LandingPages/SignIn/SignUpView.vue";
 import PostView from "../views/LandingPages/Post/PostView.vue";
@@ -31,9 +32,7 @@ import ElToggles from "../layouts/sections/elements/toggles/TogglesView.vue";
 import ElTypography from "../layouts/sections/elements/typography/TypographyView.vue";
 import firebase from "../firebase.js";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-=========
 import auth from "../firebase.js";
->>>>>>>>> Temporary merge branch 2
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -71,11 +70,7 @@ const router = createRouter({
       component: PostView,
       meta: {
         requiresAuth: true,
-<<<<<<<<< Temporary merge branch 1
       },
-=========
-      },  
->>>>>>>>> Temporary merge branch 2
     },
     {
       path: "/pages/landing-pages/explore",
@@ -102,6 +97,14 @@ const router = createRouter({
       path: "/pages/landing-pages/profile",
       name: "profile",
       component: ProfileView,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: "/pages/landing-pages/profile/edit",
+      name: "editProfile",
+      component: ProfileEdit,
       meta: {
         requiresAuth: true,
       },
