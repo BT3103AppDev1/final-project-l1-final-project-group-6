@@ -71,14 +71,13 @@ export default {
             ),
           });
           this.isSaved = false;
-          alert("Post unsaved!");
+          //alert("Post unsaved!");
         } else {
           // If post isn't saved, add it to the saved list
           await updateDoc(userRef, {
             saved: arrayUnion(this.$route.params.id),
           });
           this.isSaved = true;
-          alert("Post saved!");
         }
       } else {
         console.error("User document does not exist!");
@@ -94,8 +93,9 @@ export default {
         ← Back to Explore Posts
       </button>
       <button @click="goBack" class="back-button">← Back to Saved Posts</button>
-      <button @click="savePost" class="back-button">
-        {{ isSaved ? "Unsave Post" : "Save Post" }}
+
+      <button @click="savePost" class="star-button">
+        <i :class="['fa', isSaved ? 'fa-star' : 'fa-star-o']"></i>
       </button>
     </div>
     <div class="post-card">
@@ -181,10 +181,6 @@ export default {
   background-color: #28a745; /* Green color */
 }
 
-.back-button:last-child {
-  background-color: #ffc107; /* Green color */
-}
-
 /* Hover effect for both buttons */
 .back-button:hover {
   transform: translateY(-2px); /* Lift button slightly on hover */
@@ -198,7 +194,16 @@ export default {
 .back-button:nth-child(2):hover {
   background-color: #218838; /* Darker green on hover */
 }
-.back-button:last-child:hover {
-  background-color: #e0a800; /* Darker green on hover */
+
+.star-button {
+  background: none;
+  border: none;
+  font-size: 1.5em; /* Adjust size as needed */
+  color: #ffd700; /* Gold color for the star */
+  cursor: pointer;
+}
+
+.star-button:hover {
+  color: #ffac33; /* A lighter gold color on hover */
 }
 </style>
