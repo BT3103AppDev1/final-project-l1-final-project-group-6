@@ -7,9 +7,9 @@ import { useWindowsWidth } from "../../assets/js/useWindowsWidth";
 import ArrDark from "@/assets/img/down-arrow-dark.svg";
 import downArrow from "@/assets/img/down-arrow.svg";
 import DownArrWhite from "@/assets/img/down-arrow-white.svg";
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faSeedling } from '@fortawesome/free-solid-svg-icons'; // Use the correct icon name
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faSeedling } from "@fortawesome/free-solid-svg-icons"; // Use the correct icon name
 
 library.add(faSeedling); // Add the icon to the library
 
@@ -131,22 +131,26 @@ watch(
           : 'container-fluid px-0'
       "
     >
-  <div :class="containerClass">
-    <RouterLink
-      :to="{ name: 'presentation' }"
-      class="navbar-brand"
-      :class="navbarBrandClass"
-      rel="tooltip"
-      title="Designed and Coded by Lucas"
-      data-placement="bottom"
-    >
-      <font-awesome-icon icon="fa-solid fa-seedling" bounce style="color: #04b949; margin-right: 10px;" />
-      <span class="link-text">Link4Impact</span>
-    </RouterLink>
-  </div>
+      <div :class="containerClass">
+        <RouterLink
+          :to="{ name: 'presentation' }"
+          class="navbar-brand"
+          :class="navbarBrandClass"
+          rel="tooltip"
+          title="Designed and Coded by Lucas"
+          data-placement="bottom"
+        >
+          <font-awesome-icon
+            icon="fa-solid fa-seedling"
+            bounce
+            style="color: #04b949; margin-right: 10px"
+          />
+          <span class="link-text">Link4Impact</span>
+        </RouterLink>
+      </div>
 
       <RouterLink
-        class="navbar-brand d-block d-md-none" 
+        class="navbar-brand d-block d-md-none"
         :class="
           props.transparent || props.dark
             ? 'text-white'
@@ -241,7 +245,6 @@ watch(
                       >
                         <span>Saved Posts</span>
                       </RouterLink>
-                  
                     </div>
                   </div>
                 </div>
@@ -816,6 +819,7 @@ watch(
                 class="arrow ms-1 d-lg-none d-block ms-auto"
               />
             </a>
+
             <div
               class="dropdown-menu dropdown-menu-end dropdown-menu-animation dropdown-md mt-0 mt-lg-3 p-3 border-radius-lg"
               aria-labelledby="dropdownMenuDocs"
@@ -944,19 +948,50 @@ watch(
               </div>
             </div>
           </li>
+        </ul>
+        <!-- Post Now button -->
 
+        <ul class="navbar-nav d-lg-block d-none">
+          <li class="nav-item">
+            <a
+              :href="action.route"
+              class="btn btn-sm mb-0"
+              :class="action.color"
+              onclick="smoothToPricing('pricing-soft-ui')"
+              >{{ action.label }}</a
+            >
+          </li>
         </ul>
 
         <!-- SIGN OUT BUTTONS -->
         <li class="nav-item dropdown">
-    <a class="nav-link d-flex align-items-center" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      <img src="https://www.comp.nus.edu.sg/stfphotos/shashank.jpg" class="rounded-circle" style="width: 40px; height: 40px;" alt="Profile">
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-      <li><RouterLink to="/profile" class="dropdown-item">View Profile</RouterLink></li>
-      <li><button @click="handleSignOut" class="dropdown-item">Sign Out</button></li>
-    </ul>
-  </li>
+          <a
+            class="nav-link d-flex align-items-center"
+            id="profileDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              src="https://www.comp.nus.edu.sg/stfphotos/shashank.jpg"
+              class="rounded-circle"
+              style="width: 40px; height: 40px"
+              alt="Profile"
+            />
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+            <li>
+              <RouterLink to="/profile" class="dropdown-item"
+                >View Profile</RouterLink
+              >
+            </li>
+            <li>
+              <button @click="handleSignOut" class="dropdown-item">
+                Sign Out
+              </button>
+            </li>
+          </ul>
+        </li>
       </div>
     </div>
   </nav>
@@ -965,8 +1000,8 @@ watch(
 
 <style scoped>
 .navbar-profile-pic {
-  width: 40px; 
-  height: 40px; 
+  width: 40px;
+  height: 40px;
   object-fit: cover;
   margin-left: 12px; /* Adjust as needed for spacing */
 }
@@ -996,7 +1031,6 @@ watch(
   /* If needed, use padding to adjust the vertical position of the buttons */
 }
 
-
 .icon-spacing {
   margin-right: 10px;
 }
@@ -1008,17 +1042,16 @@ watch(
 .link-text {
   font-weight: bold;
   font-size: 1.25rem; /* This increases the font size */
-  font-family: 'Roboto', sans-serif; /* This sets a modern, sans-serif font */
+  font-family: "Roboto", sans-serif; /* This sets a modern, sans-serif font */
   color: white; /* This sets the text color to white */
 }
 
 /* You may need to add the following @font-face if you don't have Roboto loaded in your project */
 @font-face {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
-  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.googleapis.com/css?family=Roboto) format('woff2');
+  src: local("Roboto"), local("Roboto-Regular"),
+    url(https://fonts.googleapis.com/css?family=Roboto) format("woff2");
 }
-
-
 </style>
