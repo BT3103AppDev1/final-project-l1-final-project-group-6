@@ -30,6 +30,7 @@ import ElDropdowns from "../layouts/sections/elements/dropdowns/DropdownsView.vu
 import ElProgressBars from "../layouts/sections/elements/progress-bars/ProgressBarsView.vue";
 import ElToggles from "../layouts/sections/elements/toggles/TogglesView.vue";
 import ElTypography from "../layouts/sections/elements/typography/TypographyView.vue";
+import auth from "../firebase.js";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -62,12 +63,21 @@ const router = createRouter({
       path: "/pages/landing-pages/post",
       name: "post",
       component: PostView,
+      meta: {
+        requiresAuth: true,
+      },  
     },
     {
       path: "/pages/landing-pages/explore",
       name: "explore",
       component: ExploredView,
     },
+    {
+      path: "/pages/landing-pages/explore/:section",
+      name: "exploreScroll",
+      component: ExploredView,
+    },
+    
     {
       path: "/profile",
       name: "profile",
@@ -190,6 +200,15 @@ const router = createRouter({
       component: ElTypography,
     },
   ],
-});
+  scrollBehavior(to, from, savedPosition) {
+    if (to.hash) {
+      return { selector: to.hash };
+    } else if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 };
+    }
+  },
+})
 
 export default router;

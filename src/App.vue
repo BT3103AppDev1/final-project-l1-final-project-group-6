@@ -16,6 +16,29 @@ Coded by www.creative-tim.com
 import { RouterView } from "vue-router";
 </script>
 
+<script>
+import firebaseApp from "./firebase";
+import { auth } from "./firebase";
+
+export default {
+  data() {
+    return {
+      authState: null,
+    };
+  },
+  created() {
+    auth.onAuthStateChanged((user) => {
+      this.authState = user;
+    });
+  },
+  provide() { // provides for all child components to use
+    return {
+      authState: this.authState,
+    };
+  },
+}
+</script>
+
 <template>
   <router-view />
 </template>
