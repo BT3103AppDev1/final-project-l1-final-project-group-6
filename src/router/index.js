@@ -6,6 +6,7 @@ import AuthorView from "../views/LandingPages/Author/AuthorView.vue";
 import SavedView from "../views/LandingPages/Saved/SavedView.vue";
 import ExploredView from "../views/LandingPages/Explore/ExploredView.vue";
 import PostDetails from "../views/LandingPages/Saved/PostDetails.vue";
+import ProfileView from "../views/LandingPages/Profile/ProfileView.vue";
 import SignInBasicView from "../views/LandingPages/SignIn/BasicView.vue";
 import SignUpView from "../views/LandingPages/SignIn/SignUpView.vue";
 import PostView from "../views/LandingPages/Post/PostView.vue";
@@ -65,6 +66,11 @@ const router = createRouter({
       path: "/pages/landing-pages/explore",
       name: "explore",
       component: ExploredView,
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      component: ProfileView,
     },
     {
       path: "/pages/landing-pages/post-details/:id",

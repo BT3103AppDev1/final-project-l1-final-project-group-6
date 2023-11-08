@@ -1,6 +1,13 @@
 <script>
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  // signInWithPopup,
+  // GoogleAuthProvider,
+} from "firebase/auth";
 import firebaseApp from "../../../firebase.js"; // Keep this as is
+
+// const provider = new GoogleAuthProvider();
 
 const auth = getAuth(firebaseApp);
 
@@ -26,24 +33,36 @@ export default {
       } catch (error) {
         console.error("Error logging in:", error.message);
         // Handle login error (display an error message, etc.)
+        alert("Invalid email or password");
       }
     },
     // Method to navigate to the sign-up page
     async redirectToSignUp() {
       this.$router.push({ name: "signup" }); // Replace "signup" with the actual route name for the sign-up page
     },
+    // google sign in method
+    // async handleGoogleSignIn() {
+    //   try {
+    //     const result = await signInWithPopup(auth, provider);
+    //     const user = result.user;
+    //     console.log("Logged in with Google as:", user.email);
+    //     // Redirect or perform other actions upon successful Google sign-in
+    //     this.$router.push({ name: "explore" });
+    //   } catch (error) {
+    //     console.error("Error logging in with Google:", error.message);
+    //     // Handle Google sign-in error (display an error message, etc.)
+    //   }
+    // },
   },
 };
 </script>
 <template>
-  <div
-    class="page-header align-items-start min-vh-100"
-    :style="{
-      backgroundImage:
-        'url(https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80)',
-    }"
-    loading="lazy"
-  >
+  <div class="page-header align-items-start min-vh-100">
+    <video autoplay loop muted playsinline preload="auto" poster="" class="video-background">
+      <source src="../../../data/video4.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
     <span class="mask bg-gradient-dark opacity-6"></span>
     <div class="container my-auto">
       <div class="row">
@@ -56,27 +75,19 @@ export default {
                 <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">
                   Sign in
                 </h4>
-                <div class="row mt-3">
-                  <div class="col-2 text-center ms-auto">
-                    <a class="btn btn-link px-3" href="javascript:;">
-                      <i class="fa fa-facebook text-white text-lg"></i>
-                    </a>
-                  </div>
-                  <div class="col-2 text-center px-1">
-                    <a class="btn btn-link px-3" href="javascript:;">
-                      <i class="fa fa-github text-white text-lg"></i>
-                    </a>
-                  </div>
-                  <div class="col-2 text-center me-auto">
-                    <a class="btn btn-link px-3" href="javascript:;">
+                <!-- google sign in button -->
+                <!-- <div class="row mt-3">
+                  <div class="col-12 text-center">
+                    <a class="btn btn-link px-3" @click="handleGoogleSignIn">
                       <i class="fa fa-google text-white text-lg"></i>
                     </a>
-                  </div>
-                </div>
+                  </div> 
+                </div> -->
               </div>
             </div>
-            <div class="card-body">
+            <div class="card-body-login">
               <h1>Login</h1>
+              <br>
               <form @submit.prevent="login">
                 <label for="email">Email:</label>
                 <input type="email" v-model="email" required />
@@ -84,12 +95,12 @@ export default {
                 <label for="password">Password:</label>
                 <input type="password" v-model="password" required />
                 <br />
-                <button type="submit">Login</button>
+                <button type="submit" class="btn btn-success">Login</button>
               </form>
             </div>
-            <button @click="redirectToSignUp" class="btn btn-primary">
+            <MaterialButton @click="redirectToSignUp" class="btn btn-primary">
               Sign Up
-            </button>
+            </MaterialButton>
           </div>
         </div>
       </div>
@@ -99,15 +110,14 @@ export default {
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-12 col-md-6 my-auto">
             <div class="copyright text-center text-sm text-white text-lg-start">
-              © {{ new Date().getFullYear() }}, made with
-              <i class="fa fa-heart" aria-hidden="true"></i> by
+              © {{ new Date().getFullYear() }}, made by
               <a
-                href="https://www.creative-tim.com"
+                href="https://nusmods.com/courses/BT3103/application-systems-development-for-business-analytics"
                 class="font-weight-bold text-white"
                 target="_blank"
-                >Creative Tim</a
+                >BT3103</a
               >
-              for a better web.
+              Group 6
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -116,34 +126,10 @@ export default {
             >
               <li class="nav-item">
                 <a
-                  href="https://www.creative-tim.com"
+                  href="https://nusmods.com/courses/BT3103/application-systems-development-for-business-analytics"
                   class="nav-link text-white"
                   target="_blank"
-                  >Creative Tim</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  href="https://www.creative-tim.com/presentation"
-                  class="nav-link text-white"
-                  target="_blank"
-                  >About Us</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  href="https://www.creative-tim.com/blog"
-                  class="nav-link text-white"
-                  target="_blank"
-                  >Blog</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  href="https://www.creative-tim.com/license"
-                  class="nav-link pe-0 text-white"
-                  target="_blank"
-                  >License</a
+                  >BT3103</a
                 >
               </li>
             </ul>
@@ -153,3 +139,45 @@ export default {
     </footer>
   </div>
 </template>
+
+
+<style>
+.card-body-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-body-login > form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-body-login > form > label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  width: auto;
+}
+
+.card-body-login > form > input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+}
+
+.card-body-login > button {
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+  border: none;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.btn-success {
+  font-size: 1rem;
+}
+</style>
