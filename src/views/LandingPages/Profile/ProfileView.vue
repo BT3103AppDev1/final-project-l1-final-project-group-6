@@ -51,8 +51,6 @@ if (user !== null) {
   const photoURL = user.imageUrl;
   const uid = user.uid;
 }
-
-
 </script>
 
 <template>

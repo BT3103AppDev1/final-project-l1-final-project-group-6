@@ -1,7 +1,9 @@
 <template>
   <div class="post-details-container">
     <div class="button-container">
-      <button @click="goBackExplore" class="back-button">← Back to Explore Posts</button>
+      <button @click="goBackExplore" class="back-button">
+        ← Back to Explore Posts
+      </button>
       <button @click="goBack" class="back-button">← Back to Saved Posts</button>
     </div>
     <div class="post-card">
@@ -21,6 +23,11 @@
 <script>
 import firebaseApp from "../../../firebase.js";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth();
+const user = auth.currentUser;
+const userID = user.uid;
 
 export default {
   data() {
@@ -82,7 +89,7 @@ export default {
 }
 
 .post-title {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   margin-bottom: 10px;
 }
@@ -94,7 +101,7 @@ export default {
 }
 
 .post-description {
-  font-family: 'Open Sans', Arial, sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
   line-height: 1.6;
   color: #444;
 }
