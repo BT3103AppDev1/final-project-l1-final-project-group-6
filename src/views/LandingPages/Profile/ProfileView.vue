@@ -1,14 +1,15 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from "vue";
+import { defineAsyncComponent, onMounted, onUnmounted, ref } from "vue";
 
 //firebase
-import firebase from "../../../firebase.js";
+import app from "../../../firebase.js";
 import "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
   getFirestore,
   doc,
   setDoc,
+  getDoc,
   collection,
   query,
   onSnapshot,
@@ -28,31 +29,37 @@ import MaterialSwitch from "@/components/MaterialSwitch.vue";
 
 //images
 import profile from "@/assets/img/profile.jpg";
+</script>
 
-//hooks
-const body = document.getElementsByTagName("body")[0];
-onMounted(() => {
-  body.classList.add("presentation-page");
-  body.classList.add("bg-gray-200");
-});
-onUnmounted(() => {
-  body.classList.remove("presentation-page");
-  body.classList.remove("bg-gray-200");
-});
-
+<script>
+const db = getFirestore(app);
 const auth = getAuth();
-const user = auth.currentUser;
 
-if (user !== null) {
-  // The user object has basic properties such as display name, email, etc.
-  const displayName = user.username;
-  console.log("  Provider-specific UID: " + user.uid);
-  const email = user.email;
-  const photoURL = user.imageUrl;
-  const uid = user.uid;
-}
-
-
+export default {
+  data() {
+    return {
+      username: "",
+      imageURL: "",
+      userID: "",
+      uid: "",
+    };
+  },
+  mounted() {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userRef = doc(db, "users", user.uid);
+        getDoc(userRef).then((doc) => {
+          if (doc.exists()) {
+            this.username = doc.data().username;
+            this.imageURL = doc.data().imageURL;
+            this.userID = doc.data().userID;
+            this.uid = doc.data().uid;
+          }
+        });
+      }
+    });
+  },
+};
 </script>
 
 <template>
@@ -72,52 +79,22 @@ if (user !== null) {
     >
       <div class="container">
         <div class="row">
-          <div class="col-lg-7 text-center mx-auto position-relative">
-            <h1
-              class="text-white pt-3 mt-n5 me-2"
-              :style="{ display: 'inline-block ' }"
-            >
-              Profile
-            </h1>
-          </div>
+          <div class="col-lg-7 text-center mx-auto position-relative"></div>
         </div>
       </div>
     </div>
   </Header>
 
+  <h1>hi {{ this.username }}</h1>
+
   <div class="user-profile">
-    <div v-if="user">
-      <h2>You are logged in as: {{ user.email }}</h2>
-      <div>
-        <img :src="user.imageURL" alt="User Profile Image" />
-      </div>
-      <div>
-        <p>{{ user.description }}</p>
-      </div>
-      <div>
-        <button @click="editProfile">Edit</button>
-      </div>
-      <div v-if="isEditing">
-        <div>
-          <label for="username">Username:</label>
-          <input type="text" id="username" v-model="editedUser.username" />
-        </div>
-        <div>
-          <label for="description">Description:</label>
-          <textarea
-            id="description"
-            v-model="editedUser.description"
-          ></textarea>
-        </div>
-        <div>
-          <button @click="saveChanges">Save Changes</button>
-        </div>
-      </div>
-    </div>
-    <div v-else>
-      <p>Loading user data...</p>
+    <div>
+      <br /><br />
+      <img
+        src="https://picsum.photos/200/300?random=7https://picsum.photos/200/300?random=7"
+        alt="No Profile Picture"
+      />
     </div>
   </div>
-
   <Footer />
 </template>
