@@ -970,7 +970,7 @@ watch(
           </a>
           <ul class="dropdown-menu" aria-labelledby="profileDropdown">
             <li>
-              <RouterLink to="/profile" class="dropdown-item"
+              <RouterLink :to="{ name: 'profile' }" class="dropdown-item"
                 >View Profile</RouterLink
               >
             </li>
