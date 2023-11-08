@@ -7,9 +7,9 @@ import { useWindowsWidth } from "../../assets/js/useWindowsWidth";
 import ArrDark from "@/assets/img/down-arrow-dark.svg";
 import downArrow from "@/assets/img/down-arrow.svg";
 import DownArrWhite from "@/assets/img/down-arrow-white.svg";
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faSeedling } from '@fortawesome/free-solid-svg-icons'; // Use the correct icon name
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faSeedling } from "@fortawesome/free-solid-svg-icons"; // Use the correct icon name
 
 library.add(faSeedling); // Add the icon to the library
 
@@ -131,22 +131,26 @@ watch(
           : 'container-fluid px-0'
       "
     >
-  <div :class="containerClass">
-    <RouterLink
-      :to="{ name: 'presentation' }"
-      class="navbar-brand"
-      :class="navbarBrandClass"
-      rel="tooltip"
-      title="Designed and Coded by Lucas"
-      data-placement="bottom"
-    >
-      <font-awesome-icon icon="fa-solid fa-seedling" bounce style="color: #04b949; margin-right: 10px;" />
-      <span class="link-text">Link4Impact</span>
-    </RouterLink>
-  </div>
+      <div :class="containerClass">
+        <RouterLink
+          :to="{ name: 'presentation' }"
+          class="navbar-brand"
+          :class="navbarBrandClass"
+          rel="tooltip"
+          title="Designed and Coded by Lucas"
+          data-placement="bottom"
+        >
+          <font-awesome-icon
+            icon="fa-solid fa-seedling"
+            bounce
+            style="color: #04b949; margin-right: 10px"
+          />
+          <span class="link-text">Link4Impact</span>
+        </RouterLink>
+      </div>
 
       <RouterLink
-        class="navbar-brand d-block d-md-none" 
+        class="navbar-brand d-block d-md-none"
         :class="
           props.transparent || props.dark
             ? 'text-white'
@@ -198,7 +202,7 @@ watch(
                 :class="getTextColor()"
                 >dashboard</i
               >
-              Pages
+              Details
               <img
                 :src="getArrowColor()"
                 alt="down-arrow"
@@ -241,21 +245,6 @@ watch(
                       >
                         <span>Saved Posts</span>
                       </RouterLink>
-                      <RouterLink
-                        :to="{ name: 'explore' }"
-                        class="dropdown-item border-radius-md"
-                      >
-                        <span>Explore</span>
-                      </RouterLink>
-                      <div
-                        class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-0 mt-3"
-                      >
-                        Account
-                      </div>
-
-                      <button @click="handleSignOut" class="btn btn-danger">
-                        Sign Out
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -306,6 +295,18 @@ watch(
               <i class="material-icons opacity-6 me-2 text-md">public</i>
               <!-- Added me-2 for margin -->
               Explore
+            </RouterLink>
+          </li>
+
+          <li class="nav-item mx-2">
+            <RouterLink
+              to="/pages/landing-pages/saved"
+              class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+              :class="getTextColor()"
+            >
+              <i class="material-icons opacity-6 me-2 text-md">bookmark</i>
+              <!-- Added me-2 for margin -->
+              Saved Posts
             </RouterLink>
           </li>
 
@@ -818,6 +819,7 @@ watch(
                 class="arrow ms-1 d-lg-none d-block ms-auto"
               />
             </a>
+
             <div
               class="dropdown-menu dropdown-menu-end dropdown-menu-animation dropdown-md mt-0 mt-lg-3 p-3 border-radius-lg"
               aria-labelledby="dropdownMenuDocs"
@@ -946,28 +948,9 @@ watch(
               </div>
             </div>
           </li>
-          <li class="nav-item dropdown dropdown-hover mx-2">
-            <a
-              href="https://www.github.com/creativetimofficial/vue-material-kit"
-              class="nav-link d-flex cursor-pointer align-items-center"
-            >
-              <svg
-                width="20px"
-                height="20px"
-                class="material-icons me-2 opacity-6"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-                data-testid="GitHubIcon"
-                :fill="props.transparent && '#fff'"
-              >
-                <path
-                  d="M12 1.27a11 11 0 00-3.48 21.46c.55.09.73-.28.73-.55v-1.84c-3.03.64-3.67-1.46-3.67-1.46-.55-1.29-1.28-1.65-1.28-1.65-.92-.65.1-.65.1-.65 1.1 0 1.73 1.1 1.73 1.1.92 1.65 2.57 1.2 3.21.92a2 2 0 01.64-1.47c-2.47-.27-5.04-1.19-5.04-5.5 0-1.1.46-2.1 1.2-2.84a3.76 3.76 0 010-2.93s.91-.28 3.11 1.1c1.8-.49 3.7-.49 5.5 0 2.1-1.38 3.02-1.1 3.02-1.1a3.76 3.76 0 010 2.93c.83.74 1.2 1.74 1.2 2.94 0 4.21-2.57 5.13-5.04 5.4.45.37.82.92.82 2.02v3.03c0 .27.1.64.73.55A11 11 0 0012 1.27"
-                ></path>
-              </svg>
-              Github
-            </a>
-          </li>
         </ul>
+        <!-- Post Now button -->
+
         <ul class="navbar-nav d-lg-block d-none">
           <li class="nav-item">
             <a
@@ -979,6 +962,36 @@ watch(
             >
           </li>
         </ul>
+
+        <!-- SIGN OUT BUTTONS -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link d-flex align-items-center"
+            id="profileDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              src="https://www.comp.nus.edu.sg/stfphotos/shashank.jpg"
+              class="rounded-circle"
+              style="width: 40px; height: 40px"
+              alt="Profile"
+            />
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+            <li>
+              <RouterLink to="/profile" class="dropdown-item"
+                >View Profile</RouterLink
+              >
+            </li>
+            <li>
+              <button @click="handleSignOut" class="dropdown-item">
+                Sign Out
+              </button>
+            </li>
+          </ul>
+        </li>
       </div>
     </div>
   </nav>
@@ -986,9 +999,36 @@ watch(
 </template>
 
 <style scoped>
+.navbar-profile-pic {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  margin-left: 12px; /* Adjust as needed for spacing */
+}
+
+/* Adjust the line-height if necessary to vertically center the profile pic */
+.navbar-nav .nav-item {
+  align-items: center; /* Align items vertically */
+}
+
+/* Adjust dropdown menu positioning if necessary */
+.dropdown-menu {
+  top: 100%; /* Ensure it drops down right below the profile pic */
+}
 .navbar-brand {
   display: flex;
   align-items: center;
+}
+
+.nav-item {
+  list-style: none; /* This removes the bullet point from the list item */
+}
+
+/* Custom CSS to align buttons */
+.nav-item .btn {
+  vertical-align: middle; /* Aligns the text vertically in the buttons */
+  line-height: normal; /* Resets line-height to avoid discrepancies */
+  /* If needed, use padding to adjust the vertical position of the buttons */
 }
 
 .icon-spacing {
@@ -1002,17 +1042,16 @@ watch(
 .link-text {
   font-weight: bold;
   font-size: 1.25rem; /* This increases the font size */
-  font-family: 'Roboto', sans-serif; /* This sets a modern, sans-serif font */
+  font-family: "Roboto", sans-serif; /* This sets a modern, sans-serif font */
   color: white; /* This sets the text color to white */
 }
 
 /* You may need to add the following @font-face if you don't have Roboto loaded in your project */
 @font-face {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
-  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.googleapis.com/css?family=Roboto) format('woff2');
+  src: local("Roboto"), local("Roboto-Regular"),
+    url(https://fonts.googleapis.com/css?family=Roboto) format("woff2");
 }
-
-
 </style>

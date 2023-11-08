@@ -57,7 +57,7 @@ onMounted(() => {
                       </div>
                       <div class="ps-3">
                         <span class="text-sm opacity-8"
-                          >hello@creative-tim.com</span
+                          >hello@shashank.com</span
                         >
                       </div>
                     </div>
