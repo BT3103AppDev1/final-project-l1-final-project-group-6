@@ -93,28 +93,36 @@ export default {
     </div>
   </Header>
 
-  <div class="user-profile">
-    <div>
-      <br /><br />
+  <div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 text-center mx-auto position-relative">
+          <div class="user-profile">
+            <div class="profile-pic-username">
+              <div class="profile-pic">
+                <img
+                  :src="imageURL"
+                  alt="No Profile Picture"
+                  style="
+                    object-fit: fill;
+                    border-radius: 50%;
+                    width: 200px;
+                    height: 200px;
+                    border: 5px solid #57b05b;
+                  "
+                />
+              </div>
+              <div class="username">
+                <h1 class="text-end">{{ username }}</h1>
+              </div>
+            </div>
 
-      <div class="profile-pic-username">
-        <h1>{{ username }}</h1>
-      </div>
-
-      <br /><br />
-
-      <div class="profile-pic">
-        <img
-          :src="imageURL"
-          alt="No Profile Picture"
-          style="object-fit: fill"
-        />
-      </div>
-
-      <br /><br />
-
-      <div class="profile-pic-description">
-        {{ description }}
+            <div class="description">
+              <h3>Description</h3>
+              <p>{{ description }}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -124,20 +132,48 @@ export default {
 <style scoped>
 .user-profile {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+  margin: 20px;
 }
-.profile-pic {
+
+.profile-pic-username {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40px 0; /* Make the space between username and profile pic wider */
+}
+
+profile-pic {
   width: 200px;
   height: 200px;
-  border-radius: 60%;
+  border-radius: 70%;
   overflow: hidden;
   background: #fff;
   box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
-  position: relative;
-  top: 50px;
-  border: 6px solid #fff;
+  border: 6px solid #ccc; /* Updated to grey border */
+}
+
+.username {
+  margin-top: 10px; /* Add margin to separate username from profile pic on small screens */
+  font-size: 1.5rem; /* Adjust font size for small screens */
+  text-align: center; /* Center align username text */
+}
+
+.description {
+  text-align: center;
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  /* Make the description box wider horizontally */
+  max-width: 1000px; /* Adjust the max-width as per your preference */
+  width: 100%; /* Make the description container full width on small screens */
+
+  /* Media query for small screens */
+  @media screen and (max-width: 768px) {
+    margin: 10px 0; /* Reduce top and bottom margin for better spacing on small screens */
+  }
 }
 </style>

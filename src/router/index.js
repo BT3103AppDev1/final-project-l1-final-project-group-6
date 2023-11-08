@@ -69,7 +69,7 @@ const router = createRouter({
       component: PostView,
       meta: {
         requiresAuth: true,
-      },  
+      },
     },
     {
       path: "/pages/landing-pages/explore",
@@ -205,7 +205,7 @@ const router = createRouter({
       return { x: 0, y: 0 };
     }
   },
-})
+});
 
 router.beforeEach(async (to, from) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
