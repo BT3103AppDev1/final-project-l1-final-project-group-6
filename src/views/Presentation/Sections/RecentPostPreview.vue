@@ -18,7 +18,8 @@ export default {
     data() {
         return {
             previewPosts: [],
-            numPosts: 3
+            numPosts: 3,
+            entityLowerCase: this.entityType.toLowerCase()
         };
     },
     methods: {
@@ -36,6 +37,9 @@ export default {
     computed: {
         visiblePosts() {
             return this.previewPosts.slice(0, this.numPosts);
+        },
+        containerRoute() {
+            return `#${this.entityLowerCase}-container`;
         }
     }
 };
@@ -54,7 +58,9 @@ export default {
             <div v-for="n in numPosts - visiblePosts.length" :key="n" class="post-list-item"></div>
         </div>
         <div class="view-more">
-            <button class="btn btn-success view-btn">View More</button>
+            <RouterLink :to="{ name: 'explore', hash: containerRoute }">
+                <button class="btn btn-success view-btn">View More</button>
+            </RouterLink>
         </div>
     </div>
 </template>

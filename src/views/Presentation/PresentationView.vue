@@ -24,7 +24,6 @@ import RecentPostPreview from './Sections/RecentPostPreview.vue';
 /* import vueMkHeader from "@/assets/img/vue-mk-header.jpg"; */
 import classroom from '@/assets/img/classroom.jpg';
 import childrenSmiling from '@/assets/img/children-smiling.jpg';
-import solarPanel from '@/assets/video/home-solar-panel.mp4';
 import wavesWhite from '@/assets/img/waves-white.svg';
 import logoBootstrap from '@/assets/img/logos/bootstrap5.jpg';
 import logoTailwind from '@/assets/img/logos/icon-tailwind.jpg';
@@ -43,6 +42,7 @@ onUnmounted(() => {
     body.classList.remove('presentation-page');
     body.classList.remove('bg-gray-200');
 });
+
 </script>
 
 <template>
