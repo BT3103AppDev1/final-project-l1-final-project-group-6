@@ -3,7 +3,7 @@ import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
 import Header from "../../../examples/Header.vue";
 import Footer from "./Sections/SavedFooter.vue";
 import Posts from "./Sections/SavedPosts.vue";
-import counter from 'vue3-autocounter';
+import counter from "vue3-autocounter";
 
 export default {
   components: {
@@ -14,42 +14,43 @@ export default {
     counter,
   },
   data: () => ({
-    experienceTitle: 'Number of NGOs',
-    githubTitle: 'Number of Companies',
-    feedbackTitle: 'Years of Partnership',
-    projectsTitle: 'Number of Partnerships',
+    experienceTitle: "Number of NGOs",
+    githubTitle: "Number of Companies",
+    feedbackTitle: "Years of Partnership",
+    projectsTitle: "Number of Partnerships",
   }),
+  methods: {
+    handleCounterFinished() {
+      console.log("Counting finished!");
+      // You can perform any actions you want here
+    },
+  },
 };
-
-
 </script>
 
 <template>
   <DefaultNavbar transparent />
 
   <Header>
-  <div class="page-header" :style="headerStyle">
-    <video autoplay loop muted playsinline class="globe-video">
-      <source src="../../../data/video1.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+    <div class="page-header" :style="headerStyle">
+      <video autoplay loop muted playsinline class="globe-video">
+        <source src="../../../data/video1.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
 
-    <span class="mask bg-gradient-dark opacity-2"></span>
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center mx-auto my-auto">
-          <h1 class="text-white header-title">
-            Explore<span id="typed"></span>
-          </h1>
-          <p class="text-white header-subtitle">
-            The world within reach
-          </p>
+      <span class="mask bg-gradient-dark opacity-2"></span>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center mx-auto my-auto">
+            <h1 class="text-white header-title">
+              Explore<span id="typed"></span>
+            </h1>
+            <p class="text-white header-subtitle">The world within reach</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</Header>
-
+  </Header>
 
   <!-- Metrics Banner -->
   <div class="container my-6">
@@ -63,12 +64,15 @@ export default {
           suffix="+"
           :duration="5"
           :autoinit="true"
-          @finished="alert(`Counting finished!`)"
+          @finished="handleCounterFinished"
           class="font-general-medium text-4xl font-bold text-secondary-dark dark:text-secondary-light mb-2"
           aria-label="About Status Counter"
-          style="margin-top: -40px;"
+          style="margin-top: -40px"
         />
-        <span class="text-md text-ternary-dark dark:text-ternary-light" style="margin-top: -10px;">
+        <span
+          class="text-md text-ternary-dark dark:text-ternary-light"
+          style="margin-top: -10px"
+        >
           {{ experienceTitle }}
         </span>
       </div>
@@ -82,12 +86,13 @@ export default {
           suffix="+"
           :duration="5"
           :autoinit="true"
-          @finished="alert(`Counting finished!`)"
+          @finished="handleCounterFinished"
           class="font-general-medium text-4xl font-bold text-secondary-dark dark:text-secondary-light mb-2"
-          style="margin-top: -40px;"
+          style="margin-top: -40px"
         />
         <span
-          class="block text-md text-ternary-dark dark:text-ternary-light" style="margin-top: -10px;"
+          class="block text-md text-ternary-dark dark:text-ternary-light"
+          style="margin-top: -10px"
           >{{ githubTitle }}</span
         >
       </div>
@@ -101,11 +106,14 @@ export default {
           suffix="+"
           :duration="5"
           :autoinit="true"
-          @finished="alert(`Counting finished!`)"
+          @finished="handleCounterFinished"
           class="font-general-medium text-4xl font-bold text-secondary-dark dark:text-secondary-light mb-2"
-          style="margin-top: -40px;"
+          style="margin-top: -40px"
         />
-        <span class="block text-md text-ternary-dark dark:text-ternary-light" style="margin-top: -10px;">
+        <span
+          class="block text-md text-ternary-dark dark:text-ternary-light"
+          style="margin-top: -10px"
+        >
           {{ feedbackTitle }}
         </span>
       </div>
@@ -119,11 +127,14 @@ export default {
           :duration="5"
           suffix="+"
           :autoinit="true"
-          @finished="alert(`Counting finished!`)"
+          @finished="handleCounterFinished"
           class="font-general-medium text-4xl font-bold text-secondary-dark dark:text-secondary-light mb-2"
-          style="margin-top: -40px;"
+          style="margin-top: -40px"
         />
-        <span class="block text-md text-ternary-dark dark:text-ternary-light" style="margin-top: -10px;">
+        <span
+          class="block text-md text-ternary-dark dark:text-ternary-light"
+          style="margin-top: -10px"
+        >
           {{ projectsTitle }}
         </span>
       </div>
@@ -136,11 +147,11 @@ export default {
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <h2 class="header-title" style="margin-top: -30px;">NGOs</h2>
+            <h2 class="header-title" style="margin-top: -30px">NGOs</h2>
           </div>
         </div>
       </div>
-      <Posts category="NGO"/>
+      <Posts category="NGO" />
     </div>
 
     <!-- Container for Companies -->
@@ -152,7 +163,7 @@ export default {
           </div>
         </div>
       </div>
-      <Posts category="Company"/>
+      <Posts category="Company" />
     </div>
   </div>
 
@@ -200,12 +211,11 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover; /* This will cover the full area, potentially cropping the video */
-  object-position: center 35%;; /* Center the video in the container */
+  object-position: center 35%; /* Center the video in the container */
   position: absolute;
   top: 50;
-  z-index: -1;/* Keep the video behind other content */
+  z-index: -1; /* Keep the video behind other content */
 }
-
 
 .mask {
   position: absolute;
@@ -217,7 +227,8 @@ export default {
   z-index: 0; /* Above the video but below the text */
 }
 
-.header-title, .header-subtitle {
+.header-title,
+.header-subtitle {
   z-index: 1; /* Ensures text is above the overlay and video */
   position: relative;
   color: rgb(10, 0, 0);

@@ -20,8 +20,6 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const auth = getAuth(firebaseApp);
 
-
-
 const handleSignOut = async () => {
   try {
     await signOut(auth);
@@ -120,7 +118,7 @@ watch(
     :class="{
       'z-index-3 w-100 shadow-none navbar-transparent position-absolute my-3':
         props.transparent,
-      'my-3 blur border-radius-lg z-index-3 py-2 shadow py-2 start-0 end-0 mx-4 position-absolute mt-4':
+      'my-3 blur border-radius-lg z-index-3 py-2 shadow py-2 start-0 end-0 mx-4 position-absolute mt-4 w-100':
         props.sticky,
       'navbar-light bg-white py-3': props.light,
       ' navbar-dark bg-gradient-dark z-index-3 py-3': props.dark,
@@ -150,7 +148,6 @@ watch(
           <span class="link-text">Link4Impact</span>
         </RouterLink>
       </div>
-
 
       <a
         href="pages/landing-pages/post"
@@ -262,15 +259,6 @@ watch(
                 >
                   <span>Saved Posts</span>
                 </RouterLink>
-                <div
-                  class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-0 mt-3"
-                >
-                  Account
-                </div>
-
-                <button @click="handleSignOut" class="btn btn-danger">
-                  Sign Out
-                </button>
               </div>
             </div>
           </li>
@@ -299,7 +287,7 @@ watch(
             </RouterLink>
           </li>
 
-          <li class="nav-item dropdown dropdown-hover mx-2">
+          <!-- <li class="nav-item dropdown dropdown-hover mx-2">
             <a
               role="button"
               class="nav-link ps-2 d-flex cursor-pointer align-items-center"
@@ -781,8 +769,8 @@ watch(
                 </div>
               </div>
             </div>
-          </li>
-          <li class="nav-item dropdown dropdown-hover mx-2">
+          </li> -->
+          <!-- <li class="nav-item dropdown dropdown-hover mx-2">
             <a
               role="button"
               class="nav-link ps-2 d-flex cursor-pointer align-items-center"
@@ -936,7 +924,7 @@ watch(
                 </div>
               </div>
             </div>
-          </li>
+          </li> -->
         </ul>
         <!-- Post Now button -->
 
