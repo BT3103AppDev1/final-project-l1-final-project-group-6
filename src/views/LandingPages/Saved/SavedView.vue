@@ -6,9 +6,6 @@ import Header from "../../../examples/Header.vue";
 // sections
 import Footer from "./Sections/SavedFooter.vue";
 import Posts from "./Sections/SavedPosts.vue";
-
-// image
-import image from "@/assets/img/city-profile.jpg";
 </script>
 <template>
   <DefaultNavbar transparent />
@@ -39,7 +36,6 @@ import image from "@/assets/img/city-profile.jpg";
   </div>
   <Footer />
 </template>
-
 
 <style>
 @font-face {
@@ -114,4 +110,3 @@ import image from "@/assets/img/city-profile.jpg";
   margin-top: -10px;
 }
 </style>
-

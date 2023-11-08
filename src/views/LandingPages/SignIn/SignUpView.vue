@@ -36,6 +36,9 @@ export default {
           followers: 0,
           userID: user.uid,
           description: "",
+          saved: [],
+          imageURL:
+            "https://api-private.atlassian.com/users/7831f16b18333c732e152c74f1863d18/avatar",
         };
 
         await setDoc(userDocRef, userData);
