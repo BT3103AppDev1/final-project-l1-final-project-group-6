@@ -24,6 +24,7 @@ import RecentPostPreview from './Sections/RecentPostPreview.vue';
 /* import vueMkHeader from "@/assets/img/vue-mk-header.jpg"; */
 import classroom from '@/assets/img/classroom.jpg';
 import childrenSmiling from '@/assets/img/children-smiling.jpg';
+import solarPanel from '@/assets/video/home-solar-panel.mp4';
 import wavesWhite from '@/assets/img/waves-white.svg';
 import logoBootstrap from '@/assets/img/logos/bootstrap5.jpg';
 import logoTailwind from '@/assets/img/logos/icon-tailwind.jpg';
@@ -54,12 +55,20 @@ onUnmounted(() => {
         </div>
     </div>
     <Header>
+        <!-- Use for static image
         <div
             class="page-header min-vh-75"
             :style="`background-image: url(${classroom})`"
             style="background-position-y: 65%"
             loading="lazy"
-        >
+        > -->
+        <!-- Use for video -->
+        <div class="page-header min-vh-75">
+            <video autoplay loop muted playsinline class="home-video" style="headerStyle">
+                <source src="../../assets/videos/home-solar-panel.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+
             <div class="container">
                 <div class="row">
                     <div class="col-lg-7 text-center mx-auto position-relative">
