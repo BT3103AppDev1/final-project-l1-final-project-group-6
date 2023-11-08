@@ -6,43 +6,36 @@ import Header from "../../../examples/Header.vue";
 // sections
 import Footer from "./Sections/SavedFooter.vue";
 import Posts from "./Sections/SavedPosts.vue";
-
-// image
-import image from "@/assets/img/city-profile.jpg";
 </script>
 <template>
   <DefaultNavbar transparent />
 
   <Header>
-  <div class="page-header" :style="headerStyle">
-    <video autoplay loop muted playsinline class="globe-video">
-      <source src="../../../data/video2.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+    <div class="page-header" :style="headerStyle">
+      <video autoplay loop muted playsinline class="globe-video">
+        <source src="../../../data/video2.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
 
-    <span class="mask bg-gradient-dark opacity-3"></span>
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center mx-auto my-auto">
-          <h1 class="text-white header-title">
-            Bookmarked<span id="typed"></span>
-          </h1>
-          <p class="text-white header-subtitle">
-            Better late than never!
-          </p>
+      <span class="mask bg-gradient-dark opacity-3"></span>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center mx-auto my-auto">
+            <h1 class="text-white header-title">
+              Bookmarked<span id="typed"></span>
+            </h1>
+            <p class="text-white header-subtitle">Better late than never!</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</Header>
-
+  </Header>
 
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
     <Posts />
   </div>
   <Footer />
 </template>
-
 
 <style>
 @font-face {
@@ -84,12 +77,11 @@ import image from "@/assets/img/city-profile.jpg";
   width: 100%;
   height: 100%;
   object-fit: cover; /* This will cover the full area, potentially cropping the video */
-  object-position: center 50%;; /* Center the video in the container */
+  object-position: center 50%; /* Center the video in the container */
   position: absolute;
   top: 50;
-  z-index: -1;/* Keep the video behind other content */
+  z-index: -1; /* Keep the video behind other content */
 }
-
 
 .mask {
   position: absolute;
@@ -101,7 +93,8 @@ import image from "@/assets/img/city-profile.jpg";
   z-index: 0; /* Above the video but below the text */
 }
 
-.header-title, .header-subtitle {
+.header-title,
+.header-subtitle {
   z-index: 1; /* Ensures text is above the overlay and video */
   position: relative;
   color: rgb(10, 0, 0);
@@ -117,4 +110,3 @@ import image from "@/assets/img/city-profile.jpg";
   margin-top: -10px;
 }
 </style>
-

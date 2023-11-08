@@ -13,21 +13,19 @@ import { faSeedling } from "@fortawesome/free-solid-svg-icons"; // Use the corre
 
 library.add(faSeedling); // Add the icon to the library
 
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import firebaseApp from "../../firebase";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 const auth = getAuth(firebaseApp);
 
-
-
 const handleSignOut = async () => {
   try {
     await signOut(auth);
     console.log("User signed out successfully");
     // You can optionally redirect the user to a different page or perform any other actions after sign-out.
-    router.push({ name: "signin-basic" });
+    router.push({ name: "presentation" });
   } catch (error) {
     console.error("Error signing out:", error);
   }
@@ -113,14 +111,24 @@ watch(
     }
   }
 );
+
+const isLoggedIn = ref(false);
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    isLoggedIn.value = true;
+  }
+  console.log("in navbar " + isLoggedIn.value);
+});
 </script>
+
 <template>
   <nav
     class="navbar navbar-expand-lg top-0"
     :class="{
       'z-index-3 w-100 shadow-none navbar-transparent position-absolute my-3':
         props.transparent,
-      'my-3 blur border-radius-lg z-index-3 py-2 shadow py-2 start-0 end-0 mx-4 position-absolute mt-4':
+      'my-3 blur border-radius-lg z-index-3 py-2 shadow py-2 start-0 end-0 mx-4 position-absolute mt-4 w-100':
         props.sticky,
       'navbar-light bg-white py-3': props.light,
       ' navbar-dark bg-gradient-dark z-index-3 py-3': props.dark,
@@ -150,7 +158,6 @@ watch(
           <span class="link-text">Link4Impact</span>
         </RouterLink>
       </div>
-
 
       <a
         href="pages/landing-pages/post"
@@ -228,12 +235,6 @@ watch(
                       >
                         <span>Contact Us</span>
                       </RouterLink>
-                      <RouterLink
-                        :to="{ name: 'saved' }"
-                        class="dropdown-item border-radius-md"
-                      >
-                        <span>Saved Posts</span>
-                      </RouterLink>
                     </div>
                   </div>
                 </div>
@@ -250,27 +251,6 @@ watch(
                 >
                   <span>About Us</span>
                 </RouterLink>
-                <RouterLink
-                  :to="{ name: 'contactus' }"
-                  class="dropdown-item border-radius-md"
-                >
-                  <span>Contact Us</span>
-                </RouterLink>
-                <RouterLink
-                  :to="{ name: 'saved' }"
-                  class="dropdown-item border-radius-md"
-                >
-                  <span>Saved Posts</span>
-                </RouterLink>
-                <div
-                  class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-0 mt-3"
-                >
-                  Account
-                </div>
-
-                <button @click="handleSignOut" class="btn btn-danger">
-                  Sign Out
-                </button>
               </div>
             </div>
           </li>
@@ -287,7 +267,7 @@ watch(
             </RouterLink>
           </li>
 
-          <li class="nav-item mx-2">
+          <li v-if="isLoggedIn" class="nav-item mx-2">
             <RouterLink
               to="/pages/landing-pages/saved"
               class="nav-link ps-2 d-flex cursor-pointer align-items-center"
@@ -299,7 +279,7 @@ watch(
             </RouterLink>
           </li>
 
-          <li class="nav-item dropdown dropdown-hover mx-2">
+          <!-- <li class="nav-item dropdown dropdown-hover mx-2">
             <a
               role="button"
               class="nav-link ps-2 d-flex cursor-pointer align-items-center"
@@ -781,8 +761,8 @@ watch(
                 </div>
               </div>
             </div>
-          </li>
-          <li class="nav-item dropdown dropdown-hover mx-2">
+          </li> -->
+          <!-- <li class="nav-item dropdown dropdown-hover mx-2">
             <a
               role="button"
               class="nav-link ps-2 d-flex cursor-pointer align-items-center"
@@ -936,11 +916,11 @@ watch(
                 </div>
               </div>
             </div>
-          </li>
+          </li> -->
         </ul>
         <!-- Post Now button -->
 
-        <ul class="navbar-nav d-lg-block d-none">
+        <ul v-if="isLoggedIn" class="navbar-nav d-lg-block d-none">
           <li class="nav-item">
             <a
               :href="action.route"
@@ -953,7 +933,7 @@ watch(
         </ul>
 
         <!-- SIGN OUT BUTTONS -->
-        <li class="nav-item dropdown">
+        <li v-if="isLoggedIn" class="nav-item dropdown">
           <a
             class="nav-link d-flex align-items-center"
             id="profileDropdown"
@@ -970,7 +950,7 @@ watch(
           </a>
           <ul class="dropdown-menu" aria-labelledby="profileDropdown">
             <li>
-              <RouterLink to="/profile" class="dropdown-item"
+              <RouterLink :to="{ name: 'profile' }" class="dropdown-item"
                 >View Profile</RouterLink
               >
             </li>
@@ -981,6 +961,18 @@ watch(
             </li>
           </ul>
         </li>
+
+        <!-- SIGN IN BUTTONS -->
+        <ul v-if="!isLoggedIn" class="navbar-nav d-lg-block d-none">
+          <li class="nav-item">
+            <RouterLink
+              :to="{ name: 'signin-basic' }"
+              class="btn btn-sm mb-0"
+              style="background-color: #04b949; color: white"
+              >Sign In</RouterLink
+            >
+          </li>
+        </ul>
       </div>
     </div>
   </nav>

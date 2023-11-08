@@ -10,7 +10,6 @@ import ProfileView from "../views/LandingPages/Profile/ProfileView.vue";
 import SignInBasicView from "../views/LandingPages/SignIn/BasicView.vue";
 import SignUpView from "../views/LandingPages/SignIn/SignUpView.vue";
 import PostView from "../views/LandingPages/Post/PostView.vue";
-import ProfilePage from "../views/LandingPages/Profile/ProfilePage.vue";
 import PageHeaders from "../layouts/sections/page-sections/page-headers/HeadersView.vue";
 import PageFeatures from "../layouts/sections/page-sections/features/FeaturesView.vue";
 import NavigationNavbars from "../layouts/sections/navigation/navbars/NavbarsView.vue";
@@ -30,7 +29,9 @@ import ElDropdowns from "../layouts/sections/elements/dropdowns/DropdownsView.vu
 import ElProgressBars from "../layouts/sections/elements/progress-bars/ProgressBarsView.vue";
 import ElToggles from "../layouts/sections/elements/toggles/TogglesView.vue";
 import ElTypography from "../layouts/sections/elements/typography/TypographyView.vue";
-import auth from "../firebase.js";
+import firebase from "../firebase.js";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -58,6 +59,9 @@ const router = createRouter({
       path: "/pages/landing-pages/saved",
       name: "saved",
       component: SavedView,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/pages/landing-pages/post",
@@ -71,17 +75,6 @@ const router = createRouter({
       path: "/pages/landing-pages/explore",
       name: "explore",
       component: ExploredView,
-    },
-    {
-      path: "/pages/landing-pages/explore/:section",
-      name: "exploreScroll",
-      component: ExploredView,
-    },
-    
-    {
-      path: "/profile",
-      name: "profile",
-      component: ProfileView,
     },
     {
       path: "/pages/landing-pages/post-details/:id",
@@ -102,7 +95,10 @@ const router = createRouter({
     {
       path: "/pages/landing-pages/profile",
       name: "profile",
-      component: ProfilePage,
+      component: ProfileView,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/sections/page-sections/page-headers",
@@ -210,5 +206,16 @@ const router = createRouter({
     }
   },
 })
+
+router.beforeEach(async (to, from) => {
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+
+  onAuthStateChanged(getAuth(), (user) => {
+    if (requiresAuth && !user) {
+      console.log("User is not authenticated. Redirecting to signin-basic");
+      router.push("/pages/landing-pages/basic");
+    }
+  });
+});
 
 export default router;

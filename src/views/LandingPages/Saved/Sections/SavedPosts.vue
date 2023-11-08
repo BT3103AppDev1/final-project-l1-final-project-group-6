@@ -9,17 +9,25 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-const auth = getAuth(firebaseApp);
+const auth = getAuth();
+var userID = "";
 
-console.log("user", auth.currentUser);
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in. Access the UID.
+    userID = user.uid;
+    console.log(userID);
+    // Continue with your code...
+  }
+});
 
 export default {
   data() {
     return {
       db: getFirestore(firebaseApp),
-      userID: 1,
+      userID: userID,
       savedPosts: [],
     };
   },
@@ -29,15 +37,16 @@ export default {
   methods: {
     async fetchSavedPosts() {
       try {
-        const userSavedRef = doc(this.db, "saved", this.userID.toString());
+        const userSavedRef = doc(this.db, "users", this.userID.toString());
         const userSavedDoc = await getDoc(userSavedRef);
 
         if (userSavedDoc.exists()) {
           const savedData = userSavedDoc.data();
           //console.log(savedData);
-          if (savedData && savedData.postID && savedData.postID.length > 0) {
-            const postIds = savedData.postID;
+          if (savedData && savedData.saved && savedData.saved.length > 0) {
+            const postIds = savedData.saved;
             const posts = [];
+            console.log(postIds);
 
             for (const postId of postIds) {
               const postQuery = query(

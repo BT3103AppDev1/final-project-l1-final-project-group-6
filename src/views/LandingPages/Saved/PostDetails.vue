@@ -1,32 +1,31 @@
-<template>
-  <div class="post-details-container">
-    <div class="button-container">
-      <button @click="goBackExplore" class="back-button">← Back to Explore Posts</button>
-      <button @click="goBack" class="back-button">← Back to Saved Posts</button>
-    </div>
-    <div class="post-card">
-      <img :src="post.imageUrl" alt="Post Image" class="post-image" />
-      <div class="post-content">
-        <h1 class="post-title">{{ post.title }}</h1>
-        <div class="post-meta">
-          <span class="post-author">{{ post.username }}</span> |
-          <span class="post-entity">{{ post.entity }}</span>
-        </div>
-        <p class="post-description">{{ post.description }}</p>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
 import firebaseApp from "../../../firebase.js";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+const auth = getAuth();
+var userID = "";
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in. Access the UID.
+    userID = user.uid;
+    console.log(userID);
+  }
+});
 
 export default {
   data() {
     return {
       db: getFirestore(firebaseApp),
       post: {}, // will store the detailed post data
+      isSaved: false, // To track whether the post is saved
     };
   },
   async created() {
@@ -45,6 +44,12 @@ export default {
     } catch (error) {
       console.error("Error fetching post details:", error);
     }
+    const userRef = doc(this.db, "users", userID);
+    const userDoc = await getDoc(userRef);
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      this.isSaved = userData.saved.includes(this.$route.params.id);
+    }
   },
   methods: {
     goBack() {
@@ -53,9 +58,59 @@ export default {
     goBackExplore() {
       this.$router.push({ name: "explore" });
     },
+    async savePost() {
+      const userRef = doc(this.db, "users", userID);
+      const userDoc = await getDoc(userRef);
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        if (this.isSaved) {
+          // If post is saved, remove it from the saved list
+          await updateDoc(userRef, {
+            saved: userData.saved.filter(
+              (pid) => pid !== this.$route.params.id
+            ),
+          });
+          this.isSaved = false;
+          //alert("Post unsaved!");
+        } else {
+          // If post isn't saved, add it to the saved list
+          await updateDoc(userRef, {
+            saved: arrayUnion(this.$route.params.id),
+          });
+          this.isSaved = true;
+        }
+      } else {
+        console.error("User document does not exist!");
+      }
+    },
   },
 };
 </script>
+<template>
+  <div class="post-details-container">
+    <div class="button-container">
+      <button @click="goBackExplore" class="back-button">
+        ← Back to Explore Posts
+      </button>
+      <button @click="goBack" class="back-button">← Back to Saved Posts</button>
+
+      <button @click="savePost" class="star-button">
+        <i :class="['fa', isSaved ? 'fa-star' : 'fa-star-o']"></i>
+      </button>
+    </div>
+    <div class="post-card">
+      <img :src="post.imageUrl" alt="Post Image" class="post-image" />
+      <div class="post-content">
+        <h1 class="post-title">{{ post.title }}</h1>
+        <div class="post-meta">
+          <span class="post-author">{{ post.username }}</span> |
+          <span class="post-entity">{{ post.entity }}</span>
+        </div>
+        <p class="post-description">{{ post.description }}</p>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .post-details-container {
@@ -82,7 +137,7 @@ export default {
 }
 
 .post-title {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   margin-bottom: 10px;
 }
@@ -94,7 +149,7 @@ export default {
 }
 
 .post-description {
-  font-family: 'Open Sans', Arial, sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
   line-height: 1.6;
   color: #444;
 }
@@ -122,7 +177,7 @@ export default {
 }
 
 /* Style for the second button */
-.back-button:last-child {
+.back-button:nth-child(2) {
   background-color: #28a745; /* Green color */
 }
 
@@ -136,7 +191,19 @@ export default {
   background-color: #0056b3; /* Darker blue on hover */
 }
 
-.back-button:last-child:hover {
+.back-button:nth-child(2):hover {
   background-color: #218838; /* Darker green on hover */
+}
+
+.star-button {
+  background: none;
+  border: none;
+  font-size: 1.5em; /* Adjust size as needed */
+  color: #ffd700; /* Gold color for the star */
+  cursor: pointer;
+}
+
+.star-button:hover {
+  color: #ffac33; /* A lighter gold color on hover */
 }
 </style>
