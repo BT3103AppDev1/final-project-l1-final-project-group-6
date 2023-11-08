@@ -259,15 +259,6 @@ watch(
                 >
                   <span>Saved Posts</span>
                 </RouterLink>
-                <div
-                  class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-0 mt-3"
-                >
-                  Account
-                </div>
-
-                <button @click="handleSignOut" class="btn btn-danger">
-                  Sign Out
-                </button>
               </div>
             </div>
           </li>
