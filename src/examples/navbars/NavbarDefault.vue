@@ -20,6 +20,8 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const auth = getAuth(firebaseApp);
 
+
+
 const handleSignOut = async () => {
   try {
     await signOut(auth);

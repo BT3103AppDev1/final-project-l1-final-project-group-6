@@ -4,15 +4,8 @@ import { onMounted, onUnmounted, ref } from "vue";
 //firebase
 import firebase from "../../../firebase.js";
 import "firebase/firestore";
-import { getAuth } from "firebase/auth";
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  collection,
-  query,
-  onSnapshot,
-} from "firebase/firestore";
+import "firebase/auth";
+import { getFirestore, doc, setDoc,collection,query,onSnapshot } from "firebase/firestore";
 
 //example components
 import NavbarDefault from "../../../examples/navbars/NavbarDefault.vue";
@@ -29,6 +22,9 @@ import MaterialSwitch from "@/components/MaterialSwitch.vue";
 //images
 import profile from "@/assets/img/profile.jpg";
 
+
+
+
 //hooks
 const body = document.getElementsByTagName("body")[0];
 onMounted(() => {
@@ -39,20 +35,6 @@ onUnmounted(() => {
   body.classList.remove("presentation-page");
   body.classList.remove("bg-gray-200");
 });
-
-const auth = getAuth();
-const user = auth.currentUser;
-
-if (user !== null) {
-  // The user object has basic properties such as display name, email, etc.
-  const displayName = user.username;
-  console.log("  Provider-specific UID: " + user.uid);
-  const email = user.email;
-  const photoURL = user.imageUrl;
-  const uid = user.uid;
-}
-
-
 </script>
 
 <template>
@@ -87,7 +69,7 @@ if (user !== null) {
 
   <div class="user-profile">
     <div v-if="user">
-      <h2>You are logged in as: {{ user.email }}</h2>
+      <h2>You are logged in  as {{ user.username }}</h2>
       <div>
         <img :src="user.imageURL" alt="User Profile Image" />
       </div>
