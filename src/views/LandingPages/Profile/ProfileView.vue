@@ -42,6 +42,7 @@ export default {
       imageURL: "",
       userID: "",
       uid: "",
+      description: "",
     };
   },
   mounted() {
@@ -50,10 +51,17 @@ export default {
         const userRef = doc(db, "users", user.uid);
         getDoc(userRef).then((doc) => {
           if (doc.exists()) {
+            console.log("Document data:");
+            console.log(doc.data().username);
+            console.log(doc.data().imageURL);
+            console.log(doc.data().userID);
+            console.log(doc.data().uid);
+
             this.username = doc.data().username;
             this.imageURL = doc.data().imageURL;
             this.userID = doc.data().userID;
             this.uid = doc.data().uid;
+            this.description = doc.data().description;
           }
         });
       }
@@ -85,16 +93,51 @@ export default {
     </div>
   </Header>
 
-  <h1>hi {{ this.username }}</h1>
-
   <div class="user-profile">
     <div>
       <br /><br />
-      <img
-        src="https://picsum.photos/200/300?random=7https://picsum.photos/200/300?random=7"
-        alt="No Profile Picture"
-      />
+
+      <div class="profile-pic-username">
+        <h1>{{ username }}</h1>
+      </div>
+
+      <br /><br />
+
+      <div class="profile-pic">
+        <img
+          :src="imageURL"
+          alt="No Profile Picture"
+          style="object-fit: fill"
+        />
+      </div>
+
+      <br /><br />
+
+      <div class="profile-pic-description">
+        {{ description }}
+      </div>
     </div>
   </div>
   <Footer />
 </template>
+
+<style scoped>
+.user-profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.profile-pic {
+  width: 200px;
+  height: 200px;
+  border-radius: 60%;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  position: relative;
+  top: 50px;
+  border: 6px solid #fff;
+}
+</style>
