@@ -149,24 +149,11 @@ watch(
         </RouterLink>
       </div>
 
-      <RouterLink
-        class="navbar-brand d-block d-md-none"
-        :class="
-          props.transparent || props.dark
-            ? 'text-white'
-            : 'font-weight-bolder ms-sm-3'
-        "
-        to="/"
-        rel="tooltip"
-        title="Designed and Coded by Creative Tim"
-        data-placement="bottom"
-      >
-        VueJS
-      </RouterLink>
+
       <a
-        href="https://www.creative-tim.com/product/vue-material-kit-pro"
+        href="pages/landing-pages/post"
         class="btn btn-sm bg-gradient-success mb-0 ms-auto d-lg-none d-block"
-        >Buy Now</a
+        >Post Now</a
       >
       <button
         class="navbar-toggler shadow-none ms-2"
