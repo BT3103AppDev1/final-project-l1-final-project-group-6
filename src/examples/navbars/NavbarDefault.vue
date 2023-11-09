@@ -24,6 +24,7 @@ const handleSignOut = async () => {
   try {
     await signOut(auth);
     console.log("User signed out successfully");
+    location.reload();
     // You can optionally redirect the user to a different page or perform any other actions after sign-out.
     router.push({ name: "presentation" });
   } catch (error) {
