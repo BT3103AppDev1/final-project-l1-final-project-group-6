@@ -5,32 +5,16 @@ import { onMounted, onUnmounted } from 'vue';
 import NavbarDefault from '../..//examples/navbars/NavbarDefault.vue';
 import DefaultFooter from '../../examples/footers/FooterDefault.vue';
 import Header from '../../examples/Header.vue';
-import FilledInfoCard from '../../examples/cards/infoCards/FilledInfoCard.vue';
 
 //Vue Material Kit 2 components
 import MaterialSocialButton from '@/components/MaterialSocialButton.vue';
 
 // sections
-import PresentationCounter from './Sections/PresentationCounter.vue';
-import PresentationPages from './Sections/PresentationPages.vue';
-import PresentationExample from './Sections/PresentationExample.vue';
-import data from './Sections/Data/designBlocksData';
-import BuiltByDevelopers from './Components/BuiltByDevelopers.vue';
-import PresentationTestimonials from './Sections/PresentationTestimonials.vue';
-import PresentationInformation from './Sections/PresentationInformation.vue';
 import RecentPostPreview from './Sections/RecentPostPreview.vue';
 
 //images
 /* import vueMkHeader from "@/assets/img/vue-mk-header.jpg"; */
-import classroom from '@/assets/img/classroom.jpg';
 import childrenSmiling from '@/assets/img/children-smiling.jpg';
-import wavesWhite from '@/assets/img/waves-white.svg';
-import logoBootstrap from '@/assets/img/logos/bootstrap5.jpg';
-import logoTailwind from '@/assets/img/logos/icon-tailwind.jpg';
-import logoVue from '@/assets/img/logos/vue.jpg';
-import logoAngular from '@/assets/img/logos/angular.jpg';
-import logoReact from '@/assets/img/logos/react.jpg';
-import logoSketch from '@/assets/img/logos/sketch.jpg';
 
 //hooks
 const body = document.getElementsByTagName('body')[0];
@@ -42,7 +26,6 @@ onUnmounted(() => {
     body.classList.remove('presentation-page');
     body.classList.remove('bg-gray-200');
 });
-
 </script>
 
 <template>
@@ -65,7 +48,7 @@ onUnmounted(() => {
         <!-- Use for video -->
         <div class="page-header min-vh-75">
             <video autoplay loop muted playsinline class="home-video" style="headerStyle">
-                <source src="../../assets/videos/home-solar-panel.mp4" type="video/mp4" />
+                <source src="../../assets/videos/solar-installation.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
 
@@ -88,67 +71,13 @@ onUnmounted(() => {
     </Header>
 
     <!-- Body -->
-    <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
-        <div class="py-2">
-            <RecentPostPreview entityType="Company" />
-        </div>
-        <br /><br />
-        <div class="py-2">
-            <RecentPostPreview entityType="NGO" />
-        </div>
-        <!-- <PresentationCounter />
-        <PresentationInformation />
-        <PresentationExample :data="data" />
-        <PresentationPages />
-        <BuiltByDevelopers /> -->
+    <div class="card blur shadow-blur">
+        <RecentPostPreview entityType="Company" />
 
-        <!-- 
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <FilledInfoCard
-                        class="p-4"
-                        :color="{ text: 'white', background: 'bg-gradient-success' }"
-                        :icon="{ component: 'flag', color: 'white' }"
-                        title="Getting Started"
-                        description="Check the possible ways of working with our product and the necessary files for building your own project."
-                        :action="{
-                            route: 'https://www.creative-tim.com/learning-lab/vue/overview/material-kit/',
-                            label: { text: 'Let\'s start', color: 'white' }
-                        }"
-                    />
-                </div>
-                <div class="col-lg-4">
-                    <FilledInfoCard
-                        class="px-lg-1 mt-lg-0 mt-4 p-4"
-                        height="h-100"
-                        :icon="{ component: 'precision_manufacturing', color: 'success' }"
-                        title="Plugins"
-                        description="Get inspiration and have an overview about the plugins that we
-                used to create the Material Kit."
-                        :action="{
-                            route: 'https://www.creative-tim.com/learning-lab/vue/input/material-kit/',
-                            label: { text: 'Read more' }
-                        }"
-                    />
-                </div>
-                <div class="col-lg-4">
-                    <FilledInfoCard
-                        class="px-lg-1 mt-lg-0 mt-4 p-4"
-                        :icon="{ component: 'receipt_long', color: 'success' }"
-                        title="Utility Classes"
-                        description="Material Kit is giving you a lot of pre-made elements. For those
-                who want flexibility, we included many utility classes."
-                        :action="{
-                            route: 'https://www.creative-tim.com/learning-lab/vue/utilities/material-kit/',
-                            label: { text: 'Read more' }
-                        }"
-                    />
-                </div>
-            </div>
-        </div>
-        <PresentationTestimonials />
- -->
+        <br /><br />
+
+        <RecentPostPreview entityType="NGO" />
+
         <div
             class="container-fluid mt-sm-5 border-radius-xl"
             :style="{
@@ -174,7 +103,6 @@ onUnmounted(() => {
                                     difference.
                                 </p>
 
-                                <!-- TODO: Replace below with link<a> & RouterLink to sign up page -->
                                 <a
                                     href="pages/landing-pages/post/"
                                     class="btn btn-sm mb-0 bg-gradient-success px-5 py-3 mt-4"
