@@ -396,7 +396,7 @@ onAuthStateChanged(auth, (user) => {
   font-weight: bold;
   font-size: 1.25rem; /* This increases the font size */
   font-family: "Roboto", sans-serif; /* This sets a modern, sans-serif font */
-  color: white; /* This sets the text color to white */
+  color: rgb(0, 0, 0); /* This sets the text color to white */
 }
 
 /* You may need to add the following @font-face if you don't have Roboto loaded in your project */

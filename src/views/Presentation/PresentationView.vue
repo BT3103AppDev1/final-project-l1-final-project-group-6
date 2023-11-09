@@ -64,10 +64,12 @@ onUnmounted(() => {
         > -->
         <!-- Use for video -->
         <div class="page-header min-vh-75">
-            <video autoplay loop muted playsinline class="home-video" style="headerStyle">
-                <source src="../../assets/videos/home-solar-panel.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>
+    <div class="video-overlay"></div> <!-- Add this line -->
+    <video autoplay loop muted playsinline class="home-video">
+        <source src="../../data/video7.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+
 
             <div class="container">
                 <div class="row">
@@ -198,13 +200,13 @@ onUnmounted(() => {
                     <!-- TODO: Update routes -->
                     <div class="col-lg-5 me-lg-auto my-lg-auto text-lg-end mt-5">
                         <MaterialSocialButton
-                            route="https://twitter.com/intent/tweet?text=Check%20Material%20Design%20System%20made%20by%20%40CreativeTim%20%23webdesign%20%23designsystem%20%23bootstrap5&url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fmaterial-design-system-pro"
+                            route="https://www.youtube.com/watch?v=uzPsMxez92c"
                             component="twitter"
                             color="twitter"
                             label="Tweet"
                         />
                         <MaterialSocialButton
-                            route="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/material-design-system-pro"
+                            route="https://www.youtube.com/watch?v=Zd8bNW4DG5E"
                             component="facebook-square"
                             color="facebook"
                             label="Share"
@@ -222,3 +224,13 @@ onUnmounted(() => {
     </div>
     <DefaultFooter />
 </template>
+
+
+<style>
+.home-video {
+    filter: brightness(65%); /* Adjust the percentage to control brightness */
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures video covers the entire container */
+}
+</style>

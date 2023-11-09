@@ -1,7 +1,7 @@
 <script setup>
 /*
 =========================================================
-* Vue Material Kit 2 - v2.0.0
+* Vue  - v2.0.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/vue-material-kit
