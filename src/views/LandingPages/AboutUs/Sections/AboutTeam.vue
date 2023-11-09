@@ -18,18 +18,37 @@ import marquez from "@/assets/img/ivana-square.jpg";
             The Executive Team
           </h3>
           <p class="text-white opacity-8 mb-0">
-            There’s nothing I really wanted to do in life that I wasn’t able to
-            get good at. That’s my skill.
+            May the bridges i burn light the way
           </p>
         </div>
       </div>
       <div class="row">
         <div class="col-lg-6 col-12">
           <HorizontalTeamCard
-            class="mt-4"
-            :image="emma"
-            :profile="{ name: 'Emma Roberts', link: 'javascript:;' }"
+            class="mt-2"
+            :image="'https://www.comp.nus.edu.sg/stfphotos/shashank.jpg'"
+            :profile="{ name: 'Shashank', link: 'javascript:;' }"
             :position="{ label: 'UI Designer', color: 'success' }"
+            description="Artist is a term applied to a person who engages in an
+                    activity deemed to be an art."
+          />
+        </div>
+        <div class="col-lg-6 col-12">
+          <HorizontalTeamCard
+            class="mt-2"
+            :image="william"
+            :profile="{ name: 'William ', link: 'javascript:;' }"
+            :position="{ label: 'Boss', color: 'success' }"
+            description="Artist is a term applied to a person who engages in an
+                    activity deemed to be an art."
+          />
+        </div>
+        <div class="col-lg-6 col-12">
+          <HorizontalTeamCard
+            class="mt-lg-4 mt-5"
+            :image="william"
+            :profile="{ name: 'William Pearce', link: 'javascript:;' }"
+            :position="{ label: 'Boss', color: 'success' }"
             description="Artist is a term applied to a person who engages in an
                     activity deemed to be an art."
           />
