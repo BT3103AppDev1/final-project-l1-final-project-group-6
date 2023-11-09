@@ -205,7 +205,7 @@ const router = createRouter({
       component: ElTypography,
     },
   ],
-
+});
 
 router.beforeEach(async (to, from) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
