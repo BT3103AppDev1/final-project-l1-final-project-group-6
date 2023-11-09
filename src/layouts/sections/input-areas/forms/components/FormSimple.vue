@@ -54,17 +54,7 @@ onMounted(() => {
             </div>
             <div class="row">
               <div class="col-md-12">
-                <MaterialSwitch
-                  class="mb-4 d-flex align-items-center"
-                  id="flexSwitchCheckDefault"
-                  checked
-                  labelClass="ms-3 mb-0"
-                >
-                  I agree to the
-                  <a href="javascript:;" class="text-dark"
-                    ><u>Terms and Conditions</u></a
-                  >.
-                </MaterialSwitch>
+
 
                 <div class="col-md-12">
                   <MaterialButton
