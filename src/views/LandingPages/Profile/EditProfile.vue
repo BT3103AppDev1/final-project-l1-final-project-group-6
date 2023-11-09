@@ -42,7 +42,6 @@ export default {
                 userID: this.userID,
                 description: this.description
             }).then(() => {
-                console.log('Profile updated');
                 alert('Profile updated')
                 this.$router.push({ name: 'profile' });
             });

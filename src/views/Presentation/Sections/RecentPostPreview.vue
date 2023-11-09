@@ -18,7 +18,7 @@ export default {
     data() {
         return {
             previewPosts: [],
-            numPosts: 3,
+            numPosts: 4,
             entityLowerCase: this.entityType.toLowerCase()
         };
     },
@@ -39,14 +39,14 @@ export default {
             return this.previewPosts.slice(0, this.numPosts);
         },
         containerRoute() {
-            return `#${this.entityLowerCase}-container`;
+            return `#${this.entityLowerCase}Container`;
         }
     }
 };
 </script>
 
 <template>
-    <div class="parent">
+    <!-- <div class="parent">
         <div class="title">
             <h2>Recent {{ this.entityType }} Posts</h2>
         </div>
@@ -58,7 +58,29 @@ export default {
             <div v-for="n in numPosts - visiblePosts.length" :key="n" class="post-list-item"></div>
         </div>
         <div class="view-more">
-            <RouterLink :to="{ name: 'explore', hash: containerRoute }">
+            <RouterLink :to="{ path: '/pages/landing-pages/explore', hash: containerRoute }">
+                <button class="btn btn-success view-btn">View More</button>
+            </RouterLink>
+        </div>
+    </div> -->
+    <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-4 mb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="header-title pt-4" style="margin-top: -30px">
+                        Recent {{ this.entityType }} Posts
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container">
+            <div v-for="(post, index) in visiblePosts" :key="index" class="post-list-item">
+                <PostsCard :post="post" />
+            </div>
+        </div>
+        <div class="view-more">
+            <RouterLink :to="{ path: '/pages/landing-pages/explore', hash: containerRoute }">
                 <button class="btn btn-success view-btn">View More</button>
             </RouterLink>
         </div>
@@ -66,28 +88,26 @@ export default {
 </template>
 
 <style scoped>
-.parent {
-    border: 1px solid grey;
-    border-radius: 10px;
-    padding: 1em 1em 0 1em;
-    width: 95%;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.title {
-    text-align: left;
-}
-.post-container {
+.card-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
+    gap: 40px; /* Add a gap between the cards */
+    margin-left: 40px;
+    margin-top: 40px;
+}
+.container.my-5 {
+    margin-bottom: 3rem !important; /* Adjust the margin-bottom value to create more space between the containers */
 }
 
-.post-list-item {
-    flex: 0 0 calc(33.33% - 20px); /* Adjust for margins */
-    padding: 10px;
+.card.card-body {
+    margin-top: 2rem; /* Add margin at the top to create space between this container and the one above */
 }
 
+.header-title {
+    font-weight: bold;
+    font-size: 3em;
+}
 .view-more {
     text-align: center;
     margin-top: 18px; /* Add spacing between posts and the button */
