@@ -205,6 +205,15 @@ const router = createRouter({
       component: ElTypography,
     },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    if (to.hash) {
+      return { el: to.hash ,behavior: 'smooth',};
+    } else if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 };
+    }
+  },
 });
 
 router.beforeEach(async (to, from) => {

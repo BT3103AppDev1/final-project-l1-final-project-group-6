@@ -121,6 +121,14 @@ export default {
               <h3>Description</h3>
               <p>{{ description }}</p>
             </div>
+
+            <RouterLink :to="{ name: 'editProfile' }">
+              <button
+                class="btn btn-success"
+              >
+              Edit Profile
+              </button>
+            </RouterLink>
           </div>
         </div>
       </div>
