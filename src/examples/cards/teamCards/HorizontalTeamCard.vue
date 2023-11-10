@@ -1,5 +1,5 @@
 <script setup>
-defineProps({
+const props = defineProps({
   image: {
     type: String,
     required: true,
@@ -7,14 +7,12 @@ defineProps({
   profile: {
     type: Object,
     required: true,
-    name: String,
-    link: String,
+    // Don't declare object structure here
   },
   position: {
     type: Object,
-    label: String,
-    color: String,
     required: true,
+    // Don't declare object structure here
   },
   description: {
     type: String,
@@ -22,6 +20,7 @@ defineProps({
   },
 });
 </script>
+
 <template>
   <div class="card card-profile">
     <div class="row">

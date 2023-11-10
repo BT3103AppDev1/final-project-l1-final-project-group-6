@@ -12,40 +12,41 @@ import CenteredBlogCard from "../../../../examples/cards/blogCards/CenteredBlogC
             <DefaultInfoCard
               color="info"
               icon="public"
-              title="Fully integrated"
-              description="We get insulted by others, lose trust for those We get back
-                  freezes"
+              title="Streamlined Matchmaking"
+              description="The app can facilitate a targeted and efficient matchmaking process"
             />
             <DefaultInfoCard
               color="info"
               icon="payments"
-              title="Payments functionality"
-              description="We get insulted by others, lose trust for those We get back
-                  freezes"
+              title="Increased Visibility and Awareness"
+              description="NGOs can gain significant exposure to a wider audience of potential supporters"
             />
           </div>
           <div class="row justify-content-start mt-4">
             <DefaultInfoCard
               color="info"
               icon="apps"
-              title="Prebuilt components"
-              description="We get insulted by others, lose trust for those We get back
-                  freezes"
+              title="Enhanced Corporate Social Responsiblity"
+              description="Help companies find meaningful and impactful ways to contribute to society"
             />
             <DefaultInfoCard
               color="info"
               icon="3p"
-              title="Improved platform"
-              description="We get insulted by others, lose trust for those We get back
-                  freezes"
+              title="Efficient Resources"
+              description="We only connect appropriate NGOs to companies for efficient resource allocation"
             />
           </div>
         </div>
         <div class="col-lg-4 ms-auto mt-lg-0 mt-6">
+          <div class="video-overlay"></div> <!-- Add this line for video overlay -->
+    <video autoplay loop muted playsinline class="home-video">
+        <source src="../../../../data/video8.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+    </video>
+    <h3> </h3>
           <CenteredBlogCard
-            image="https://images.unsplash.com/photo-1544717302-de2939b7ef71?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-            title="Get insights on Search"
-            description="Website visitors today demand a frictionless user expericence — especially when using search. Because of the hight standards."
+            title="[Beta] Recommendation Engine"
+            description="To provide an enhanced user experience, we are working on a recommendation engine so you don't have to seive through the many posts"
           />
         </div>
       </div>
