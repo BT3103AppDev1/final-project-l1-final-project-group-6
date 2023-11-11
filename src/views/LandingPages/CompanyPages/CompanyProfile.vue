@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <script setup>
 // example components
 import DefaultNavbar from '../../../examples/navbars/NavbarDefault.vue';
@@ -6,18 +7,6 @@ import DefaultNavbar from '../../../examples/navbars/NavbarDefault.vue';
 <script>
 import firebaseApp from '../../../firebase.js';
 import { getFirestore, doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-
-const auth = getAuth();
-var userID = '';
-
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // User is signed in. Access the UID.
-    userID = user.uid;
-    console.log(userID);
-  }
-});
 
 export default {
 
@@ -29,11 +18,11 @@ export default {
     };
   },
   async created() {
-    const postId = this.$route.params.id;
-
+    const userId = this.$route.params.id;
+    console.log(this.$route.params.id)
     // Fetch the post details using the postId
     try {
-      const postRef = doc(this.db, 'posts', postId);
+      const postRef = doc(this.db, 'users', userId);
       const postDoc = await getDoc(postRef);
 
       if (postDoc.exists()) {
@@ -44,50 +33,13 @@ export default {
     } catch (error) {
       console.error('Error fetching post details:', error);
     }
-    const userRef = doc(this.db, 'users', userID);
-    const userDoc = await getDoc(userRef);
-    if (userDoc.exists()) {
-      const userData = userDoc.data();
-      this.isSaved = userData.saved.includes(this.$route.params.id);
-    }
-  },
-  methods: {
-    goBack() {
-      this.$router.push({ name: 'saved' });
-    },
-    goBackExplore() {
-      this.$router.push({ name: 'explore' });
-    },
-    async savePost() {
-      const userRef = doc(this.db, 'users', userID);
-      const userDoc = await getDoc(userRef);
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        if (this.isSaved) {
-          // If post is saved, remove it from the saved list
-          await updateDoc(userRef, {
-            saved: userData.saved.filter((pid) => pid !== this.$route.params.id)
-          });
-          this.isSaved = false;
-          //alert("Post unsaved!");
-        } else {
-          // If post isn't saved, add it to the saved list
-          await updateDoc(userRef, {
-            saved: arrayUnion(this.$route.params.id)
-          });
-          this.isSaved = true;
-        }
-      } else {
-        console.error('User document does not exist!');
-      }
-    },
-    redirectToCompanyProfile(userID) {
-      this.$router.push({ name: 'companyprofile', params: { id: userID } });
-    }
+    //console.log(this.post)
 
-  }
+  },
+  methods: {}
 };
 </script>
+
 <template>
   <DefaultNavbar transparent />
   <div class="page-header">
@@ -100,7 +52,7 @@ export default {
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center mx-auto my-auto">
-          <h1 class="text-white header-title">Post Details<span id="typed"></span></h1>
+          <h1 class="text-white header-title">Entity Information<span id="typed"></span></h1>
           <p class="text-white header-subtitle">Knowledge is Power!</p>
         </div>
       </div>
@@ -108,30 +60,23 @@ export default {
   </div>
 
   <div class="post-details-container">
-    <div class="button-container">
-      <button @click="goBackExplore" class="back-button">← Back to Explore Posts</button>
-      <button @click="goBack" class="back-button">← Back to Saved Posts</button>
 
-      <button @click="savePost" class="star-button">
-        <i :class="['fa', isSaved ? 'fa-star' : 'fa-star-o']"></i>
-      </button>
-    </div>
     <div class="post-card">
       <div class="image-container">
         <img :src="post.imageUrl" alt="Post Image" class="post-image" />
       </div>
       <div class="post-content">
-        <h1 class="post-title">{{ post.title }}</h1>
+        <h1 class="post-title">{{ post.username }}</h1>
+        <h1 class="post-title">{{ post.entity }}</h1>
         <div class="post-meta">
-          <span class="post-author" @click="redirectToCompanyProfile(post.userID)">{{ post.username }}</span>
-          |
-          <span class="post-entity">{{ post.entity }}</span>
+          <span class="post-author">{{ post.followers }} followers</span> |
+          <span class="post-entity">{{ post.following }} following</span>
         </div>
         <p class="post-description">{{ post.description }}</p>
       </div>
     </div>
   </div>
-</template>
+</template> 
 
 <style scoped>
 .counter-container {
@@ -264,14 +209,6 @@ export default {
   font-size: 0.95em;
   color: #666;
   margin-bottom: 1.5rem;
-}
-
-.post-author:hover {
-  text-decoration: underline;
-  /* Underline the text on hover */
-  cursor: pointer;
-  /* Change cursor to pointer on hover for better indication */
-  /* Add any other styles you want on hover */
 }
 
 .post-description {

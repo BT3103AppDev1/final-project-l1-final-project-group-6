@@ -11,6 +11,7 @@ import ProfileEdit from "../views/LandingPages/Profile/EditProfile.vue";
 import SignInBasicView from "../views/LandingPages/SignIn/BasicView.vue";
 import SignUpView from "../views/LandingPages/SignIn/SignUpView.vue";
 import PostView from "../views/LandingPages/Post/PostView.vue";
+import CompanyProfile from "../views/LandingPages/CompanyPages/CompanyProfile.vue";
 import PageHeaders from "../layouts/sections/page-sections/page-headers/HeadersView.vue";
 import PageFeatures from "../layouts/sections/page-sections/features/FeaturesView.vue";
 import NavigationNavbars from "../layouts/sections/navigation/navbars/NavbarsView.vue";
@@ -30,9 +31,7 @@ import ElDropdowns from "../layouts/sections/elements/dropdowns/DropdownsView.vu
 import ElProgressBars from "../layouts/sections/elements/progress-bars/ProgressBarsView.vue";
 import ElToggles from "../layouts/sections/elements/toggles/TogglesView.vue";
 import ElTypography from "../layouts/sections/elements/typography/TypographyView.vue";
-import firebase from "../firebase.js";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import auth from "../firebase.js";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -81,6 +80,12 @@ const router = createRouter({
       path: "/pages/landing-pages/post-details/:id",
       name: "postdetails",
       component: PostDetails,
+      props: true,
+    },
+    {
+      path: "/pages/landing-pages/company-profile/:id",
+      name: "companyprofile",
+      component: CompanyProfile,
       props: true,
     },
     {
@@ -207,7 +212,7 @@ const router = createRouter({
   ],
   scrollBehavior(to, from, savedPosition) {
     if (to.hash) {
-      return { el: to.hash ,behavior: 'smooth',};
+      return { el: to.hash, behavior: "smooth" };
     } else if (savedPosition) {
       return savedPosition;
     } else {
