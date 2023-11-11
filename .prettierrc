@@ -1,0 +1,15 @@
+{
+    "semi": true,
+    "trailingComma": "none",
+    "singleQuote": true,
+    "tabWidth": 4,
+    "overrides": [
+        {
+            "files": "*.html *.vue",
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ],
+    "printWidth": 100
+}

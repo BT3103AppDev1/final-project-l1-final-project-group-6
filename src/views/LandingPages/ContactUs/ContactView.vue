@@ -26,7 +26,7 @@ onMounted(() => {
         <DefaultNavbar
           :sticky="true"
           :action="{
-            route: 'https://www.creative-tim.com/product/vue-material-kit-pro',
+            route: '',
             color: 'bg-gradient-success',
             label: 'Buy Now',
           }"
@@ -44,11 +44,20 @@ onMounted(() => {
             <div
               class="position-relative h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center"
               :style="{
-                backgroundImage: `url(${image})`,
                 backgroundSize: 'cover',
               }"
               loading="lazy"
-            ></div>
+            >
+            <video 
+    src="../../../data/video5.mp4" 
+    type="video/mp4" 
+    autoplay 
+    loop 
+    muted
+    class="min-vh-50 w-0-0 shifted-video">
+</video>
+
+          </div>
           </div>
           <div
             class="mt-8 col-xl-5 col-lg-6 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5"
@@ -68,7 +77,7 @@ onMounted(() => {
               <div class="card-body">
                 <p class="pb-3">
                   For further questions, including partnership opportunities,
-                  please email hello@creative-tim.com or contact using our
+                  please email NUS OFFICE or contact using our
                   contact form.
                 </p>
                 <form id="contact-form" method="post" autocomplete="off">
@@ -87,7 +96,7 @@ onMounted(() => {
                           class="input-group-static mb-4"
                           type="email"
                           label="Email"
-                          placeholder="hello@creative-tim.com"
+                          placeholder="nus"
                         />
                       </div>
                     </div>

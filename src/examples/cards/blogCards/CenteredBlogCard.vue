@@ -2,7 +2,15 @@
 defineProps({
   image: {
     type: String,
-    required: true,
+    required: false,
+  },
+  video: {
+    type: String,
+    required: false,
+  },
+  isVideo: {
+    type: Boolean,
+    default: false,
   },
   title: {
     type: String,
@@ -24,11 +32,17 @@ defineProps({
   },
 });
 </script>
+
 <template>
   <div class="card">
     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
       <a :href="action.route" class="d-block blur-shadow-image">
-        <img :src="image" :alt="title" class="img-fluid border-radius-lg" />
+        <!-- Conditionally render image or video -->
+        <img v-if="!isVideo && image" :src="image" :alt="title" class="img-fluid border-radius-lg" />
+        <video v-if="isVideo && video" autoplay loop muted playsinline class="home-video">
+          <source :src="video" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </a>
     </div>
     <div class="card-body text-center">
