@@ -107,27 +107,34 @@ export default {
     </div>
   </div>
 
-  <div class="post-details-container">
-    <div class="button-container">
-      <button @click="goBackExplore" class="back-button">← Back to Explore Posts</button>
-      <button @click="goBack" class="back-button">← Back to Saved Posts</button>
+  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
 
-      <button @click="savePost" class="star-button">
-        <i :class="['fa', isSaved ? 'fa-star' : 'fa-star-o']"></i>
-      </button>
-    </div>
-    <div class="post-card">
-      <div class="image-container">
-        <img :src="post.imageUrl" alt="Post Image" class="post-image" />
+    <div class="post-details-container">
+      <div class="button-container">
+        <button @click="goBackExplore" class="back-button">← Back to Explore Posts</button>
+        <button @click="goBack" class="back-button">← Back to Saved Posts</button>
+
+        <button @click="savePost" class="star-button">
+          <i :class="['fa', isSaved ? 'fa-star' : 'fa-star-o']"></i>
+        </button>
       </div>
-      <div class="post-content">
-        <h1 class="post-title">{{ post.title }}</h1>
-        <div class="post-meta">
-          <span class="post-author" @click="redirectToCompanyProfile(post.userID)">{{ post.username }}</span>
-          |
-          <span class="post-entity">{{ post.entity }}</span>
+      <div class="post-card">
+        <div class="image-container">
+          <img :src="post.imageUrl" alt="Post Image" class="post-image" />
         </div>
-        <p class="post-description">{{ post.description }}</p>
+        <div class="post-content">
+          <h2 class="post-title">{{ post.title }}</h2>
+          <div class="post-meta">
+            <span
+              class="post-author"
+              @click="redirectToCompanyProfile(post.userID)"
+              >{{ post.username }}</span
+            >
+            |
+            <span class="post-entity">{{ post.entity }}</span>
+          </div>
+          <p class="post-description">{{ post.description }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -261,12 +268,19 @@ export default {
 }
 
 .post-meta {
-  font-size: 0.95em;
+  font-size: 1.2em;
   color: #666;
   margin-bottom: 1.5rem;
 }
-
+.post-author{
+  text-decoration: underline;
+  /* Underline the text on hover */
+  cursor: pointer;
+  /* Change cursor to pointer on hover for better indication */
+  /* Add any other styles you want on hover */
+}
 .post-author:hover {
+  color: #0056b3;
   text-decoration: underline;
   /* Underline the text on hover */
   cursor: pointer;
