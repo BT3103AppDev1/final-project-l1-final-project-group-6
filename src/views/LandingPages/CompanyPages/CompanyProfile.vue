@@ -57,6 +57,10 @@ export default {
         },
         redirectToPost(postID) {
             this.$router.push({ name: 'postdetails', params: { id: postID } });
+        },
+        sendEmail() {
+            const mailtoLink = `mailto:${this.user.email}`;
+            window.location.href = mailtoLink;
         }
     }
 };
@@ -140,6 +144,9 @@ export default {
                 <h3 class="post-title">{{ user.username }} | {{ user.entity }}</h3>
                 <div class="post-content">
                     <p class="post-description">Email: {{ user.email }}</p>
+                    <button class="btn btn-success" @click="sendEmail">
+                        Contact {{ user.username }}
+                    </button>
                 </div>
             </div>
             <!-- </div> -->
