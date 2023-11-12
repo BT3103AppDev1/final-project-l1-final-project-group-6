@@ -9,7 +9,7 @@ import { getFirestore, doc, setDoc } from 'firebase/firestore';
 
 //example components
 import NavbarDefault from '../../../examples/navbars/NavbarDefault.vue';
-import Footer from '../../../examples/footers/SavedFooter.vue';
+import DefaultFooter from '../../../examples/footers/FooterDefault.vue';
 import Header from '../../../examples/Header.vue';
 import FilledInfoCard from '../../../examples/cards/infoCards/FilledInfoCard.vue';
 
@@ -560,5 +560,5 @@ const selectedCountry = ref('Country');
             </div>
         </div>
     </div>
-    <Footer />
+    <DefaultFooter />
 </template>
