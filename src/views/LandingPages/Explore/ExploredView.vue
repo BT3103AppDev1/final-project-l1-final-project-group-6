@@ -1,9 +1,14 @@
+<script setup>
+// Vue Material Kit 2 component
+import MaterialInput from '@/components/MaterialInput.vue';
+</script>
+
 <script>
 import DefaultNavbar from '../../../examples/navbars/NavbarDefault.vue';
 import Header from '../../../examples/Header.vue';
-import Footer from './Sections/SavedFooter.vue';
 import Posts from './Sections/SavedPosts.vue';
 import counter from 'vue3-autocounter';
+import VueMultiselect from 'vue-multiselect';
 import DefaultFooter from '../../../examples/footers/FooterDefault.vue';
 
 export default {
@@ -12,7 +17,8 @@ export default {
         Header,
         DefaultFooter,
         Posts, // This is your Posts component
-        counter
+        counter,
+        VueMultiselect
     },
     data: () => ({
         experienceTitle: 'Number of NGOs',
@@ -20,10 +26,68 @@ export default {
         feedbackTitle: 'Years of Partnership',
         projectsTitle: 'Number of Partnerships'
     }),
+
+    data() {
+        return {
+            filter: {
+                title: null,
+                category: [],
+                entityName: null,
+                countryName: [],
+                sdg: []
+            },
+            sdgOptions: [
+                { name: 'SDG 1 - No Poverty' },
+                { name: 'SDG 2 - Zero Hunger' },
+                { name: 'SDG 3 - Good Health and Well-being' },
+                { name: 'SDG 4 - Quality Education' },
+                { name: 'SDG 5 - Gender Equality' },
+                { name: 'SDG 6 - Clean Water and Sanitation' },
+                { name: 'SDG 7 - Affordable and Clean Energy' },
+                { name: 'SDG 8 - Decent Work and Economic Growth' },
+                { name: 'SDG 9 - Industry, Innovation and Infrastructure' },
+                { name: 'SDG 10 - Reduced Inequality' },
+                { name: 'SDG 11 - Sustainable Cities and Communities' },
+                { name: 'SDG 12 - Responsible Consumption and Production' },
+                { name: 'SDG 13 - Climate Action' },
+                { name: 'SDG 14 - Life Below Water' },
+                { name: 'SDG 15 - Life on Land' },
+                { name: 'SDG 16 - Peace and Justice Strong Institutions' },
+                { name: 'SDG 17 - Partnerships to achieve the Goal' }
+            ],
+            countryOptions: [
+                { name: 'Afghanistan' },
+                { name: 'Bahrain' },
+                { name: 'Bangladesh' },
+                { name: 'Brunei' },
+                { name: 'Cambodia' },
+                { name: 'China' },
+                { name: 'India' },
+                { name: 'Indonesia' },
+                { name: 'Iraq' },
+                { name: 'Israel' },
+                { name: 'Japan' },
+                { name: 'Laos' },
+                { name: 'Malaysia' },
+                { name: 'Myanmar' },
+                { name: 'Pakistan' },
+                { name: 'Philippines' },
+                { name: 'Saudi Arabia' },
+                { name: 'Singapore' },
+                { name: 'South Korea' },
+                { name: 'Vietnam' }
+            ],
+            categoryOptions: [{ name: 'Financial' }, { name: 'Non-Financial' }]
+        };
+    },
+
     methods: {
         handleCounterFinished() {
             console.log('Counting finished!');
             // You can perform any actions you want here
+        },
+        updateFilterTitle(event) {
+            this.filter.title = event.target.value;
         }
     }
 };
@@ -58,9 +122,8 @@ export default {
     </Header>
 
     <!-- Metrics Banner -->
-    <div class="container my-6">
+    <!-- <div class="container my-6">
         <div class="row">
-            <!-- Years of experience counter -->
             <div class="col text-center d-flex flex-column align-items-center">
                 <counter
                     ref="counter"
@@ -82,7 +145,6 @@ export default {
                 </span>
             </div>
 
-            <!-- GitHub stars counter -->
             <div class="col text-center d-flex flex-column align-items-center">
                 <counter
                     ref="counter"
@@ -102,7 +164,6 @@ export default {
                 >
             </div>
 
-            <!-- Positive feedback counter -->
             <div class="col text-center d-flex flex-column align-items-center">
                 <counter
                     ref="counter"
@@ -123,7 +184,6 @@ export default {
                 </span>
             </div>
 
-            <!-- Projects completed counter -->
             <div class="col text-center d-flex flex-column align-items-center">
                 <counter
                     ref="counter"
@@ -144,6 +204,56 @@ export default {
                 </span>
             </div>
         </div>
+    </div> -->
+
+    <div class="search-container mt-6">
+        <MaterialInput
+            class="input-group-dynamic"
+            icon="search"
+            type="text"
+            placeholder="Search by post title"
+            name="filterTitle"
+            @input="updateFilterTitle"
+            style="width: 100%; margin-right: 10px"
+        />
+    </div>
+    <br />
+
+    <!-- Filter for all posts -->
+    <div class="filter-container">
+        <div class="sdg-filter">
+            <VueMultiselect
+                v-model="filter.sdg"
+                :options="sdgOptions"
+                :multiple="true"
+                :close-on-select="false"
+                placeholder="Select SDGs"
+                label="name"
+                track-by="name"
+            />
+        </div>
+        <div class="country-filter">
+            <VueMultiselect
+                v-model="filter.countryName"
+                :options="countryOptions"
+                :multiple="true"
+                :close-on-select="false"
+                placeholder="Select Countries"
+                label="name"
+                track-by="name"
+            />
+        </div>
+        <div class="category-filter">
+            <VueMultiselect
+                v-model="filter.category"
+                :options="categoryOptions"
+                :multiple="true"
+                :close-on-select="true"
+                placeholder="Select Categories"
+                label="name"
+                track-by="name"
+            />
+        </div>
     </div>
 
     <div>
@@ -156,7 +266,7 @@ export default {
                     </div>
                 </div>
             </div>
-            <Posts category="NGO" />
+            <Posts category="NGO" :filter="filter" />
         </div>
 
         <!-- Container for Companies -->
@@ -168,7 +278,7 @@ export default {
                     </div>
                 </div>
             </div>
-            <Posts category="Company" />
+            <Posts category="Company" :filter="filter" />
         </div>
     </div>
 
@@ -248,4 +358,20 @@ export default {
     font-size: 1.2em;
     margin-top: -10px;
 }
+
+.filter-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.search-filter,
+.sdg-filter,
+.country-filter,
+.category-filter {
+    flex: 1;
+    margin-right: 10px;
+}
 </style>
+
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>

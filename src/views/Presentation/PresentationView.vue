@@ -73,11 +73,11 @@ onUnmounted(() => {
 
     <!-- Body -->
     <div class="card blur shadow-blur">
-        <RecentPostPreview entityType="Company" />
+        <RecentPostPreview entityType="NGO" />
 
         <br /><br />
 
-        <RecentPostPreview entityType="NGO" />
+        <RecentPostPreview entityType="Company" />
 
         <div
             class="container-fluid mt-sm-5 border-radius-xl"

@@ -147,23 +147,23 @@ const submitToFirebase = async () => {
 };
 
 const sdgs = [
-    'SDG 1- No Poverty',
-    'SDG 2- Zero Hunger',
-    'SDG 3- Good Health and Well-being',
-    'SDG 4- Quality Education',
-    'SDG 5- Gender Equality',
-    'SDG 6- Clean Water and Sanitation',
-    'SDG 7- Affordable and Clean Energy',
-    'SDG 8- Decent Work and Economic Growth',
-    'SDG 9- Industry, Innovation and Infrastructure',
-    'SDG 10- Reduced Inequality',
-    'SDG 11- Sustainable Cities and Communities',
-    'SDG 12- Responsible Consumption and Production',
-    'SDG 13- Climate Action',
-    'SDG 14- Life Below Water',
-    'SDG 15- Life on Land',
-    'SDG 16- Peace and Justice Strong Institutions',
-    'SDG 17- Partnerships to achieve the Goal'
+    'SDG 1 - No Poverty',
+    'SDG 2 - Zero Hunger',
+    'SDG 3 - Good Health and Well-being',
+    'SDG 4 - Quality Education',
+    'SDG 5 - Gender Equality',
+    'SDG 6 - Clean Water and Sanitation',
+    'SDG 7 - Affordable and Clean Energy',
+    'SDG 8 - Decent Work and Economic Growth',
+    'SDG 9 - Industry, Innovation and Infrastructure',
+    'SDG 10 - Reduced Inequality',
+    'SDG 11 - Sustainable Cities and Communities',
+    'SDG 12 - Responsible Consumption and Production',
+    'SDG 13 - Climate Action',
+    'SDG 14 - Life Below Water',
+    'SDG 15 - Life on Land',
+    'SDG 16 - Peace and Justice Strong Institutions',
+    'SDG 17 - Partnerships to achieve the Goal'
 ];
 
 const countries = [
@@ -219,7 +219,7 @@ const selectedCountry = ref('Country');
                             Post Now
                         </h1>
                         <p class="lead text-white px-5 mt-3" :style="{ fontWeight: '500' }">
-                            Ready to champoin a cause you are passionate about, or share more about
+                            Ready to champion a cause you are passionate about, or share more about
                             your organisation?
                         </p>
                     </div>
