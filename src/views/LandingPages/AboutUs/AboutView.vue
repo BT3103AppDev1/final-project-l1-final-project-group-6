@@ -42,14 +42,13 @@ onUnmounted(() => {
 });
 </script>
 <template>
-    <DefaultNavbar
-        :action="{
-            route: 'javascript:;',
-            label: 'Buy Now',
-            color: 'btn-white'
-        }"
-        transparent
-    />
+    <div class="container position-sticky z-index-sticky top-0">
+        <div class="row">
+            <div class="col-12">
+                <DefaultNavbar :sticky="true" />
+            </div>
+        </div>
+    </div>
     <header class="bg-gradient-dark">
         <div class="page-header min-vh-75">
             <video
@@ -76,21 +75,7 @@ onUnmounted(() => {
                         <p class="lead mb-4 text-white opacity-8">
                             We dream for a world connected.
                         </p>
-                        <h6 class="text-white mb-2 mt-5">Find us on</h6>
-                        <div class="d-flex justify-content-center">
-                            <a href="javascript:;"
-                                ><i class="fab fa-facebook text-lg text-white me-4"></i
-                            ></a>
-                            <a href="javascript:;"
-                                ><i class="fab fa-instagram text-lg text-white me-4"></i
-                            ></a>
-                            <a href="javascript:;"
-                                ><i class="fab fa-twitter text-lg text-white me-4"></i
-                            ></a>
-                            <a href="javascript:;"
-                                ><i class="fab fa-google-plus text-lg text-white"></i
-                            ></a>
-                        </div>
+
                     </div>
                 </div>
             </div>

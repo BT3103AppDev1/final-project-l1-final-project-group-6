@@ -6,16 +6,16 @@ import MaterialInput from '@/components/MaterialInput.vue';
 <script>
 import DefaultNavbar from '../../../examples/navbars/NavbarDefault.vue';
 import Header from '../../../examples/Header.vue';
-import Footer from './Sections/SavedFooter.vue';
 import Posts from './Sections/SavedPosts.vue';
 import counter from 'vue3-autocounter';
 import VueMultiselect from 'vue-multiselect';
+import DefaultFooter from '../../../examples/footers/FooterDefault.vue';
 
 export default {
     components: {
         DefaultNavbar,
         Header,
-        Footer,
+        DefaultFooter,
         Posts, // This is your Posts component
         counter,
         VueMultiselect
@@ -80,6 +80,7 @@ export default {
             categoryOptions: [{ name: 'Financial' }, { name: 'Non-Financial' }]
         };
     },
+
     methods: {
         handleCounterFinished() {
             console.log('Counting finished!');
@@ -93,7 +94,13 @@ export default {
 </script>
 
 <template>
-    <DefaultNavbar transparent />
+    <div class="container position-sticky z-index-sticky top-0">
+        <div class="row">
+            <div class="col-12">
+                <DefaultNavbar :sticky="true" />
+            </div>
+        </div>
+    </div>
 
     <Header>
         <div class="page-header" :style="headerStyle">
@@ -276,7 +283,7 @@ export default {
     </div>
 
     <!-- Code for footer -->
-    <Footer />
+    <DefaultFooter />
 </template>
 
 <style>

@@ -1,15 +1,16 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref, computed } from 'vue';
 
 //firebase
 import firebase from '../../../firebase.js';
 import 'firebase/firestore';
 import 'firebase/auth';
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 //example components
 import NavbarDefault from '../../../examples/navbars/NavbarDefault.vue';
-import Footer from '../../../examples/footers/SavedFooter.vue';
+import DefaultFooter from '../../../examples/footers/FooterDefault.vue';
 import Header from '../../../examples/Header.vue';
 import FilledInfoCard from '../../../examples/cards/infoCards/FilledInfoCard.vue';
 
@@ -38,6 +39,7 @@ import nvpc from '@/assets/img/post-nvpc-removebg-preview.png';
 
 //hooks
 const body = document.getElementsByTagName('body')[0];
+
 onMounted(() => {
     body.classList.add('presentation-page');
     body.classList.add('bg-gray-200');
@@ -47,11 +49,48 @@ onUnmounted(() => {
     body.classList.remove('bg-gray-200');
 });
 
+const isNgo = ref(false);
+const financialLabel = computed(() =>
+    isNgo.value ? 'Financial Support: ' : 'Financial Requested: '
+);
+const nonFinancialLabel = computed(() =>
+    isNgo.value ? 'Non-Financial Support: ' : 'Non-Financial Requested: '
+);
+const entityLabel = computed(() => (isNgo.value ? 'Organisation Name' : 'NGO Name'));
+const switchText = computed(() =>
+    isNgo.value ? 'I am Submitting this as an Organisation' : 'I am Submitting this as an NGO'
+);
+
 const showDropdown = ref(false);
 const checkedNames = ref([]);
 const checkedNonNames = ref([]);
 
 const db = getFirestore(firebase);
+const auth = getAuth();
+
+const username = ref('');
+const userID = ref('');
+
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const userRef = doc(db, 'users', user.uid);
+        getDoc(userRef)
+            .then((docSnap) => {
+                if (docSnap.exists()) {
+                    const userData = docSnap.data();
+                    username.value = userData.username;
+                    userID.value = userData.userID;
+                } else {
+                    console.log('No such document!');
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching user data:', error);
+            });
+    }
+});
+
 const firstName = ref('');
 const lastName = ref('');
 const projectTitle = ref('');
@@ -66,9 +105,11 @@ const submitToFirebase = async () => {
 
         try {
             // Create a new document in Firebase Firestore with the form data
+            const entityType = isNgo.value ? 'NGO' : 'Organization';
             const docRef = await setDoc(
                 doc(db, 'requests', document.getElementById('projectTitle').value),
                 {
+                    entityType: entityType,
                     firstName: document.getElementById('firstName').value,
                     lastName: document.getElementById('lastName').value,
                     projectTitle: document.getElementById('projectTitle').value,
@@ -76,11 +117,14 @@ const submitToFirebase = async () => {
                     NonFinancialRequested: checkedNonNames.value,
                     organizationName: document.getElementById('organizationName').value,
                     selectedSDG: selectedOption.value,
-                    message: document.getElementById('message').value
+                    message: document.getElementById('message').value,
+                    selectedCountry: selectedCountry.value,
+                    Username: username.value,
+                    userID: userID.value
                 }
             );
             console.log(docRef);
-            // Display a success message 
+            // Display a success message
             console.log('Document written!');
             alert(
                 'Your request for project: ' +
@@ -301,7 +345,7 @@ const selectedCountry = ref('Country');
             <div class="container py-4">
                 <div class="row">
                     <div class="col-lg-8 mx-auto d-flex justify-content-center flex-column">
-                        <h3 class="text-center">Start your request here</h3>
+                        <h3 class="text-center">Start your request here, {{ username }}</h3>
                         <p class="lead text-black px-0 mt-3" :style="{ fontWeight: '300' }">
                             Please allow a minimum of 2 weeks processing time for your submission
                             for listing and reach out to hello@link4impact if you have any questions
@@ -309,6 +353,14 @@ const selectedCountry = ref('Country');
                         </p>
                         <form role="form" id="myform" method="post" autocomplete="off">
                             <div class="card-body">
+                                <MaterialSwitch
+                                    v-model="isNgo"
+                                    class="mb-4 d-flex align-items-center"
+                                    id="flexSwitchCheckDefaultNGO"
+                                    labelClass="ms-3 mb-0"
+                                >
+                                    {{ switchText }}
+                                </MaterialSwitch>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <MaterialInput
@@ -341,9 +393,7 @@ const selectedCountry = ref('Country');
                                 <div class="mb-4">
                                     <MaterialInput
                                         class="input-group-dynamic"
-                                        :placeholder="
-                                            organizationNamePlaceholder || 'Organization Name'
-                                        "
+                                        :placeholder="organizationNamePlaceholder || entityLabel"
                                         type="text"
                                         v-model="organizationName"
                                         id="organizationName"
@@ -413,7 +463,7 @@ const selectedCountry = ref('Country');
                                     </div>
                                 </div>
 
-                                <div>Financial Requested: {{ checkedNames.join(', ') }}</div>
+                                <div>{{ financialLabel }} {{ checkedNames.join(', ') }}</div>
 
                                 <input
                                     type="checkbox"
@@ -440,7 +490,7 @@ const selectedCountry = ref('Country');
                                 />
                                 <label for="Debt">Debt</label>
 
-                                <div>Non-Financial Requested: {{ checkedNonNames.join(', ') }}</div>
+                                <div>{{ nonFinancialLabel }} {{ checkedNonNames.join(', ') }}</div>
 
                                 <input
                                     type="checkbox"
@@ -492,7 +542,6 @@ const selectedCountry = ref('Country');
                                     <MaterialSwitch
                                         class="mb-4 d-flex align-items-center"
                                         id="flexSwitchCheckDefault"
-                                        checked
                                         labelClass="ms-3 mb-0"
                                     >
                                         I agree to disclose my information to the Link4Impact team
@@ -504,6 +553,7 @@ const selectedCountry = ref('Country');
                                             ><u>Terms and Conditions</u></a
                                         >.
                                     </MaterialSwitch>
+                                    <p>Submission ID: {{ username }} </p>
 
                                     <div class="col-md-12">
                                         <MaterialButton
@@ -560,5 +610,5 @@ const selectedCountry = ref('Country');
             </div>
         </div>
     </div>
-    <Footer />
+    <DefaultFooter />
 </template>
