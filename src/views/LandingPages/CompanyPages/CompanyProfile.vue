@@ -85,7 +85,9 @@ export default {
           <h1 class="text-white header-title">
             Entity Information<span id="typed"></span>
           </h1>
-          <p class="text-white header-subtitle">The better we know each other, the more we love each other</p>
+          <p class="text-white header-subtitle">
+            The better we know each other, the more we love each other
+          </p>
         </div>
       </div>
     </div>
@@ -93,7 +95,6 @@ export default {
 
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
     <div class="post-details-container">
-      <!-- <div class="post-card"> -->
       <div class="entity-tabs">
         <div
           :class="{
@@ -143,14 +144,11 @@ export default {
         </div>
       </div>
       <div v-if="currentTab === 'contact'">
-        <h3 class="post-title">{{ user.username }} | {{ user.entity }}</h3> 
+        <h3 class="post-title">{{ user.username }} | {{ user.entity }}</h3>
         <div class="post-content">
           <p class="post-description">Email: {{ user.email }}</p>
-
-
         </div>
       </div>
-      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -235,7 +233,6 @@ export default {
   flex-grow: 1; /* Ensures each tab takes up equal space */
   margin-bottom: 10px;
 }
-
 
 .entity-tab:hover {
   background-color: #f2f2f2; /* Slight background on hover for interactivity */
@@ -371,69 +368,5 @@ export default {
 
 .router-link:hover {
   text-decoration: underline;
-}
-
-/* Button container for grouping and alignment */
-.button-container {
-  display: flex;
-  justify-content: start;
-  /* Align buttons to the start */
-  gap: 10px;
-  /* Space between buttons */
-  margin-bottom: 20px;
-}
-
-.back-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  color: white;
-  /* Common text color for contrast */
-}
-
-/* Style for the first button */
-.back-button:first-child {
-  background-color: #007bff;
-  /* Blue color */
-}
-
-/* Style for the second button */
-.back-button:nth-child(2) {
-  background-color: #28a745;
-  /* Green color */
-}
-
-/* Hover effect for both buttons */
-.back-button:hover {
-  transform: translateY(-2px);
-  /* Lift button slightly on hover */
-}
-
-/* Specific hover colors for each button */
-.back-button:first-child:hover {
-  background-color: #0056b3;
-  /* Darker blue on hover */
-}
-
-.back-button:nth-child(2):hover {
-  background-color: #218838;
-  /* Darker green on hover */
-}
-
-.star-button {
-  background: none;
-  border: none;
-  font-size: 1.5em;
-  /* Adjust size as needed */
-  color: #ffd700;
-  /* Gold color for the star */
-  cursor: pointer;
-}
-
-.star-button:hover {
-  color: #ffac33;
-  /* A lighter gold color on hover */
 }
 </style>
