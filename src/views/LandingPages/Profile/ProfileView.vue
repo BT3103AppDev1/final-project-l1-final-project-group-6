@@ -22,7 +22,8 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 //example components
-import NavbarDefault from "../../../examples/navbars/NavbarDefault.vue";
+import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
+
 import Footer from "../../../examples/footers/SavedFooter.vue";
 import Header from "../../../examples/Header.vue";
 
@@ -149,7 +150,13 @@ export default {
 </script>
 
 <template>
-  <NavbarDefault :sticky="true" />
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+      <div class="col-12">
+        <DefaultNavbar :sticky="true" />
+      </div>
+    </div>
+  </div>
 
   <Header>
     <div
@@ -250,7 +257,8 @@ export default {
           <h3>{{ post.title }}</h3>
           <p>{{ post.description }}</p>
           <span class="post-author" @click="redirectToPost(post.postID)"
-            >Read More →</span>
+            >Read More →</span
+          >
           <!-- Trash can icon for deleting the post -->
           <font-awesome-icon
             :icon="['fas', 'trash']"
