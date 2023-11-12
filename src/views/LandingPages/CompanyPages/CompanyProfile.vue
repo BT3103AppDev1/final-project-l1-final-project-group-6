@@ -67,7 +67,13 @@ export default {
 </script>
 
 <template>
-    <DefaultNavbar transparent />
+    <div class="container position-sticky z-index-sticky top-0">
+        <div class="row">
+            <div class="col-12">
+                <DefaultNavbar :sticky="true" />
+            </div>
+        </div>
+    </div>
     <div class="page-header">
         <video autoplay loop muted playsinline class="globe-video">
             <source src="../../../data/video2.mp4" type="video/mp4" />
