@@ -126,24 +126,7 @@ onUnmounted(() => {
                     </div>
                     <!-- TODO: Update routes -->
                     <div class="col-lg-5 me-lg-auto my-lg-auto text-lg-end mt-5">
-                        <MaterialSocialButton
-                            route="https://www.youtube.com/watch?v=uzPsMxez92c"
-                            component="twitter"
-                            color="twitter"
-                            label="Tweet"
-                        />
-                        <MaterialSocialButton
-                            route="https://www.youtube.com/watch?v=Zd8bNW4DG5E"
-                            component="facebook-square"
-                            color="facebook"
-                            label="Share"
-                        />
-                        <MaterialSocialButton
-                            route=""
-                            component="pinterest"
-                            color="pinterest"
-                            label="Pin it"
-                        />
+
                     </div>
                 </div>
             </div>

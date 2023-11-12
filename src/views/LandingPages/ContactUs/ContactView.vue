@@ -12,6 +12,22 @@ import image from '@/assets/img/illustrations/illustration-signin.jpg';
 import MaterialInput from '@/components/MaterialInput.vue';
 import MaterialTextArea from '@/components/MaterialTextArea.vue';
 import MaterialButton from '@/components/MaterialButton.vue';
+const sendemail = (event) => {
+    event.preventDefault();
+    // Access the value of the inputs using their IDs
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+
+    if (name === '' || email === '' || message === '') {
+        alert('Please fill in all fields!');
+    } else {
+        alert('Sending message....');
+        window.open(`mailto:hello@link4impact.com?subject=Contact from ${name}&body=${message}`);
+        document.getElementById('contact-form').reset();
+    }
+};
 
 // material-input
 import setMaterialInput from '@/assets/js/material-input';
@@ -69,13 +85,14 @@ onMounted(() => {
                             <div class="card-body">
                                 <p class="pb-3">
                                     For further questions, including partnership opportunities,
-                                    please email NUS OFFICE or contact using our contact form.
+                                    please email hello@link4impact or contact us using this form.
                                 </p>
                                 <form id="contact-form" method="post" autocomplete="off">
                                     <div class="card-body p-0 my-3">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <MaterialInput
+                                                    id = "name"
                                                     class="input-group-static mb-4"
                                                     type="text"
                                                     label="Full Name"
@@ -84,6 +101,7 @@ onMounted(() => {
                                             </div>
                                             <div class="col-md-6 ps-md-2">
                                                 <MaterialInput
+                                                    id = "email"
                                                     class="input-group-static mb-4"
                                                     type="email"
                                                     label="Email"
@@ -106,8 +124,9 @@ onMounted(() => {
                                                     variant="gradient"
                                                     color="success"
                                                     class="mt-3 mb-0"
-                                                    >Send Message</MaterialButton
-                                                >
+                                                    @click="sendemail($event)"
+                                                    >Send Message
+                                                </MaterialButton>
                                             </div>
                                         </div>
                                     </div>
