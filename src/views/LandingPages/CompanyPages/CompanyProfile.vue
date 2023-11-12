@@ -1,42 +1,72 @@
-<!-- eslint-disable prettier/prettier -->
 <script setup>
-// example components
-import DefaultNavbar from '../../../examples/navbars/NavbarDefault.vue';
+import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
 </script>
 
 <script>
-import firebaseApp from '../../../firebase.js';
-import { getFirestore, doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import firebaseApp from "../../../firebase.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  getDocs,
+  collection,
+  query,
+  where,
+} from "firebase/firestore";
 
 export default {
-
   data() {
     return {
       db: getFirestore(firebaseApp),
-      post: {}, // will store the detailed post data
-      isSaved: false // To track whether the post is saved
+      user: {},
+      posts: {},
+      currentTab: "description",
     };
   },
   async created() {
     const userId = this.$route.params.id;
-    console.log(this.$route.params.id)
-    // Fetch the post details using the postId
-    try {
-      const postRef = doc(this.db, 'users', userId);
-      const postDoc = await getDoc(postRef);
 
-      if (postDoc.exists()) {
-        this.post = postDoc.data();
+    try {
+      const userRef = doc(this.db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (userDoc.exists()) {
+        this.user = userDoc.data();
       } else {
-        console.error('No such post!');
+        console.error("No such user!");
+      }
+
+      if (this.user && this.user.posts && this.user.posts.length > 0) {
+        const postIds = this.user.posts;
+        const posts = [];
+
+        for (const postId of postIds) {
+          const postQuery = query(
+            collection(this.db, "posts"),
+            where("postID", "==", postId)
+          );
+          const postSnapshot = await getDocs(postQuery);
+
+          if (!postSnapshot.empty) {
+            posts.push(postSnapshot.docs[0].data());
+          }
+        }
+
+        this.posts = posts;
       }
     } catch (error) {
-      console.error('Error fetching post details:', error);
+      console.error("Error fetching user and post details:", error);
     }
-    //console.log(this.post)
-
   },
-  methods: {}
+
+  methods: {
+    showTab(tabName) {
+      this.currentTab = tabName;
+    },
+    redirectToPost(postID) {
+      this.$router.push({ name: "postdetails", params: { id: postID } });
+    },
+  },
 };
 </script>
 
@@ -52,31 +82,78 @@ export default {
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center mx-auto my-auto">
-          <h1 class="text-white header-title">Entity Information<span id="typed"></span></h1>
-          <p class="text-white header-subtitle">Knowledge is Power!</p>
+          <h1 class="text-white header-title">
+            Entity Information<span id="typed"></span>
+          </h1>
+          <p class="text-white header-subtitle">The better we know each other, the more we love each other</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="post-details-container">
-
-    <div class="post-card">
-      <div class="image-container">
-        <img :src="post.imageUrl" alt="Post Image" class="post-image" />
-      </div>
-      <div class="post-content">
-        <h1 class="post-title">{{ post.username }}</h1>
-        <h1 class="post-title">{{ post.entity }}</h1>
-        <div class="post-meta">
-          <span class="post-author">{{ post.followers }} followers</span> |
-          <span class="post-entity">{{ post.following }} following</span>
+  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+    <div class="post-details-container">
+      <!-- <div class="post-card"> -->
+      <div class="entity-tabs">
+        <div
+          :class="{
+            'entity-tab': true,
+            active: currentTab === 'description',
+          }"
+          @click="showTab('description')"
+        >
+          Description
         </div>
-        <p class="post-description">{{ post.description }}</p>
+        <div
+          :class="{ 'entity-tab': true, active: currentTab === 'posts' }"
+          @click="showTab('posts')"
+        >
+          Posts
+        </div>
+        <div
+          :class="{ 'entity-tab': true, active: currentTab === 'contact' }"
+          @click="showTab('contact')"
+        >
+          Contact Us
+        </div>
       </div>
+      <div v-if="currentTab === 'description'">
+        <div class="image-container">
+          <img :src="user.imageUrl" alt="Post Image" class="post-image" />
+        </div>
+        <div class="post-content">
+          <h1 class="post-title">{{ user.username }} | {{ user.entity }}</h1>
+          <div class="post-meta">
+            <span class="post-entity">{{ user.followers }} followers</span> |
+            <span class="post-entity">{{ user.following }} following</span>
+          </div>
+          <p class="post-description">{{ user.description }}</p>
+        </div>
+      </div>
+      <div v-if="currentTab === 'posts'">
+        <div v-for="(post, index) in posts" :key="index" class="post-entry">
+          <img :src="post.imageUrl" class="post-entry-image" alt="Post image" />
+          <div class="post-entry-content">
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.description }}</p>
+            <span class="post-author" @click="redirectToPost(post.postID)"
+              >Read More →</span
+            >
+          </div>
+        </div>
+      </div>
+      <div v-if="currentTab === 'contact'">
+        <h3 class="post-title">{{ user.username }} | {{ user.entity }}</h3> 
+        <div class="post-content">
+          <p class="post-description">Email: {{ user.email }}</p>
+
+
+        </div>
+      </div>
+      <!-- </div> -->
     </div>
   </div>
-</template> 
+</template>
 
 <style scoped>
 .counter-container {
@@ -136,7 +213,38 @@ export default {
   z-index: 0;
   /* Above the video but below the text */
 }
+.entity-tabs {
+  display: flex;
+  justify-content: space-between; /* Distributes space evenly */
+  align-items: center; /* Aligns items vertically in the center */
+  width: 100%; /* Set the width you desire for the entire tab bar */
+  min-width: 600px; /* Example fixed max-width for the tab bar */
+  max-width: 600px; /* Example fixed max-width for the tab bar */
+  margin: 0 auto; /* Centers the tab bar in the parent container */
+  padding: 10px 0; /* Adjust padding as needed, but keep top and bottom padding the same for both tabs */
+  cursor: pointer;
+}
 
+.entity-tab {
+  flex: 1; /* This ensures both tabs take up equal space in the container */
+  text-align: center;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  color: grey; /* Non-active tab color */
+  flex-grow: 1; /* Ensures each tab takes up equal space */
+  margin-bottom: 10px;
+}
+
+
+.entity-tab:hover {
+  background-color: #f2f2f2; /* Slight background on hover for interactivity */
+}
+
+.entity-tab.active {
+  border-bottom: 3px solid blue; /* Active tab underline */
+  color: black; /* Active tab color */
+}
 .header-title,
 .header-subtitle {
   z-index: 1;
@@ -197,7 +305,7 @@ export default {
 }
 
 .post-title {
-  font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Nunito", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 700;
   /* Bold font weight for the title */
   color: #333;
@@ -212,10 +320,57 @@ export default {
 }
 
 .post-description {
-  font-family: 'Nunito', Arial, sans-serif;
+  font-family: "Nunito", Arial, sans-serif;
   line-height: 1.8;
   /* Increased line height for readability */
   color: #444;
+}
+
+.posts-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-entry {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  margin-bottom: 1rem; /* Space between entries */
+  background: #fafafa; /* Light grey background */
+  border-radius: 16px; /* Softer corners */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+  overflow: hidden;
+}
+
+.post-entry-image {
+  width: 120px; /* Adjust size as needed */
+  height: 120px; /* Adjust size as needed */
+  object-fit: cover;
+  border-top-left-radius: 16px; /* Rounded corners on the image */
+  border-bottom-left-radius: 16px; /* Rounded corners on the image */
+}
+
+.post-entry-content {
+  padding: 1rem;
+  flex-grow: 1; /* Take up remaining space */
+}
+
+.post-author {
+  color: blue;
+  cursor: pointer;
+}
+
+.post-author:hover {
+  text-decoration: underline;
+}
+
+/* Style your 'Read more' link to match the design */
+.router-link {
+  color: blue;
+  text-decoration: none;
+}
+
+.router-link:hover {
+  text-decoration: underline;
 }
 
 /* Button container for grouping and alignment */
