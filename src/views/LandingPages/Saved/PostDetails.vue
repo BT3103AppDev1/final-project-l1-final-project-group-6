@@ -52,8 +52,11 @@ export default {
     },
     methods: {
         goBack() {
-            this.$router.push({ name: 'saved' });
+            this.$router.go(-1);
         },
+        /* goBack() {
+            this.$router.go({ name: 'saved' });
+        }, */
         goBackExplore() {
             this.$router.push({ name: 'explore' });
         },
@@ -108,8 +111,8 @@ export default {
     <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
         <div class="post-details-container">
             <div class="button-container">
-                <button @click="goBackExplore" class="back-button">← Back to Explore Posts</button>
-                <button @click="goBack" class="back-button">← Back to Saved Posts</button>
+                <!-- <button @click="goBackExplore" class="back-button">← Back to Explore Posts</button> -->
+                <button @click="goBack" class="back-button">← Back to previous page</button>
 
                 <button @click="savePost" class="star-button">
                     <i :class="['fa', isSaved ? 'fa-star' : 'fa-star-o']"></i>
