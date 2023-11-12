@@ -6,6 +6,11 @@ import { getFirestore, doc, setDoc } from "firebase/firestore";
 const auth = getAuth(firebaseApp);
 const db = getFirestore(firebaseApp);
 
+const firebaseErrors = {
+  'auth/weak-password': 'Password must be at least 6 characters',
+  'auth/email-already-in-use': 'This email is already in use. Please login instead.',
+};
+
 export default {
   data() {
     return {
@@ -13,6 +18,9 @@ export default {
       password: "",
       entity: "NGO",
       username: "", // Initialize the company name field
+      isSignUpError: false,
+      accountExists: false,
+      errorMessage: "",
     };
   },
   methods: {
@@ -48,8 +56,16 @@ export default {
         this.$router.push({ name: "signin-basic" }); // Redirect to the sign-in page
       } catch (error) {
         console.error("Error registering user:", error.message);
-        // Handle registration error (display an error message, etc.)
+        this.isSignUpError = true;
+        // Display the error message to the user
+        this.errorMessage = firebaseErrors[error.code] || error.message;
+        if (error.code === 'auth/email-already-in-use') {
+          this.accountExists = true;
+        }
       }
+    },
+    returnToLogin() {
+      this.$router.push({ name: "signin-basic" });
     },
   },
 };
@@ -110,7 +126,16 @@ export default {
                   required
                 />
               </div>
-              <button type="submit" class="btn btn-primary">Sign Up</button>
+
+              <div class="footer ">
+                <div id="error-handling" v-if="isSignUpError">
+                  <p id="error-message">{{ errorMessage }}</p>
+                  <button class="btn btn-primary" v-if="accountExists" @click="returnToLogin">
+                    Return to Login Page
+                  </button>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+              </div>
             </form>
           </div>
         </div>
@@ -130,5 +155,10 @@ export default {
   /* Add padding to the input fields */
   width: 100%;
   /* Make the input fields full width */
+}
+
+#error-message {
+  color: red;
+  
 }
 </style>
