@@ -16,7 +16,7 @@ export default {
     return {
       email: "",
       password: "",
-      entity: "",
+      entity: "NGO",
       username: "", // Initialize the company name field
       isSignUpError: false,
       accountExists: false,
@@ -103,17 +103,17 @@ export default {
                 />
               </div>
               <div class="mb-3">
-                <label for="type" class="form-label"
+                <label for="entity" class="form-label"
                   >Are you an NGO or a Company?</label
                 >
                 <select
-                  id="type"
-                  v-model="type"
+                  id="entity"
+                  v-model="entity"
                   class="form-control input-box"
                   required
                 >
-                  <option value="ngo">NGO</option>
-                  <option value="company">Company</option>
+                  <option value="NGO">NGO</option>
+                  <option value="Company">Company</option>
                 </select>
               </div>
               <div class="mb-3">
