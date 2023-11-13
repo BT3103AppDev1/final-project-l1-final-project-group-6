@@ -46,7 +46,7 @@ export default {
           description: "",
           saved: [],
           posts: [],
-          requests: [],
+          post_requests: [],
           imageUrl:
             "https://api-private.atlassian.com/users/7831f16b18333c732e152c74f1863d18/avatar",
         };
