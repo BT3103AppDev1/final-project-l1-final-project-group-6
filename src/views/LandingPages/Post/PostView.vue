@@ -252,7 +252,7 @@ const selectedCountry = ref("Country");
     <div class="row">
       <div class="d-flex flex-column w-100 text-center p-5 mb-8">
         <h3>Meet our partners</h3>
-        <div class="d-flex justify-content-center mt-3 flex-wrap">
+        <!-- <div class="d-flex justify-content-center mt-3 flex-wrap">
           <a
             href="https://cityofgood.sg/"
             target="_blank"
@@ -333,7 +333,7 @@ const selectedCountry = ref("Country");
             title="Coming Soon"
           >
           </a>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
