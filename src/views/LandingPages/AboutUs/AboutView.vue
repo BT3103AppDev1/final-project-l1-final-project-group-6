@@ -18,6 +18,7 @@ import Featuring from './Sections/AboutFeaturing.vue';
 import Newsletter from './Sections/AboutNewsletter.vue';
 
 const body = document.getElementsByTagName('body')[0];
+
 //hooks
 onMounted(() => {
     body.classList.add('about-us');
