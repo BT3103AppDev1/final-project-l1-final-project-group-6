@@ -43,15 +43,6 @@ import Posts from './Sections/SavedPosts.vue';
     <DefaultFooter />
 </template>
 
-<style>
-@font-face {
-    font-family: 'Geologica';
-    src: url('path-to-your-font-files/Geologica-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-</style>
-
 <style scoped>
 .counter-container {
     min-width: max-content;

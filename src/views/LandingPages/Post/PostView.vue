@@ -387,7 +387,7 @@ const selectedCountry = ref("Country");
             <h3 class="text-center">Start your request here, {{ username }}</h3>
             <p class="lead text-black px-0 mt-3" :style="{ fontWeight: '300' }">
               Please allow a minimum of 2 weeks processing time for your
-              submission for listing and reach out to hello@link4impact if you
+              submission for listing and reach out to hello@link4impact.com if you
               have any questions about the submission guidelines and endorsement
               criteria.
             </p>

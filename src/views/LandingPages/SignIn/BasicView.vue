@@ -28,7 +28,8 @@ export default {
         );
         const user = userCredential.user;
         console.log("Logged in as:", user.email);
-        // Redirect or perform other actions upon successful login
+        // Redirect upon successful login
+        alert("Login successful!")
         this.$router.push({ name: "explore" });
       } catch (error) {
         console.error("Error logging in:", error.message);
