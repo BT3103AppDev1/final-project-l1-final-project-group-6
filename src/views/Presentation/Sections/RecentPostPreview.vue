@@ -36,7 +36,10 @@ export default {
     },
     computed: {
         visiblePosts() {
-            return this.previewPosts.slice(0, this.numPosts);
+            let sorted = this.previewPosts.sort((a, b) => {
+                return b.creationTime - a.creationTime;
+            });
+            return sorted.slice(0, this.numPosts);
         },
         containerRoute() {
             return `#${this.entityLowerCase}Container`;
