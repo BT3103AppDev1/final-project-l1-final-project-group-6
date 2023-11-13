@@ -78,17 +78,19 @@ export default {
             this.following = doc.data().following;
             this.followers = doc.data().followers;
             this.posts = doc.data().posts;
+            console.log(this.posts);
+
 
             if (this.username && this.posts && this.posts.length > 0) {
-              const postIds = this.posts;
+              const postIDs = this.posts;
               const posts = [];
               console.log(this.posts);
 
-              for (const postId of postIds) {
-                console.log(postId);
+              for (const postID of postIDs) {
+                console.log(postID);
                 const postQuery = query(
                   collection(this.db, "posts"),
-                  where("postID", "==", postId)
+                  where("postID", "==", postID)
                 );
                 getDocs(postQuery).then((postSnapshot) => {
                   //console.log(postSnapshot);
@@ -137,10 +139,10 @@ export default {
         console.error("Error updating document:", error);
       }
     },
-    async deletePost(postId) {
+    async deletePost(postID) {
       try {
-        await deleteDoc(doc(this.db, "posts", postId));
-        this.posts = this.posts.filter((post) => post.postID !== postId);
+        await deleteDoc(doc(this.db, "posts", postID));
+        this.posts = this.posts.filter((post) => post.postID !== postID);
       } catch (error) {
         console.error("Error deleting post:", error);
       }
@@ -213,17 +215,26 @@ export default {
                 "
               />
             </div>
-            <!-- <h1 v-if="editingField !== 'imageURL'">Profile Picture</h1>
+            <h1 v-if="editingField !== 'imageURL'">Profile Picture</h1>
             <input v-else v-model="imageURL" type="text" />
             <font-awesome-icon
+              class="edit-icon"
               :icon="['fas', 'pencil-alt']"
               @click="toggleEdit('imageURL')"
-            /> -->
+            />
+            <button
+              class="btn btn-success"
+              @click="saveChanges"
+              v-if="editingField === 'imageURL'"
+            >
+              Save
+            </button>
           </div>
           <div class="username">
             <h1 v-if="editingField !== 'username'">{{ username }}</h1>
             <input v-else v-model="username" type="text" />
             <font-awesome-icon
+              class="edit-icon"
               :icon="['fas', 'pencil-alt']"
               @click="toggleEdit('username')"
             />
@@ -232,6 +243,7 @@ export default {
             <h3 v-if="editingField !== 'description'">{{ description }}</h3>
             <textarea v-else v-model="description"></textarea>
             <font-awesome-icon
+              class="edit-icon"
               :icon="['fas', 'pencil-alt']"
               @click="toggleEdit('description')"
             />
@@ -379,6 +391,23 @@ profile-pic {
   padding: 20px;
   max-width: 800px;
   margin: auto;
+}
+
+.editable-field {
+  display: flex;
+  margin-left: 100px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* Adjust width as needed */
+}
+
+.edit-icon {
+  font-size: 1.25rem; /* This sets the size of the icon */
+}
+
+.edit-icon:hover {
+  font-size: 1.5rem; /* This sets the size of the icon */
+  cursor: pointer;
 }
 
 .post-card {
