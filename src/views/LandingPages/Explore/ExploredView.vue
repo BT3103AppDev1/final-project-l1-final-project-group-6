@@ -29,6 +29,9 @@ export default {
 
     data() {
         return {
+            searchQuery: '', // for the search query
+            allPosts: [], // assuming you fetch your posts and store them here
+            filteredPosts: [], // this will store the filtered posts
             filter: {
                 title: null,
                 category: [],
@@ -80,7 +83,11 @@ export default {
             categoryOptions: [{ name: 'Financial' }, { name: 'Non-Financial' }]
         };
     },
-
+    watch: {
+        searchQuery(newQuery) {
+            this.filterPosts();
+        },
+    },
     methods: {
         handleCounterFinished() {
             console.log('Counting finished!');
@@ -88,7 +95,17 @@ export default {
         },
         updateFilterTitle(event) {
             this.filter.title = event.target.value;
-        }
+        },
+        filterPosts() {
+            if (!this.searchQuery) {
+                this.filteredPosts = this.allPosts;
+            } else {
+                this.filteredPosts = this.allPosts.filter(post => {
+                    // Replace 'postTitle' with the property you want to search by
+                    return post.postTitle.toLowerCase().includes(this.searchQuery.toLowerCase());
+                });
+            }
+        },
     }
 };
 </script>
@@ -121,103 +138,15 @@ export default {
         </div>
     </Header>
 
-    <!-- Metrics Banner -->
-    <!-- <div class="container my-6">
-        <div class="row">
-            <div class="col text-center d-flex flex-column align-items-center">
-                <counter
-                    ref="counter"
-                    :startAmount="0"
-                    :endAmount="2000"
-                    suffix="+"
-                    :duration="5"
-                    :autoinit="true"
-                    @finished="handleCounterFinished"
-                    class="font-general-medium text-4xl font-bold text-secondary-dark dark:text-secondary-light mb-2"
-                    aria-label="About Status Counter"
-                    style="margin-top: -40px"
-                />
-                <span
-                    class="text-md text-ternary-dark dark:text-ternary-light"
-                    style="margin-top: -10px"
-                >
-                    {{ experienceTitle }}
-                </span>
-            </div>
-
-            <div class="col text-center d-flex flex-column align-items-center">
-                <counter
-                    ref="counter"
-                    :startAmount="0"
-                    :endAmount="1500"
-                    suffix="+"
-                    :duration="5"
-                    :autoinit="true"
-                    @finished="handleCounterFinished"
-                    class="font-general-medium text-4xl font-bold text-secondary-dark dark:text-secondary-light mb-2"
-                    style="margin-top: -40px"
-                />
-                <span
-                    class="block text-md text-ternary-dark dark:text-ternary-light"
-                    style="margin-top: -10px"
-                    >{{ githubTitle }}</span
-                >
-            </div>
-
-            <div class="col text-center d-flex flex-column align-items-center">
-                <counter
-                    ref="counter"
-                    :startAmount="0"
-                    :endAmount="5"
-                    suffix="+"
-                    :duration="5"
-                    :autoinit="true"
-                    @finished="handleCounterFinished"
-                    class="font-general-medium text-4xl font-bold text-secondary-dark dark:text-secondary-light mb-2"
-                    style="margin-top: -40px"
-                />
-                <span
-                    class="block text-md text-ternary-dark dark:text-ternary-light"
-                    style="margin-top: -10px"
-                >
-                    {{ feedbackTitle }}
-                </span>
-            </div>
-
-            <div class="col text-center d-flex flex-column align-items-center">
-                <counter
-                    ref="counter"
-                    :startAmount="0"
-                    :endAmount="300"
-                    :duration="5"
-                    suffix="+"
-                    :autoinit="true"
-                    @finished="handleCounterFinished"
-                    class="font-general-medium text-4xl font-bold text-secondary-dark dark:text-secondary-light mb-2"
-                    style="margin-top: -40px"
-                />
-                <span
-                    class="block text-md text-ternary-dark dark:text-ternary-light"
-                    style="margin-top: -10px"
-                >
-                    {{ projectsTitle }}
-                </span>
-            </div>
-        </div>
-    </div> -->
-
-    <div class="search-container mt-6">
-        <MaterialInput
-            class="input-group-dynamic"
-            icon="search"
-            type="text"
-            placeholder="Search by post title"
-            name="filterTitle"
-            @input="updateFilterTitle"
-            style="width: 100%; margin-right: 10px"
-        />
-    </div>
-    <br />
+    <br/>
+    <!-- Above the filter-container -->
+<div class="search-container">
+    <MaterialInput 
+        v-model="searchQuery" 
+        placeholder="Search..."
+        icon="search"
+    />
+</div>
 
     <!-- Filter for all posts -->
     <div class="filter-container">
@@ -232,6 +161,7 @@ export default {
                 track-by="name"
             />
         </div>
+
         <div class="country-filter">
             <VueMultiselect
                 v-model="filter.countryName"
@@ -243,6 +173,7 @@ export default {
                 track-by="name"
             />
         </div>
+        
         <div class="category-filter">
             <VueMultiselect
                 v-model="filter.category"
@@ -359,19 +290,46 @@ export default {
     margin-top: -10px;
 }
 
-.filter-container {
+.search-container {
     display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+    justify-content: center; /* Centers the search bar horizontally */
+    margin-top: 2rem; /* Adds space above the search bar */
+    margin-bottom: 2rem; /* Adds space below the search bar */
+    padding-left: 150px; /* Added padding to ensure it doesn't touch the screen edge */
+    padding-right: 150px; /* Added padding to ensure it doesn't touch the screen edge */
 }
 
-.search-filter,
-.sdg-filter,
-.country-filter,
-.category-filter {
-    flex: 1;
-    margin-right: 10px;
+
+.input-group-dynamic {
+    width: 100%; /* Make the width full inside its container */
+    max-width: 500px; /* Maximum width of the search input */
+    margin: 0 auto; /* Centers the element horizontally */
+    background-color: #ffffff; /* Solid white background */
+    border: 1px solid #000000; /* Add a border to the input */
+    border-radius: 0.375rem; /* Slight rounding of corners */
+    padding: 0.5rem; /* Padding inside the search box */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Soft shadow for depth */
 }
+
+/* This will ensure that the container for the search and filter uses flexbox to align its children */
+.filter-container {
+    display: flex;
+    justify-content: center; /* Centers items horizontally */
+    align-items: center; /* Centers items vertically */
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+}
+
+.sdg-filter {
+    margin-left: 15px;
+}
+
+.country-filter {
+    margin-left: 15px;
+}
+.category-filter {
+    margin-left: 15px;
+}
+
 </style>
 
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>
