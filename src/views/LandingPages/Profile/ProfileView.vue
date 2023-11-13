@@ -33,8 +33,13 @@ const auth = getAuth();
 var userID = "";
 
 onAuthStateChanged(auth, (user) => {
-  userID = user.uid;
-  //console.log(userID);
+  if (user) {
+    // User is signed in
+    userID = user.uid;
+  } else {
+    // User is signed out, handle accordingly (e.g., redirect to login)
+    // You can add your own logic here
+  }
 });
 
 export default {
@@ -61,63 +66,65 @@ export default {
     };
   },
   async created() {
-    const userRef = doc(db, "users", userID);
-    const userDoc = await getDoc(userRef);
-    if (userDoc.exists()) {
-      const userData = userDoc.data();
-      this.username = userData.username;
-      this.imageURL = userData.imageUrl;
-      this.userID = userData.userID;
-      this.description = userData.description;
-      this.entity = userData.entity;
-      this.email = userData.email;
-      this.following = userData.following;
-      this.followers = userData.followers;
-      this.saved = userData.saved;
-      this.posts = userData.posts;
-      this.postNos = userData.posts;
-      this.post_requests = userData.post_requests;
-      this.requestNos = userData.post_requests;
-      //console.log(this.posts);
+    if (userID) {
+      const userRef = doc(db, "users", userID);
+      const userDoc = await getDoc(userRef);
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        this.username = userData.username;
+        this.imageURL = userData.imageUrl;
+        this.userID = userData.userID;
+        this.description = userData.description;
+        this.entity = userData.entity;
+        this.email = userData.email;
+        this.following = userData.following;
+        this.followers = userData.followers;
+        this.saved = userData.saved;
+        this.posts = userData.posts;
+        this.postNos = userData.posts;
+        this.post_requests = userData.post_requests;
+        this.requestNos = userData.post_requests;
+        //console.log(this.posts);
 
-      if (this.username && this.posts && this.posts.length > 0) {
-        const postIDs = this.posts;
-        const posts = [];
+        if (this.username && this.posts && this.posts.length > 0) {
+          const postIDs = this.posts;
+          const posts = [];
 
-        for (const postID of postIDs) {
-          const postRef = doc(this.db, "posts", postID);
-          const postDoc = await getDoc(postRef);
+          for (const postID of postIDs) {
+            const postRef = doc(this.db, "posts", postID);
+            const postDoc = await getDoc(postRef);
 
-          if (postDoc.exists()) {
-            const postData = postDoc.data();
-            posts.push(postData);
+            if (postDoc.exists()) {
+              const postData = postDoc.data();
+              posts.push(postData);
+            }
           }
+
+          this.posts = posts;
         }
 
-        this.posts = posts;
-      }
+        if (
+          this.username &&
+          this.post_requests &&
+          this.post_requests.length > 0
+        ) {
+          const requestTitles = this.post_requests;
+          const requests = [];
 
-      if (
-        this.username &&
-        this.post_requests &&
-        this.post_requests.length > 0
-      ) {
-        const requestTitles = this.post_requests;
-        const requests = [];
+          for (const title of requestTitles) {
+            const requestRef = doc(this.db, "requests", title);
+            const requestDoc = await getDoc(requestRef);
 
-        for (const title of requestTitles) {
-          const requestRef = doc(this.db, "requests", title);
-          const requestDoc = await getDoc(requestRef);
-
-          if (requestDoc.exists()) {
-            const requestData = requestDoc.data();
-            requests.push(requestData);
+            if (requestDoc.exists()) {
+              const requestData = requestDoc.data();
+              requests.push(requestData);
+            }
           }
-        }
 
-        this.post_requests = requests;
-        console.log("requests", this.post_requests);
-        console.log("posts", this.posts);
+          this.post_requests = requests;
+          console.log("requests", this.post_requests);
+          console.log("posts", this.posts);
+        }
       }
     }
   },
@@ -201,150 +208,151 @@ export default {
       </div>
     </div>
   </Header>
-
-  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
-    <div class="post-details-container">
-      <div class="entity-tabs">
-        <div
-          :class="{
-            'entity-tab': true,
-            active: currentTab === 'description',
-          }"
-          @click="showTab('description')"
-        >
-          Description
+  <div v-if="userID">
+    <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+      <div class="post-details-container">
+        <div class="entity-tabs">
+          <div
+            :class="{
+              'entity-tab': true,
+              active: currentTab === 'description',
+            }"
+            @click="showTab('description')"
+          >
+            Description
+          </div>
+          <div
+            :class="{ 'entity-tab': true, active: currentTab === 'posts' }"
+            @click="showTab('posts')"
+          >
+            Posts
+          </div>
+          <div
+            :class="{ 'entity-tab': true, active: currentTab === 'contact' }"
+            @click="showTab('contact')"
+          >
+            Contact Us
+          </div>
         </div>
-        <div
-          :class="{ 'entity-tab': true, active: currentTab === 'posts' }"
-          @click="showTab('posts')"
-        >
-          Posts
-        </div>
-        <div
-          :class="{ 'entity-tab': true, active: currentTab === 'contact' }"
-          @click="showTab('contact')"
-        >
-          Contact Us
-        </div>
-      </div>
-      <div v-if="currentTab === 'description'">
-        <div class="user-profile">
-          <div class="profile-pic-username">
-            <div class="profile-pic">
-              <img
-                :src="imageURL"
-                alt="No Profile Picture"
-                style="
-                  object-fit: fill;
-                  border-radius: 50%;
-                  width: 200px;
-                  height: 200px;
-                  border: 5px solid #57b05b;
-                "
+        <div v-if="currentTab === 'description'">
+          <div class="user-profile">
+            <div class="profile-pic-username">
+              <div class="profile-pic">
+                <img
+                  :src="imageURL"
+                  alt="No Profile Picture"
+                  style="
+                    object-fit: fill;
+                    border-radius: 50%;
+                    width: 200px;
+                    height: 200px;
+                    border: 5px solid #57b05b;
+                  "
+                />
+              </div>
+              <h1 v-if="editingField !== 'imageURL'">Profile Picture</h1>
+              <input v-else v-model="imageURL" type="text" />
+              <font-awesome-icon
+                class="edit-icon"
+                :icon="['fas', 'pencil-alt']"
+                @click="toggleEdit('imageURL')"
+              />
+              <button
+                class="btn btn-success"
+                @click="saveChanges"
+                v-if="editingField === 'imageURL'"
+              >
+                Save
+              </button>
+            </div>
+            <div class="username">
+              <h1 v-if="editingField !== 'username'">{{ username }}</h1>
+              <input v-else v-model="username" type="text" />
+              <font-awesome-icon
+                class="edit-icon"
+                :icon="['fas', 'pencil-alt']"
+                @click="toggleEdit('username')"
               />
             </div>
-            <h1 v-if="editingField !== 'imageURL'">Profile Picture</h1>
-            <input v-else v-model="imageURL" type="text" />
-            <font-awesome-icon
-              class="edit-icon"
-              :icon="['fas', 'pencil-alt']"
-              @click="toggleEdit('imageURL')"
-            />
+            <div class="description">
+              <h3 v-if="editingField !== 'description'">{{ description }}</h3>
+              <textarea v-else v-model="description"></textarea>
+              <font-awesome-icon
+                class="edit-icon"
+                :icon="['fas', 'pencil-alt']"
+                @click="toggleEdit('description')"
+              />
+            </div>
             <button
               class="btn btn-success"
               @click="saveChanges"
-              v-if="editingField === 'imageURL'"
+              v-if="editingField"
             >
               Save
             </button>
-          </div>
-          <div class="username">
-            <h1 v-if="editingField !== 'username'">{{ username }}</h1>
-            <input v-else v-model="username" type="text" />
-            <font-awesome-icon
-              class="edit-icon"
-              :icon="['fas', 'pencil-alt']"
-              @click="toggleEdit('username')"
-            />
-          </div>
-          <div class="description">
-            <h3 v-if="editingField !== 'description'">{{ description }}</h3>
-            <textarea v-else v-model="description"></textarea>
-            <font-awesome-icon
-              class="edit-icon"
-              :icon="['fas', 'pencil-alt']"
-              @click="toggleEdit('description')"
-            />
-          </div>
-          <button
-            class="btn btn-success"
-            @click="saveChanges"
-            v-if="editingField"
-          >
-            Save
-          </button>
 
-          <!-- <RouterLink :to="{ name: 'editProfile' }">
+            <!-- <RouterLink :to="{ name: 'editProfile' }">
             <button class="btn btn-success">Edit Profile</button>
           </RouterLink> -->
-        </div>
-      </div>
-    </div>
-    <div v-if="currentTab === 'posts'" class="posts-headers">
-      <h3>Listed Posts</h3>
-      <div v-for="(post, index) in posts" :key="index" class="post-entry">
-        <img :src="post.imageUrl" class="post-entry-image" alt="Post image" />
-        <div class="post-entry-content">
-          <h3>{{ post.title }}</h3>
-          <p>{{ post.description }}</p>
-          <span class="post-author" @click="redirectToPost(post.postID)"
-            >Read More →</span
-          >
-          <!-- Trash can icon for deleting the post -->
-          <div class="trash-icon-container">
-            <font-awesome-icon
-              :icon="['fas', 'trash']"
-              class="delete-icon"
-              @click="deletePost(post.postID)"
-            />
           </div>
         </div>
       </div>
-      <br />
-      <h3>Unlisted Requests</h3>
-      <div
-        v-for="(post, index) in post_requests"
-        :key="index"
-        class="post-entry"
-      >
-        <img :src="post.imageUrl" class="post-entry-image" alt="Post image" />
-        <div class="post-entry-content">
-          <h3>{{ post.title }}</h3>
-          <p>
-            Organization name: {{ post.organizationName }} | Description:
-            {{ post.description }}
-          </p>
+      <div v-if="currentTab === 'posts'" class="posts-headers">
+        <h3>Listed Posts</h3>
+        <div v-for="(post, index) in posts" :key="index" class="post-entry">
+          <img :src="post.imageUrl" class="post-entry-image" alt="Post image" />
+          <div class="post-entry-content">
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.description }}</p>
+            <span class="post-author" @click="redirectToPost(post.postID)"
+              >Read More →</span
+            >
+            <!-- Trash can icon for deleting the post -->
+            <div class="trash-icon-container">
+              <font-awesome-icon
+                :icon="['fas', 'trash']"
+                class="delete-icon"
+                @click="deletePost(post.postID)"
+              />
+            </div>
+          </div>
+        </div>
+        <br />
+        <h3>Unlisted Requests</h3>
+        <div
+          v-for="(post, index) in post_requests"
+          :key="index"
+          class="post-entry"
+        >
+          <img :src="post.imageUrl" class="post-entry-image" alt="Post image" />
+          <div class="post-entry-content">
+            <h3>{{ post.title }}</h3>
+            <p>
+              Organization name: {{ post.organizationName }} | Description:
+              {{ post.description }}
+            </p>
 
-          <p>
-            SDG Country: {{ post.selectedCountry }} | SDG Selection:
-            {{ post.selectedSDG }}
-          </p>
+            <p>
+              SDG Country: {{ post.selectedCountry }} | SDG Selection:
+              {{ post.selectedSDG }}
+            </p>
 
-          <!-- Trash can icon for deleting the post -->
-          <div class="trash-icon-container">
-            <font-awesome-icon
-              :icon="['fas', 'trash']"
-              class="delete-icon"
-              @click="deleteRequest(post.title)"
-            />
+            <!-- Trash can icon for deleting the post -->
+            <div class="trash-icon-container">
+              <font-awesome-icon
+                :icon="['fas', 'trash']"
+                class="delete-icon"
+                @click="deleteRequest(post.title)"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div v-if="currentTab === 'contact'" class="posts-headers">
-      <h3 class="post-content">{{ username }} | {{ entity }}</h3>
-      <div class="post-content">
-        <p class="post-description">Email: {{ email }}</p>
+      <div v-if="currentTab === 'contact'" class="posts-headers">
+        <h3 class="post-content">{{ username }} | {{ entity }}</h3>
+        <div class="post-content">
+          <p class="post-description">Email: {{ email }}</p>
+        </div>
       </div>
     </div>
   </div>
