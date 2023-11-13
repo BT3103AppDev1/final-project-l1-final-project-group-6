@@ -27,15 +27,6 @@ import MaterialTextArea from "@/components/MaterialTextArea.vue";
 import MaterialButton from "@/components/MaterialButton.vue";
 import MaterialSwitch from "@/components/MaterialSwitch.vue";
 
-// sections
-// import PresentationCounter from "./Sections/PresentationCounter.vue";
-// import PresentationPages from "./Sections/PresentationPages.vue";
-// import PresentationExample from "./Sections/PresentationExample.vue";
-// import data from "./Sections/Data/designBlocksData";
-// import BuiltByDevelopers from "./Components/BuiltByDevelopers.vue";
-// import PresentationTestimonials from "./Sections/PresentationTestimonials.vue";
-// import PresentationInformation from "./Sections/PresentationInformation.vue";
-
 //images
 import unhelp from "@/assets/img/post-un.jpg";
 import soc from "@/assets/img/computing_places-1-505521.jpg";
@@ -117,6 +108,8 @@ const submitToFirebase = async () => {
     try {
       // Create a new document in Firebase Firestore with the form data
       const entityType = isNgo.value ? "NGO" : "Organization";
+      const randomNum = Math.floor(Math.random() * 100) + 1;
+      const randomImage = `https://picsum.photos/200/300?random=${randomNum}`;
       const docRef = await setDoc(
         doc(db, "requests", document.getElementById("projectTitle").value),
         {
@@ -132,7 +125,7 @@ const submitToFirebase = async () => {
           selectedCountry: selectedCountry.value,
           username: username.value,
           userID: userID.value,
-          imageUrl: "https://picsum.photos/200/300?random=69",
+          imageUrl: randomImage,
         }
       );
 
