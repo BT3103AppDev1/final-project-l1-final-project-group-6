@@ -352,7 +352,7 @@ export default {
       </div>
     </div>
     <div v-if="currentTab === 'contact'" class="posts-headers">
-      <h3 class="post-title">{{ username }} | {{ entity }}</h3>
+      <h3 class="post-content">{{ username }} | {{ entity }}</h3>
       <div class="post-content">
         <p class="post-description">Email: {{ email }}</p>
       </div>
