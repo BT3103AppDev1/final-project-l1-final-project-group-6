@@ -1,6 +1,6 @@
 <script setup>
 //firebase
-import app from "../../../firebase.js";
+import firebaseApp from "../../../firebase.js";
 import "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
@@ -28,7 +28,6 @@ library.add(faPencilAlt);
 </script>
 
 <script>
-const db = getFirestore(app);
 const auth = getAuth();
 var userID = "";
 
@@ -48,6 +47,7 @@ export default {
   },
   data() {
     return {
+      db: getFirestore(firebaseApp),
       username: "",
       imageURL: "",
       userID: "",
@@ -67,7 +67,7 @@ export default {
   },
   async created() {
     if (userID) {
-      const userRef = doc(db, "users", userID);
+      const userRef = doc(this.db, "users", userID);
       const userDoc = await getDoc(userRef);
       if (userDoc.exists()) {
         const userData = userDoc.data();
