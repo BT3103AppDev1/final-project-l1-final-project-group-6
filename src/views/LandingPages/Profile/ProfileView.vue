@@ -1,15 +1,6 @@
 <script setup>
 //firebase
-import firebaseApp from "../../../firebase.js";
-import "firebase/firestore";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc,
-  deleteDoc,
-} from "firebase/firestore";
+
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -28,6 +19,16 @@ library.add(faPencilAlt);
 </script>
 
 <script>
+import firebaseApp from "../../../firebase.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  deleteDoc,
+} from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 const auth = getAuth();
 var userID = "";
 
@@ -99,7 +100,6 @@ export default {
               posts.push(postData);
             }
           }
-
           this.posts = posts;
         }
 
@@ -142,7 +142,6 @@ export default {
     async saveChanges() {
       // Validate data before saving
       // Update Firestore document
-      console.log(this.requestNos);
       try {
         await setDoc(doc(this.db, "users", this.userID), {
           username: this.username,
