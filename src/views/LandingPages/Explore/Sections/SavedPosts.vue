@@ -69,8 +69,13 @@ export default {
             }
         },
 
+        /**
+         * Fetches all posts from firestore, using the collection 'posts'.
+         * Updates this.allPosts and this.filteredPosts.
+         */
         async fetchPosts() {
             try {
+                // create query to retrive posts based on entity prop
                 const postsQuery = query(
                     collection(this.db, 'posts'),
                     where('entity', '==', this.category)
@@ -81,7 +86,7 @@ export default {
                 querySnapshot.forEach((doc) => {
                     posts.push({ id: doc.id, ...doc.data() });
                 });
-                this.allPosts = posts;
+                this.allPosts = posts; // store all posts in allPosts. do not delete; is used to filter posts in explore page.
                 this.filteredPosts = posts;
             } catch (error) {
                 console.error('Error fetching posts:', error);
@@ -92,31 +97,42 @@ export default {
             this.$router.push({ name: 'postdetails', params: { id: postId } });
         },
 
+        /**
+         * Updates this.filteredPosts based on this.filter.
+         * Relies on the watch argument; is called when this.filter is updated.
+         */
         updateFilteredPosts() {
-            // Filter the posts based on the filter object
             let { title, category, entityName, countryName, sdg } = this.filter;
+            // Map over sdg array to convert from string to number. Uses regex to extract the number from the string
+            // originally SDG 1 : No Poverty, changes to 1
             if (sdg.length > 0) {
                 sdg = sdg.map((x) => {
                     const number = parseInt(x.name.match(/\d+/)[0], 10);
                     return number;
                 });
             }
+            // Map over category array to convert from Object to a string.
+            // original [{name: "Financial"}, {name: "Non-Financial"}] changes to ["Financial", "Non-Financial"]
             if (category.length > 0) {
                 category = category.map((x) => {
                     return x.name;
                 });
             }
+            // Map over countryName array to convert from Object to a string.
+            // original [{name: "Singapore"}, {name: "Cambodia"}] changes to ["Singapore", "Cambodia"]
             if (countryName.length > 0) {
                 countryName = countryName.map((x) => {
                     return x.name;
                 });
             }
-            const newFilteredPosts = this.allPosts.filter((post) => {
-                let isMatch = true;
+            // Filter the posts based on the filter object
+            const newFilteredPosts = this.allPosts.filter((post) => { 
+                let isMatch = true; // predicate
                 if (title) {
                     isMatch = isMatch && post.title.toLowerCase().includes(title.toLowerCase());
                 }
                 if (category && category.length > 0) {
+                    // slices the post's category string to get financial/non-financial
                     let curr = post.category;
                     let colonIndex = curr.indexOf(':');
                     curr = curr.slice(0, colonIndex).trim();
@@ -129,8 +145,7 @@ export default {
                     isMatch = isMatch && sdg.includes(post.sdgNo);
                 }
                 if (entityName) {
-                    isMatch =
-                        isMatch && post.username.toLowerCase().includes(entityName.toLowerCase());
+                    isMatch = isMatch && post.username.toLowerCase().includes(entityName.toLowerCase());
                 }
                 return isMatch;
             });
