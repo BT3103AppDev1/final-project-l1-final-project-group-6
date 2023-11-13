@@ -35,11 +35,11 @@ export default {
     };
   },
   async created() {
-    const postId = this.$route.params.id;
+    const postID = this.$route.params.id;
 
-    // Fetch the post details using the postId
+    // Fetch the post details using the postID
     try {
-      const postRef = doc(this.db, "posts", postId);
+      const postRef = doc(this.db, "posts", postID);
       const postDoc = await getDoc(postRef);
 
       if (postDoc.exists()) {
