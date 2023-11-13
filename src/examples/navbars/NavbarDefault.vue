@@ -160,11 +160,11 @@ onAuthStateChanged(auth, (user) => {
                 </RouterLink>
             </div>
 
-            <a
+            <RouterLink
                 v-if="isLoggedIn"
-                href="pages/landing-pages/post"
+                :to="{ name: 'post' }"
                 class="btn btn-sm bg-gradient-success mb-0 ms-auto d-lg-none d-block"
-                >Post Now</a
+                >Post Now</RouterLink
             >
             <a
                 v-if="!isLoggedIn"
