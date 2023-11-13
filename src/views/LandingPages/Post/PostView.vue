@@ -56,9 +56,9 @@ const financialLabel = computed(() =>
 const nonFinancialLabel = computed(() =>
     isNgo.value ? 'Non-Financial Support: ' : 'Non-Financial Requested: '
 );
-const entityLabel = computed(() => (isNgo.value ? 'Organisation Name' : 'NGO Name'));
+const entityLabel = computed(() => (isNgo.value ? 'Company Name' : 'NGO Name'));
 const switchText = computed(() =>
-    isNgo.value ? 'I am Submitting this as an Organisation' : 'I am Submitting this as an NGO'
+    isNgo.value ? 'I am Submitting this as an Company' : 'I am Submitting this as an NGO'
 );
 
 const showDropdown = ref(false);
@@ -105,7 +105,7 @@ const submitToFirebase = async () => {
 
         try {
             // Create a new document in Firebase Firestore with the form data
-            const entityType = isNgo.value ? 'NGO' : 'Organization';
+            const entityType = isNgo.value ? 'NGO' : 'Company';
             const docRef = await setDoc(
                 doc(db, 'requests', document.getElementById('projectTitle').value),
                 {
@@ -116,10 +116,10 @@ const submitToFirebase = async () => {
                     FinancialRequested: checkedNames.value,
                     NonFinancialRequested: checkedNonNames.value,
                     organizationName: document.getElementById('organizationName').value,
-                    selectedSDG: selectedOption.value,
-                    message: document.getElementById('message').value,
-                    selectedCountry: selectedCountry.value,
-                    Username: username.value,
+                    sdgNo: selectedOption.value,
+                    description: document.getElementById('message').value,
+                    country: selectedCountry.value,
+                    username: username.value,
                     userID: userID.value
                 }
             );
