@@ -252,7 +252,7 @@ const selectedCountry = ref("Country");
     <div class="row">
       <div class="d-flex flex-column w-100 text-center p-5 mb-8">
         <h3>Meet our partners</h3>
-        <!-- <div class="d-flex justify-content-center mt-3 flex-wrap">
+        <div class="d-flex justify-content-center mt-3 flex-wrap">
           <a
             href="https://cityofgood.sg/"
             target="_blank"
@@ -287,14 +287,6 @@ const selectedCountry = ref("Country");
               loading="lazy"
               :style="{ height: '90px' }"
             />
-          </a>
-          <a
-            href="https://www.creative-tim.com/product/vue-material-kit-pro"
-            class="mx-3"
-            data-bs-toggle="tooltip"
-            data-bs-placement="bottom"
-            title="Vue.js - Is a Progressive JavaScript Framework"
-          >
           </a>
           <a
             href="https://www.google.org/"
@@ -333,7 +325,7 @@ const selectedCountry = ref("Country");
             title="Coming Soon"
           >
           </a>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
@@ -380,7 +372,7 @@ const selectedCountry = ref("Country");
             <h3 class="text-center">Start your request here, {{ username }}</h3>
             <p class="lead text-black px-0 mt-3" :style="{ fontWeight: '300' }">
               Please allow a minimum of 2 weeks processing time for your
-              submission for listing and reach out to hello@link4impact if you
+              submission for listing and reach out to hello@link4impact.com if you
               have any questions about the submission guidelines and endorsement
               criteria.
             </p>

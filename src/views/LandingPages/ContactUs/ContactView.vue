@@ -85,7 +85,7 @@ onMounted(() => {
                             <div class="card-body">
                                 <p class="pb-3">
                                     For further questions, including partnership opportunities,
-                                    please email hello@link4impact or contact us using this form.
+                                    please email hello@link4impact.com or contact us using this form.
                                 </p>
                                 <form id="contact-form" method="post" autocomplete="off">
                                     <div class="card-body p-0 my-3">

@@ -29,10 +29,7 @@ export default {
 
     data() {
         return {
-            searchQuery: '', // for the search query
-            allPosts: [], // assuming you fetch your posts and store them here
-            filteredPosts: [], // this will store the filtered posts
-            filter: {
+            filter: { // object will be passed to the Posts component to filter accordingly
                 title: null,
                 category: [],
                 entityName: null,
@@ -83,11 +80,6 @@ export default {
             categoryOptions: [{ name: 'Financial' }, { name: 'Non-Financial' }]
         };
     },
-    watch: {
-        searchQuery(newQuery) {
-            this.filterPosts();
-        },
-    },
     methods: {
         handleCounterFinished() {
             console.log('Counting finished!');
@@ -96,15 +88,8 @@ export default {
         updateFilterTitle(event) {
             this.filter.title = event.target.value;
         },
-        filterPosts() {
-            if (!this.searchQuery) {
-                this.filteredPosts = this.allPosts;
-            } else {
-                this.filteredPosts = this.allPosts.filter(post => {
-                    // Replace 'postTitle' with the property you want to search by
-                    return post.postTitle.toLowerCase().includes(this.searchQuery.toLowerCase());
-                });
-            }
+        updateFilterEntityName(event) {
+            this.filter.entityName = event.target.value;
         },
     }
 };
@@ -142,8 +127,16 @@ export default {
     <!-- Above the filter-container -->
 <div class="search-container">
     <MaterialInput 
-        v-model="searchQuery" 
-        placeholder="Search..."
+        class="input-group-dynamic "
+        @input="updateFilterTitle"
+        placeholder="Search by post title"
+        icon="search"
+    />
+<br>
+    <MaterialInput 
+        class="input-group-dynamic "
+        @input="updateFilterEntityName"
+        placeholder="Search by entity name"
         icon="search"
     />
 </div>
@@ -217,15 +210,6 @@ export default {
     <DefaultFooter />
 </template>
 
-<style>
-@font-face {
-    font-family: 'Geologica';
-    src: url('path-to-your-font-files/Geologica-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-</style>
-
 <style scoped>
 .counter-container {
     min-width: max-content;
@@ -291,7 +275,7 @@ export default {
 }
 
 .search-container {
-    display: flex;
+    /* display: flex; */
     justify-content: center; /* Centers the search bar horizontally */
     margin-top: 2rem; /* Adds space above the search bar */
     margin-bottom: 2rem; /* Adds space below the search bar */
@@ -304,11 +288,7 @@ export default {
     width: 100%; /* Make the width full inside its container */
     max-width: 500px; /* Maximum width of the search input */
     margin: 0 auto; /* Centers the element horizontally */
-    background-color: #ffffff; /* Solid white background */
-    border: 1px solid #000000; /* Add a border to the input */
-    border-radius: 0.375rem; /* Slight rounding of corners */
-    padding: 0.5rem; /* Padding inside the search box */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Soft shadow for depth */
+    
 }
 
 /* This will ensure that the container for the search and filter uses flexbox to align its children */
@@ -332,4 +312,5 @@ export default {
 
 </style>
 
+<!-- Used to style the multiselect component. DO NOT REMOVE -->
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>

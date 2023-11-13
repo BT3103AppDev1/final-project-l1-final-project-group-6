@@ -8,6 +8,7 @@ import ExploredView from '../views/LandingPages/Explore/ExploredView.vue';
 import PostDetails from '../views/LandingPages/Saved/PostDetails.vue';
 import ProfileView from '../views/LandingPages/Profile/ProfileView.vue';
 import ProfileEdit from '../views/LandingPages/Profile/EditProfile.vue';
+import ErrorView from '../views/LandingPages/Error/ErrorView.vue';
 import SignInBasicView from '../views/LandingPages/SignIn/BasicView.vue';
 import SignUpView from '../views/LandingPages/SignIn/SignUpView.vue';
 import PostView from '../views/LandingPages/Post/PostView.vue';
@@ -113,6 +114,12 @@ const router = createRouter({
             meta: {
                 requiresAuth: true
             }
+        },
+        {
+            path: '/:catchAll(.*)',
+            name: 'error',
+            component: ErrorView
+
         },
         {
             path: '/sections/page-sections/page-headers',

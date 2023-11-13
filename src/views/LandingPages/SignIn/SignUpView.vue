@@ -54,6 +54,7 @@ export default {
         await setDoc(userDocRef, userData);
 
         // Redirect or perform other actions upon successful registration
+        alert("Succesful registration! Redirecting you to the login page.")
         this.$router.push({ name: "signin-basic" }); // Redirect to the sign-in page
       } catch (error) {
         console.error("Error registering user:", error.message);
