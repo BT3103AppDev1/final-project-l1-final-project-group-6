@@ -1,70 +1,66 @@
-<!-- eslint-disable prettier/prettier -->
 <script>
-import firebaseApp from '../../../../firebase.js';
-import { getFirestore, doc, getDoc, getDocs, collection, query, where } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import firebaseApp from "../../../../firebase.js";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const auth = getAuth();
-var userID = '';
+var userID = "";
 
 onAuthStateChanged(auth, (user) => {
-    if (user) {
-        // User is signed in. Access the UID.
-        userID = user.uid;
-        console.log(userID);
-    }
+  if (user) {
+    // User is signed in. Access the UID.
+    userID = user.uid;
+    console.log(userID);
+  }
 });
 
 export default {
-    data() {
-        return {
-            db: getFirestore(firebaseApp),
-            userID: userID,
-            savedPosts: []
-        };
-    },
-    mounted() {
-        this.fetchSavedPosts();
-    },
-    methods: {
-        async fetchSavedPosts() {
-            try {
-                const userSavedRef = doc(this.db, 'users', this.userID.toString());
-                const userSavedDoc = await getDoc(userSavedRef);
+  data() {
+    return {
+      db: getFirestore(firebaseApp),
+      userID: userID,
+      savedPosts: [],
+    };
+  },
+  mounted() {
+    this.fetchSavedPosts();
+  },
+  methods: {
+    async fetchSavedPosts() {
+      try {
+        const userSavedRef = doc(this.db, "users", this.userID.toString());
+        const userSavedDoc = await getDoc(userSavedRef);
 
-                if (userSavedDoc.exists()) {
-                    const savedData = userSavedDoc.data();
-                    //console.log(savedData);
-                    if (savedData && savedData.saved && savedData.saved.length > 0) {
-                        const postIDs = savedData.saved;
-                        const posts = [];
-                        console.log(postIDs);
+        if (userSavedDoc.exists()) {
+          const savedData = userSavedDoc.data();
+          //console.log(savedData);
+          if (savedData && savedData.saved && savedData.saved.length > 0) {
+            const postIDs = savedData.saved;
+            const posts = [];
+            console.log(postIDs);
 
-                        for (const postID of postIDs) {
-                            const postQuery = query(
-                                collection(this.db, 'posts'),
-                                where('postID', '==', postID)
-                            );
-                            const postSnapshot = await getDocs(postQuery);
-                            //console.log(postSnapshot.docs[0].data());
+            for (const postID of postIDs) {
+              const postRef = doc(this.db, "posts", postID);
+              const postDoc = await getDoc(postRef);
 
-                            if (!postSnapshot.empty) {
-                                posts.push(postSnapshot.docs[0].data());
-                            }
-                        }
-
-                        this.savedPosts = posts;
-                        console.log(this.savedPosts);
-                    }
-                }
-            } catch (error) {
-                console.error('Error fetching saved posts:', error);
+              if (postDoc.exists()) {
+                const postData = postDoc.data();
+                posts.push(postData);
+              }
             }
-        },
-        redirectToPostDetails(postID) {
-            this.$router.push({ name: 'postdetails', params: { id: postID } });
+
+            this.savedPosts = posts;
+            console.log(this.savedPosts);
+          }
         }
-    }
+      } catch (error) {
+        console.error("Error fetching saved posts:", error);
+      }
+    },
+    redirectToPostDetails(postID) {
+      this.$router.push({ name: "postdetails", params: { id: postID } });
+    },
+  },
 };
 </script>
 

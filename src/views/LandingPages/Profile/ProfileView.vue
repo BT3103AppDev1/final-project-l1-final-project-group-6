@@ -1,6 +1,4 @@
 <script setup>
-import { defineAsyncComponent, onMounted, onUnmounted, ref } from "vue";
-
 //firebase
 import app from "../../../firebase.js";
 import "firebase/firestore";
@@ -9,11 +7,7 @@ import {
   getFirestore,
   doc,
   setDoc,
-  getDocs,
   getDoc,
-  collection,
-  query,
-  where,
   deleteDoc,
 } from "firebase/firestore";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -89,19 +83,17 @@ export default {
       if (this.username && this.posts && this.posts.length > 0) {
         const postIDs = this.posts;
         const posts = [];
-        //console.log(this.posts);
 
         for (const postID of postIDs) {
-          const postQuery = query(
-            collection(this.db, "posts"),
-            where("postID", "==", postID)
-          );
-          const postSnapshot = await getDocs(postQuery);
+          const postRef = doc(this.db, "posts", postID);
+          const postDoc = await getDoc(postRef);
 
-          if (!postSnapshot.empty) {
-            posts.push(postSnapshot.docs[0].data());
+          if (postDoc.exists()) {
+            const postData = postDoc.data();
+            posts.push(postData);
           }
         }
+
         this.posts = posts;
       }
 
@@ -110,22 +102,20 @@ export default {
         this.post_requests &&
         this.post_requests.length > 0
       ) {
-        const postIDs = this.post_requests;
-        const posts = [];
-        //console.log(postIDs);
+        const requestTitles = this.post_requests;
+        const requests = [];
 
-        for (const postID of postIDs) {
-          const postQuery = query(
-            collection(this.db, "requests"),
-            where("title", "==", postID)
-          );
-          const postSnapshot = await getDocs(postQuery);
+        for (const title of requestTitles) {
+          const requestRef = doc(this.db, "requests", title);
+          const requestDoc = await getDoc(requestRef);
 
-          if (!postSnapshot.empty) {
-            posts.push(postSnapshot.docs[0].data());
+          if (requestDoc.exists()) {
+            const requestData = requestDoc.data();
+            requests.push(requestData);
           }
         }
-        this.post_requests = posts;
+
+        this.post_requests = requests;
         console.log("requests", this.post_requests);
         console.log("posts", this.posts);
       }
