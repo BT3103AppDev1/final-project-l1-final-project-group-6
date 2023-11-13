@@ -6,9 +6,6 @@ import NavbarDefault from '../..//examples/navbars/NavbarDefault.vue';
 import DefaultFooter from '../../examples/footers/FooterDefault.vue';
 import Header from '../../examples/Header.vue';
 
-//Vue Material Kit 2 components
-import MaterialSocialButton from '@/components/MaterialSocialButton.vue';
-
 // sections
 import RecentPostPreview from './Sections/RecentPostPreview.vue';
 
@@ -38,20 +35,14 @@ onUnmounted(() => {
         </div>
     </div>
     <Header>
-        <!-- Use for static image
-        <div
-            class="page-header min-vh-75"
-            :style="`background-image: url(${classroom})`"
-            style="background-position-y: 65%"
-            loading="lazy"
-        > -->
         <!-- Use for video -->
         <div class="page-header min-vh-75">
-    <div class="video-overlay"></div> <!-- Add this line -->
-    <video autoplay loop muted playsinline class="home-video">
-        <source src="../../data/video7.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-    </video>
+            <div class="video-overlay"></div>
+            <!-- Add this line -->
+            <video autoplay loop muted playsinline class="home-video">
+                <source src="../../data/video7.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
 
             <div class="container">
                 <div class="row">
@@ -79,6 +70,7 @@ onUnmounted(() => {
 
         <RecentPostPreview entityType="Company" />
 
+        <!-- Invite to post -->
         <div
             class="container-fluid mt-sm-5 border-radius-xl"
             :style="{
@@ -124,17 +116,13 @@ onUnmounted(() => {
                         <h4 class="mb-1">Thank you for your support!</h4>
                         <p class="lead mb-0">Share our mission with others</p>
                     </div>
-                    <!-- TODO: Update routes -->
-                    <div class="col-lg-5 me-lg-auto my-lg-auto text-lg-end mt-5">
-
-                    </div>
+                    <div class="col-lg-5 me-lg-auto my-lg-auto text-lg-end mt-5"></div>
                 </div>
             </div>
         </div>
     </div>
     <DefaultFooter />
 </template>
-
 
 <style>
 .home-video {

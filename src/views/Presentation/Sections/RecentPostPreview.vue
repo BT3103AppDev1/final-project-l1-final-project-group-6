@@ -46,23 +46,6 @@ export default {
 </script>
 
 <template>
-    <!-- <div class="parent">
-        <div class="title">
-            <h2>Recent {{ this.entityType }} Posts</h2>
-        </div>
-        <div class="post-container">
-            <div v-for="(post, index) in visiblePosts" :key="index" class="post-list-item">
-                <PostsCard :post="post" />
-            </div>
-
-            <div v-for="n in numPosts - visiblePosts.length" :key="n" class="post-list-item"></div>
-        </div>
-        <div class="view-more">
-            <RouterLink :to="{ path: '/pages/landing-pages/explore', hash: containerRoute }">
-                <button class="btn btn-success view-btn">View More</button>
-            </RouterLink>
-        </div>
-    </div> -->
     <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-4 mb-4">
         <div class="container">
             <div class="row">
