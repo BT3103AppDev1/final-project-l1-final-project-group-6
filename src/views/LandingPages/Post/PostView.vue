@@ -5,7 +5,7 @@ import { onMounted, onUnmounted, ref, computed } from 'vue';
 import firebase from '../../../firebase.js';
 import 'firebase/firestore';
 import 'firebase/auth';
-import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 //example components
@@ -56,9 +56,9 @@ const financialLabel = computed(() =>
 const nonFinancialLabel = computed(() =>
     isNgo.value ? 'Non-Financial Support: ' : 'Non-Financial Requested: '
 );
-const entityLabel = computed(() => (isNgo.value ? 'Company Name' : 'NGO Name'));
+const entityLabel = computed(() => (isNgo.value ? 'Organisation Name' : 'NGO Name'));
 const switchText = computed(() =>
-    isNgo.value ? 'I am Submitting this as an Company' : 'I am Submitting this as an NGO'
+    isNgo.value ? 'I am Submitting this as an Organisation' : 'I am Submitting this as an NGO'
 );
 
 const showDropdown = ref(false);
@@ -70,7 +70,6 @@ const auth = getAuth();
 
 const username = ref('');
 const userID = ref('');
-
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -105,24 +104,40 @@ const submitToFirebase = async () => {
 
         try {
             // Create a new document in Firebase Firestore with the form data
-            const entityType = isNgo.value ? 'NGO' : 'Company';
+            const entityType = isNgo.value ? 'NGO' : 'Organization';
             const docRef = await setDoc(
                 doc(db, 'requests', document.getElementById('projectTitle').value),
                 {
-                    entityType: entityType,
+                    entity: entityType,
                     firstName: document.getElementById('firstName').value,
                     lastName: document.getElementById('lastName').value,
-                    projectTitle: document.getElementById('projectTitle').value,
+                    title: document.getElementById('projectTitle').value,
                     FinancialRequested: checkedNames.value,
                     NonFinancialRequested: checkedNonNames.value,
                     organizationName: document.getElementById('organizationName').value,
-                    sdgNo: selectedOption.value,
+                    selectedSDG: selectedOption.value,
                     description: document.getElementById('message').value,
-                    country: selectedCountry.value,
+                    selectedCountry: selectedCountry.value,
                     username: username.value,
-                    userID: userID.value
+                    userID: userID.value,
+                    imageUrl: 'https://picsum.photos/200/300?random=69'
                 }
             );
+
+            const documentRef = doc(db, 'users', userID.value);
+            // Update the 'yourListField' by appending a new value
+            const newValueToAdd = document.getElementById('projectTitle').value;
+
+            updateDoc(documentRef, {
+                post_requests: arrayUnion(newValueToAdd)
+            })
+                .then(() => {
+                    console.log('Field updated successfully.');
+                })
+                .catch((error) => {
+                    console.error('Error updating field:', error);
+                });
+
             console.log(docRef);
             // Display a success message
             console.log('Document written!');
@@ -553,7 +568,7 @@ const selectedCountry = ref('Country');
                                             ><u>Terms and Conditions</u></a
                                         >.
                                     </MaterialSwitch>
-                                    <p>Submission ID: {{ username }} </p>
+                                    <p>Submission ID: {{ username }}</p>
 
                                     <div class="col-md-12">
                                         <MaterialButton

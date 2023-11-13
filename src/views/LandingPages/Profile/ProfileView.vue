@@ -36,11 +36,16 @@ library.add(faPencilAlt);
 <script>
 const db = getFirestore(app);
 const auth = getAuth();
+var userID = "";
+
+onAuthStateChanged(auth, (user) => {
+  userID = user.uid;
+  //console.log(userID);
+});
 
 export default {
   components: {
     FontAwesomeIcon,
-    // ... other components
   },
   data() {
     return {
@@ -52,62 +57,81 @@ export default {
       email: "",
       followers: 0,
       following: 0,
+      saved: {},
       posts: {},
+      postNos: {},
+      post_requests: {},
+      requestNos: {},
       currentTab: "description",
       editingField: null,
     };
   },
-  mounted() {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userRef = doc(db, "users", user.uid);
-        getDoc(userRef).then((doc) => {
-          if (doc.exists()) {
-            // console.log("Document data:");
-            // console.log(doc.data().username);
-            // console.log(doc.data().imageURL);
-            // console.log(doc.data().userID);
-            // console.log(doc.data().uid);
+  async created() {
+    const userRef = doc(db, "users", userID);
+    const userDoc = await getDoc(userRef);
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      this.username = userData.username;
+      this.imageURL = userData.imageUrl;
+      this.userID = userData.userID;
+      this.description = userData.description;
+      this.entity = userData.entity;
+      this.email = userData.email;
+      this.following = userData.following;
+      this.followers = userData.followers;
+      this.saved = userData.saved;
+      this.posts = userData.posts;
+      this.postNos = userData.posts;
+      this.post_requests = userData.post_requests;
+      this.requestNos = userData.post_requests;
+      //console.log(this.posts);
 
-            this.username = doc.data().username;
-            this.imageURL = doc.data().imageUrl;
-            this.userID = doc.data().userID;
-            this.description = doc.data().description;
-            this.entity = doc.data().entity;
-            this.email = doc.data().email;
-            this.following = doc.data().following;
-            this.followers = doc.data().followers;
-            this.posts = doc.data().posts;
-            console.log(this.posts);
+      if (this.username && this.posts && this.posts.length > 0) {
+        const postIDs = this.posts;
+        const posts = [];
+        //console.log(this.posts);
 
+        for (const postID of postIDs) {
+          const postQuery = query(
+            collection(this.db, "posts"),
+            where("postID", "==", postID)
+          );
+          const postSnapshot = await getDocs(postQuery);
 
-            if (this.username && this.posts && this.posts.length > 0) {
-              const postIDs = this.posts;
-              const posts = [];
-              console.log(this.posts);
-
-              for (const postID of postIDs) {
-                console.log(postID);
-                const postQuery = query(
-                  collection(this.db, "posts"),
-                  where("postID", "==", postID)
-                );
-                getDocs(postQuery).then((postSnapshot) => {
-                  //console.log(postSnapshot);
-
-                  if (!postSnapshot.empty) {
-                    posts.push(postSnapshot.docs[0].data());
-                  }
-                });
-              }
-              this.posts = posts;
-              console.log(posts);
-            }
+          if (!postSnapshot.empty) {
+            posts.push(postSnapshot.docs[0].data());
           }
-        });
+        }
+        this.posts = posts;
       }
-    });
+
+      if (
+        this.username &&
+        this.post_requests &&
+        this.post_requests.length > 0
+      ) {
+        const postIDs = this.post_requests;
+        const posts = [];
+        //console.log(postIDs);
+
+        for (const postID of postIDs) {
+          const postQuery = query(
+            collection(this.db, "requests"),
+            where("title", "==", postID)
+          );
+          const postSnapshot = await getDocs(postQuery);
+
+          if (!postSnapshot.empty) {
+            posts.push(postSnapshot.docs[0].data());
+          }
+        }
+        this.post_requests = posts;
+        console.log("requests", this.post_requests);
+        console.log("posts", this.posts);
+      }
+    }
   },
+
   methods: {
     showTab(tabName) {
       this.currentTab = tabName;
@@ -128,11 +152,13 @@ export default {
           imageUrl: this.imageURL,
           description: this.description,
           entity: this.entity,
-          posts: this.posts,
+          posts: this.postNos,
+          post_requests: this.requestNos,
           userID: this.userID,
           email: this.email,
           followers: this.followers,
           following: this.following,
+          saved: this.saved,
         });
         this.editingField = null; // Exit edit mode
       } catch (error) {
@@ -140,11 +166,23 @@ export default {
       }
     },
     async deletePost(postID) {
+      alert("Deleting Post");
       try {
         await deleteDoc(doc(this.db, "posts", postID));
         this.posts = this.posts.filter((post) => post.postID !== postID);
       } catch (error) {
         console.error("Error deleting post:", error);
+      }
+    },
+    async deleteRequest(postID) {
+      alert("Deleting Request");
+      try {
+        await deleteDoc(doc(this.db, "requests", postID));
+        this.post_requests = this.post_requests.filter(
+          (request) => request.title !== postID
+        );
+      } catch (error) {
+        console.error("Error deleting request:", error);
       }
     },
   },
@@ -262,7 +300,8 @@ export default {
         </div>
       </div>
     </div>
-    <div v-if="currentTab === 'posts'">
+    <div v-if="currentTab === 'posts'" class="posts-headers">
+      <h3>Listed Posts</h3>
       <div v-for="(post, index) in posts" :key="index" class="post-entry">
         <img :src="post.imageUrl" class="post-entry-image" alt="Post image" />
         <div class="post-entry-content">
@@ -272,15 +311,47 @@ export default {
             >Read More →</span
           >
           <!-- Trash can icon for deleting the post -->
-          <font-awesome-icon
-            :icon="['fas', 'trash']"
-            class="delete-icon"
-            @click="deletePost(post.postID)"
-          />
+          <div class="trash-icon-container">
+            <font-awesome-icon
+              :icon="['fas', 'trash']"
+              class="delete-icon"
+              @click="deletePost(post.postID)"
+            />
+          </div>
+        </div>
+      </div>
+      <br />
+      <h3>Unlisted Requests</h3>
+      <div
+        v-for="(post, index) in post_requests"
+        :key="index"
+        class="post-entry"
+      >
+        <img :src="post.imageUrl" class="post-entry-image" alt="Post image" />
+        <div class="post-entry-content">
+          <h3>{{ post.title }}</h3>
+          <p>
+            Organization name: {{ post.organizationName }} | Description:
+            {{ post.description }}
+          </p>
+
+          <p>
+            SDG Country: {{ post.selectedCountry }} | SDG Selection:
+            {{ post.selectedSDG }}
+          </p>
+
+          <!-- Trash can icon for deleting the post -->
+          <div class="trash-icon-container">
+            <font-awesome-icon
+              :icon="['fas', 'trash']"
+              class="delete-icon"
+              @click="deleteRequest(post.title)"
+            />
+          </div>
         </div>
       </div>
     </div>
-    <div v-if="currentTab === 'contact'">
+    <div v-if="currentTab === 'contact'" class="posts-headers">
       <h3 class="post-title">{{ username }} | {{ entity }}</h3>
       <div class="post-content">
         <p class="post-description">Email: {{ email }}</p>
@@ -391,6 +462,8 @@ profile-pic {
   padding: 20px;
   max-width: 800px;
   margin: auto;
+  align-items: center;
+  text-align: center;
 }
 
 .editable-field {
@@ -481,6 +554,16 @@ profile-pic {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); /* Subtle shadow */
   overflow: hidden;
   position: relative;
+  justify-content: space-between; /* This will align children to each end */
+}
+
+.trash-icon-container {
+  margin-left: auto; /* Pushes the icon to the right */
+}
+
+.delete-icon {
+  font-size: 1.5rem; /* Increases the size of the icon */
+  cursor: pointer; /* Changes the cursor to a pointer when hovering over the icon */
 }
 
 .post-entry-image {
