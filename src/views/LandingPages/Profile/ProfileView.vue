@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 //example components
 import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
 
-import Footer from "../../../examples/footers/SavedFooter.vue";
+import DefaultFooter from "../../../examples/footers/FooterDefault.vue";
 import Header from "../../../examples/Header.vue";
 
 //images
@@ -348,7 +348,7 @@ export default {
       </div>
     </div>
   </div>
-  <Footer />
+  <DefaultFooter />
 </template>
 
 <style scoped>

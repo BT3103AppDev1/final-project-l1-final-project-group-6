@@ -1,5 +1,6 @@
 <script setup>
 import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
+import DefaultFooter from "../../../examples/footers/FooterDefault.vue";
 </script>
 
 <script>
@@ -166,6 +167,7 @@ export default {
       <!-- </div> -->
     </div>
   </div>
+  <DefaultFooter />
 </template>
 
 <style scoped>
