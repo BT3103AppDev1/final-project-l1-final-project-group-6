@@ -57,11 +57,11 @@ export default {
       email: "",
       followers: 0,
       following: 0,
-      saved: {},
-      posts: {},
-      postNos: {},
-      post_requests: {},
-      requestNos: {},
+      saved: [],
+      posts: [],
+      postNos: [],
+      post_requests: [],
+      requestNos: [],
       currentTab: "description",
       editingField: null,
     };
@@ -145,20 +145,20 @@ export default {
     async saveChanges() {
       // Validate data before saving
       // Update Firestore document
-      console.log(this.userID);
+      console.log(this.requestNos);
       try {
         await setDoc(doc(this.db, "users", this.userID), {
           username: this.username,
           imageUrl: this.imageURL,
+          userID: this.userID,
           description: this.description,
           entity: this.entity,
-          posts: this.postNos,
-          post_requests: this.requestNos,
-          userID: this.userID,
           email: this.email,
           followers: this.followers,
           following: this.following,
           saved: this.saved,
+          posts: this.postNos,
+          post_requests: this.requestNos,
         });
         this.editingField = null; // Exit edit mode
       } catch (error) {
